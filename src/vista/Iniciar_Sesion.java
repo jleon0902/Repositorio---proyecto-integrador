@@ -7,7 +7,7 @@ import controlador.LoginControlador;
 
 /**
  *
- * @author VALENTINA
+ * @author VALENTINA JUAN PABLOO 
  */
 public class Iniciar_Sesion extends javax.swing.JFrame {
     private LoginControlador controlador;
