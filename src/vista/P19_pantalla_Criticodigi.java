@@ -3,7 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package vista;
-
+import modelo.FamiliasDao;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 /**
  *
  * @author VALENTINA
@@ -15,12 +17,153 @@ public class P19_pantalla_Criticodigi extends javax.swing.JFrame {
     /**
      * Creates new form P19_pantalla_Criticodigi
      */
-    public P19_pantalla_Criticodigi() {
-        initComponents();
-    }
-    
+public P19_pantalla_Criticodigi() {
+    initComponents();
+
+    jTextField1.setEditable(false);
+
+    cmbRegion.removeAllItems();
+    cmbDepartamento.removeAllItems();
+    cmbMunicipio.removeAllItems();
+
+    cmbDepartamento.setEnabled(false);
+    cmbMunicipio.setEnabled(false);
+
+    cargarTotalFamiliasFinalizadas();
+    cargarRegiones();
+
+    cmbRegion.addActionListener(e -> cambiarRegion());
+    cmbDepartamento.addActionListener(e -> cambiarDepartamento());
+}
     public javax.swing.JPanel obtenerPanelFamilias() {
     return pnlFamiliasEncuestadas;
+}
+    
+    private FamiliasDao familiasDao = new FamiliasDao();
+
+
+private void cargarTotalFamiliasFinalizadas() {
+    try {
+        int total = familiasDao.contarFamiliasFinalizadas();
+
+        System.out.println("Total recibido desde DAO: " + total);
+
+        jTextField1.setText(String.valueOf(total));
+        jTextField1.revalidate();
+        jTextField1.repaint();
+
+        System.out.println("Valor del campo: " + jTextField1.getText());
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(
+            this,
+            "Error al consultar las familias: " + e.getMessage()
+        );
+        e.printStackTrace();
+    }
+}
+
+
+private void cargarRegiones() {
+    try {
+        cmbRegion.removeAllItems();
+        cmbRegion.addItem("Seleccione una región...");
+        cmbRegion.addItem("Todos");
+
+        for (String region : familiasDao.obtenerRegiones()) {
+            cmbRegion.addItem(region);
+        }
+
+        cmbRegion.setSelectedIndex(0);
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(
+            this,
+            "Error al cargar las regiones: " + e.getMessage()
+        );
+    }
+}
+
+private void cambiarRegion() {
+    if (cmbRegion.getSelectedIndex() <= 0) {
+        cmbDepartamento.removeAllItems();
+        cmbMunicipio.removeAllItems();
+
+        cmbDepartamento.setEnabled(false);
+        cmbMunicipio.setEnabled(false);
+        return;
+    }
+
+    String region = cmbRegion.getSelectedItem().toString();
+
+    cmbDepartamento.removeAllItems();
+    cmbMunicipio.removeAllItems();
+
+    if (region.equals("Todos")) {
+        cmbDepartamento.addItem("Todos los departamentos");
+        cmbMunicipio.addItem("Todos los municipios");
+
+        cmbDepartamento.setEnabled(false);
+        cmbMunicipio.setEnabled(false);
+        return;
+    }
+
+    try {
+        cmbDepartamento.addItem("Todos los departamentos");
+
+        for (String departamento :
+                familiasDao.obtenerDepartamentos(region)) {
+            cmbDepartamento.addItem(departamento);
+        }
+
+        cmbMunicipio.addItem("Todos los municipios");
+        cmbDepartamento.setEnabled(true);
+        cmbMunicipio.setEnabled(false);
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(
+            this,
+            "Error al cargar los departamentos: " + e.getMessage()
+        );
+    }
+}
+
+private void cambiarDepartamento() {
+    if (!cmbDepartamento.isEnabled()
+            || cmbDepartamento.getSelectedIndex() <= 0) {
+        cmbMunicipio.removeAllItems();
+        cmbMunicipio.addItem("Todos los municipios");
+        cmbMunicipio.setEnabled(false);
+        return;
+    }
+
+    String region = cmbRegion.getSelectedItem().toString();
+    String departamento = cmbDepartamento.getSelectedItem().toString();
+
+    if (departamento.equals("Todos los departamentos")) {
+        cmbMunicipio.removeAllItems();
+        cmbMunicipio.addItem("Todos los municipios");
+        cmbMunicipio.setEnabled(false);
+        return;
+    }
+
+    try {
+        cmbMunicipio.removeAllItems();
+        cmbMunicipio.addItem("Todos los municipios");
+
+        for (String municipio :
+                familiasDao.obtenerMunicipios(region, departamento)) {
+            cmbMunicipio.addItem(municipio);
+        }
+
+        cmbMunicipio.setEnabled(true);
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(
+            this,
+            "Error al cargar los municipios: " + e.getMessage()
+        );
+    }
 }
 
     /**
@@ -80,7 +223,7 @@ public class P19_pantalla_Criticodigi extends javax.swing.JFrame {
                 .addComponent(lblEnph)
                 .addGap(137, 137, 137)
                 .addComponent(lblCriticoDigitador)
-                .addContainerGap(243, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlLogosLayout.setVerticalGroup(
             pnlLogosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,7 +302,7 @@ public class P19_pantalla_Criticodigi extends javax.swing.JFrame {
         lblTotalFamilias.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblTotalFamilias.setText("Total familias encuestadas:");
 
-        lblMostrarFamilias.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        lblMostrarFamilias.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         lblMostrarFamilias.setText("Mostrar familias por:");
 
         lblRegion.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
@@ -208,21 +351,24 @@ public class P19_pantalla_Criticodigi extends javax.swing.JFrame {
                                         .addComponent(cmbDepartamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addGroup(pnlFamiliasEncuestadasLayout.createSequentialGroup()
                         .addGap(289, 289, 289)
-                        .addGroup(pnlFamiliasEncuestadasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblFamiliasEncuestadas))))
-                .addContainerGap(211, Short.MAX_VALUE))
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(330, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFamiliasEncuestadasLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnMostrarFamilias)
-                .addGap(237, 237, 237))
+                .addGroup(pnlFamiliasEncuestadasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFamiliasEncuestadasLayout.createSequentialGroup()
+                        .addComponent(btnMostrarFamilias)
+                        .addGap(237, 237, 237))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFamiliasEncuestadasLayout.createSequentialGroup()
+                        .addComponent(lblFamiliasEncuestadas)
+                        .addGap(219, 219, 219))))
         );
         pnlFamiliasEncuestadasLayout.setVerticalGroup(
             pnlFamiliasEncuestadasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlFamiliasEncuestadasLayout.createSequentialGroup()
-                .addGap(39, 39, 39)
+                .addGap(32, 32, 32)
                 .addComponent(lblFamiliasEncuestadas)
-                .addGap(33, 33, 33)
+                .addGap(40, 40, 40)
                 .addGroup(pnlFamiliasEncuestadasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTotalFamilias)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -251,9 +397,9 @@ public class P19_pantalla_Criticodigi extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pnlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(pnlFamiliasEncuestadas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(pnlLogos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(pnlLogos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -271,8 +417,96 @@ public class P19_pantalla_Criticodigi extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMostrarFamiliasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarFamiliasActionPerformed
-        // TODO add your handling code here:
-        int respuesta = javax.swing.JOptionPane.showConfirmDialog( this, "¿Está seguro?\n\n" + "Al hacerlo se transferirá la información que realizó " + "la familia en el capítulo D: Gastos Diarios.", "Confirmar transferencia", javax.swing.JOptionPane.OK_CANCEL_OPTION, javax.swing.JOptionPane.WARNING_MESSAGE ); if (respuesta == javax.swing.JOptionPane.OK_OPTION) { javax.swing.JOptionPane.showMessageDialog( this, "Has confirmado la transferencia del capítulo D: Gastos Diarios." ); }
+  try {
+        // Consultar las familias con encuesta finalizada
+        int total = familiasDao.contarFamiliasFinalizadas();
+
+        if (total == 0) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Todavía no ha finalizado ninguna familia.",
+                "Familias no disponibles",
+                JOptionPane.INFORMATION_MESSAGE
+            );
+            return;
+        }
+
+        // Obtener la región seleccionada
+        String regionMostrar =
+            (String) cmbRegion.getSelectedItem();
+
+        if (cmbRegion.getSelectedIndex() <= 0
+                || regionMostrar == null) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Debe seleccionar una región.",
+                "Aviso",
+                JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+
+        // Valores de departamento y municipio
+        String departamento = null;
+        String municipio = null;
+
+        // Si la región es "Todos", los otros filtros quedan vacíos
+        if (!regionMostrar.equalsIgnoreCase("Todos")) {
+
+            if (cmbDepartamento.getSelectedIndex() > 0) {
+                String seleccionado =
+                    cmbDepartamento.getSelectedItem().toString();
+
+                if (!seleccionado.equals("Todos los departamentos")) {
+                    departamento = seleccionado;
+                }
+            }
+
+            if (cmbMunicipio.getSelectedIndex() > 0) {
+                String seleccionado =
+                    cmbMunicipio.getSelectedItem().toString();
+
+                if (!seleccionado.equals("Todos los municipios")) {
+                    municipio = seleccionado;
+                }
+            }
+        }
+
+        // Confirmar apertura de la pantalla 20
+        int respuesta = JOptionPane.showConfirmDialog(
+            this,
+            "¿Desea consultar las familias con encuestas finalizadas?",
+            "Confirmar consulta",
+            JOptionPane.YES_NO_OPTION
+        );
+
+        if (respuesta == JOptionPane.YES_OPTION) {
+            P20_pantalla_Criticodigi pantalla =
+                new P20_pantalla_Criticodigi();
+
+            // Enviar "Todos" sin convertirlo en null
+            pantalla.configurarFiltros(
+                regionMostrar,
+                departamento,
+                municipio
+            );
+
+            pantalla.setLocationRelativeTo(this);
+            pantalla.setVisible(true);
+
+            this.dispose();
+        }
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(
+            this,
+            "No fue posible consultar las familias finalizadas: "
+                + e.getMessage(),
+            "Error",
+            JOptionPane.ERROR_MESSAGE
+        );
+    }
+       
     }//GEN-LAST:event_btnMostrarFamiliasActionPerformed
 
     private void btnGenerarInformesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarInformesActionPerformed

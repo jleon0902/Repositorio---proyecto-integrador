@@ -15,32 +15,179 @@ public class P20_pantalla_Criticodigi extends javax.swing.JFrame {
     /**
      * Creates new form P20_pantalla_Criticodigi
      */
-    public P20_pantalla_Criticodigi() {
-        initComponents();
-        javax.swing.table.DefaultTableModel modelo =
-        (javax.swing.table.DefaultTableModel) tblTablaFamiliasEncuesta.getModel();
 
-modelo.addColumn("Seleccionar");
+public P20_pantalla_Criticodigi() {
+    initComponents();
+    
+  configurarSeleccionUnica();
 
-// Configurar la sexta columna como checkbox
-tblTablaFamiliasEncuesta.getColumnModel().getColumn(5).setCellRenderer(
-        tblTablaFamiliasEncuesta.getDefaultRenderer(Boolean.class));
+tblTablaFamiliasEncuesta.setColumnSelectionAllowed(false);
+tblTablaFamiliasEncuesta.setRowSelectionAllowed(true);
+tblTablaFamiliasEncuesta.setSelectionMode(
+    javax.swing.ListSelectionModel.SINGLE_SELECTION
+);
 
-tblTablaFamiliasEncuesta.getColumnModel().getColumn(5).setCellEditor(
-        new javax.swing.DefaultCellEditor(new javax.swing.JCheckBox()));
-for (int i = 0; i < tblTablaFamiliasEncuesta.getColumnCount(); i++) {
-    javax.swing.table.TableColumn columna =
+txtRegion.setEditable(false);
+txtDepartamento.setEditable(false);
+txtMunicipio.setEditable(false);
+
+tblTablaFamiliasEncuesta.setSelectionMode(
+    javax.swing.ListSelectionModel.SINGLE_SELECTION
+);
+tblTablaFamiliasEncuesta.setRowSelectionAllowed(true);
+tblTablaFamiliasEncuesta.setColumnSelectionAllowed(false);
+    txtRegion.setEditable(false);
+    txtDepartamento.setEditable(false);
+    txtMunicipio.setEditable(false);
+
+    javax.swing.table.DefaultTableModel modelo =
+        (javax.swing.table.DefaultTableModel)
+            tblTablaFamiliasEncuesta.getModel();
+
+    // La columna 4 ya existe y es de tipo Boolean.
+    tblTablaFamiliasEncuesta.getColumnModel()
+        .getColumn(4).setCellRenderer(
+            tblTablaFamiliasEncuesta.getDefaultRenderer(Boolean.class));
+   
+
+    configurarSeleccionUnica();
+
+    for (int i = 0;
+            i < tblTablaFamiliasEncuesta.getColumnCount(); i++) {
+
+        javax.swing.table.TableColumn columna =
             tblTablaFamiliasEncuesta.getColumnModel().getColumn(i);
 
-    java.awt.FontMetrics metricas =
-            tblTablaFamiliasEncuesta.getFontMetrics(tblTablaFamiliasEncuesta.getTableHeader().getFont());
+        java.awt.FontMetrics metricas =
+            tblTablaFamiliasEncuesta.getFontMetrics(
+                tblTablaFamiliasEncuesta.getTableHeader().getFont());
 
-    int anchoTitulo = metricas.stringWidth(
+        int anchoTitulo = metricas.stringWidth(
             columna.getHeaderValue().toString()) + 20;
 
-    columna.setPreferredWidth(anchoTitulo);
-}
+        columna.setPreferredWidth(anchoTitulo);
     }
+}
+
+
+public void configurarFiltros(
+        String region, String departamento, String municipio) {
+
+    // Mostrar los filtros seleccionados
+    txtRegion.setText(region == null ? "" : region);
+    txtDepartamento.setText(
+        departamento == null ? "" : departamento
+    );
+    txtMunicipio.setText(
+        municipio == null ? "" : municipio
+    );
+
+    // Para la consulta, "Todos" significa no filtrar por región
+    String regionFiltro =
+        "Todos".equalsIgnoreCase(region) ? null : region;
+
+    cargarFamiliasFinalizadas(
+        regionFiltro,
+        departamento,
+        municipio
+    );
+}
+
+
+private void cargarFamiliasFinalizadas(
+        String region, String departamento, String municipio) {
+
+    modelo.FamiliasDao dao = new modelo.FamiliasDao();
+
+    javax.swing.table.DefaultTableModel modeloTabla =
+        (javax.swing.table.DefaultTableModel)
+            tblTablaFamiliasEncuesta.getModel();
+
+    modeloTabla.setRowCount(0);
+
+    try {
+        java.util.List<Object[]> familias =
+            dao.obtenerFamiliasFinalizadas(
+                region, departamento, municipio);
+
+        int numero = 1;
+
+        for (Object[] familia : familias) {
+            modeloTabla.addRow(new Object[]{
+                numero++,
+                familia[0],
+                familia[1],
+                familia[2],
+                Boolean.FALSE
+            });
+        }
+
+        if (familias.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(
+                this,
+                "No se encontraron familias con encuestas finalizadas "
+                + "para los filtros seleccionados.");
+        }
+
+    } catch (java.sql.SQLException e) {
+        javax.swing.JOptionPane.showMessageDialog(
+            this,
+            "Error al cargar las familias: " + e.getMessage());
+    }
+}
+
+
+
+
+
+
+
+
+private void configurarSeleccionUnica() {
+
+    javax.swing.table.DefaultTableModel modelo =
+        new javax.swing.table.DefaultTableModel(
+            new Object[][] {},
+            new String[] {
+                "#",
+                "Número vivienda",
+                "Responsable del hogar",
+                "Estado de la encuesta",
+                ""
+            }
+        ) {
+            @Override
+            public Class<?> getColumnClass(int columna) {
+                if (columna == 4) {
+                    return Boolean.class;
+                }
+                return Object.class;
+            }
+
+            @Override
+            public void setValueAt(Object valor, int fila, int columna) {
+
+                if (columna == 4 && Boolean.TRUE.equals(valor)) {
+                    for (int i = 0; i < getRowCount(); i++) {
+                        if (i != fila) {
+                            super.setValueAt(Boolean.FALSE, i, 4);
+                        }
+                    }
+                }
+
+                super.setValueAt(valor, fila, columna);
+            }
+        };
+
+    tblTablaFamiliasEncuesta.setModel(modelo);
+}
+
+
+
+
+
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -51,11 +198,6 @@ for (int i = 0; i < tblTablaFamiliasEncuesta.getColumnCount(); i++) {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnlMenu = new javax.swing.JPanel();
-        lblMenu = new javax.swing.JLabel();
-        btnFamiliasEncuestadas = new javax.swing.JButton();
-        btnCerrarSesion = new javax.swing.JButton();
-        btnGenerarInformes = new javax.swing.JButton();
         pnlFamiliasEncuestadas = new javax.swing.JPanel();
         btnVerFamilia = new javax.swing.JButton();
         lblFamiliasEncuestadas = new javax.swing.JLabel();
@@ -67,59 +209,13 @@ for (int i = 0; i < tblTablaFamiliasEncuesta.getColumnCount(); i++) {
         txtMunicipio = new javax.swing.JTextField();
         txtDepartamento = new javax.swing.JTextField();
         txtRegion = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
         pnlLogos = new javax.swing.JPanel();
         lblDane = new javax.swing.JLabel();
         lblEnph = new javax.swing.JLabel();
         lblCriticoDigitador = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        pnlMenu.setBackground(new java.awt.Color(227, 223, 223));
-        pnlMenu.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 1, 0, new java.awt.Color(0, 0, 0)));
-
-        lblMenu.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        lblMenu.setText("Menú");
-
-        btnFamiliasEncuestadas.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btnFamiliasEncuestadas.setText("Familias encuestadas");
-
-        btnCerrarSesion.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btnCerrarSesion.setText("Cerrar sesión");
-        btnCerrarSesion.addActionListener(this::btnCerrarSesionActionPerformed);
-
-        btnGenerarInformes.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btnGenerarInformes.setText("Generar informes");
-
-        javax.swing.GroupLayout pnlMenuLayout = new javax.swing.GroupLayout(pnlMenu);
-        pnlMenu.setLayout(pnlMenuLayout);
-        pnlMenuLayout.setHorizontalGroup(
-            pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlMenuLayout.createSequentialGroup()
-                .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnFamiliasEncuestadas, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(pnlMenuLayout.createSequentialGroup()
-                            .addGap(93, 93, 93)
-                            .addComponent(lblMenu))
-                        .addGroup(pnlMenuLayout.createSequentialGroup()
-                            .addGap(21, 21, 21)
-                            .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(btnGenerarInformes, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(43, Short.MAX_VALUE))
-        );
-        pnlMenuLayout.setVerticalGroup(
-            pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlMenuLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(lblMenu)
-                .addGap(26, 26, 26)
-                .addComponent(btnFamiliasEncuestadas)
-                .addGap(18, 18, 18)
-                .addComponent(btnGenerarInformes)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 213, Short.MAX_VALUE)
-                .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18))
-        );
 
         pnlFamiliasEncuestadas.setBackground(new java.awt.Color(255, 255, 255));
         pnlFamiliasEncuestadas.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 1, 1, new java.awt.Color(0, 0, 0)));
@@ -163,6 +259,10 @@ for (int i = 0; i < tblTablaFamiliasEncuesta.getColumnCount(); i++) {
         spTablaFamiliasEncuesta.setViewportView(tblTablaFamiliasEncuesta);
         tblTablaFamiliasEncuesta.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
+        jButton1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jButton1.setText("Volver");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
+
         javax.swing.GroupLayout pnlFamiliasEncuestadasLayout = new javax.swing.GroupLayout(pnlFamiliasEncuestadas);
         pnlFamiliasEncuestadas.setLayout(pnlFamiliasEncuestadasLayout);
         pnlFamiliasEncuestadasLayout.setHorizontalGroup(
@@ -195,7 +295,9 @@ for (int i = 0; i < tblTablaFamiliasEncuesta.getColumnCount(); i++) {
                         .addGap(35, 35, 35)
                         .addComponent(spTablaFamiliasEncuesta))
                     .addGroup(pnlFamiliasEncuestadasLayout.createSequentialGroup()
-                        .addContainerGap(937, Short.MAX_VALUE)
+                        .addGap(59, 59, 59)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnVerFamilia)))
                 .addGap(37, 37, 37))
         );
@@ -222,7 +324,9 @@ for (int i = 0; i < tblTablaFamiliasEncuesta.getColumnCount(); i++) {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(spTablaFamiliasEncuesta, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnVerFamilia)
+                .addGroup(pnlFamiliasEncuestadasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnVerFamilia)
+                    .addComponent(jButton1))
                 .addGap(37, 37, 37))
         );
 
@@ -268,7 +372,6 @@ for (int i = 0; i < tblTablaFamiliasEncuesta.getColumnCount(); i++) {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnlLogos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(pnlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(pnlFamiliasEncuestadas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -276,24 +379,55 @@ for (int i = 0; i < tblTablaFamiliasEncuesta.getColumnCount(); i++) {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pnlLogos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlFamiliasEncuestadas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(pnlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addComponent(pnlFamiliasEncuestadas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVerFamiliaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerFamiliaActionPerformed
-        // TODO add your handling code here:
-        int respuesta = javax.swing.JOptionPane.showConfirmDialog( this, "¿Está seguro?\n\n" + "Al hacerlo se transferirá la información que realizó " + "la familia en el capítulo D: Gastos Diarios.", "Confirmar transferencia", javax.swing.JOptionPane.OK_CANCEL_OPTION, javax.swing.JOptionPane.WARNING_MESSAGE ); if (respuesta == javax.swing.JOptionPane.OK_OPTION) { javax.swing.JOptionPane.showMessageDialog( this, "Has confirmado la transferencia del capítulo D: Gastos Diarios." ); }
+int filaSeleccionada =
+        tblTablaFamiliasEncuesta.getSelectedRow();
+
+    if (filaSeleccionada == -1) {
+        javax.swing.JOptionPane.showMessageDialog(
+            this,
+            "Selecciona una familia primero.",
+            "Familia no seleccionada",
+            javax.swing.JOptionPane.WARNING_MESSAGE
+        );
+        return;
+    }
+
+    int respuesta = javax.swing.JOptionPane.showConfirmDialog(
+        this,
+        "¿Desea ver la información de la familia seleccionada?",
+        "Confirmar",
+        javax.swing.JOptionPane.YES_NO_OPTION
+    );
+
+    if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
+
+        P21_pantalla_Criticodigi pantalla =
+            new P21_pantalla_Criticodigi();
+
+        pantalla.setLocationRelativeTo(this);
+        pantalla.setVisible(true);
+
+        this.dispose();
+    }
     }//GEN-LAST:event_btnVerFamiliaActionPerformed
 
-    private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnCerrarSesionActionPerformed
+            P19_pantalla_Criticodigi pantalla =
+            new P19_pantalla_Criticodigi();
+
+    pantalla.setLocationRelativeTo(this);
+    pantalla.setVisible(true);
+
+    this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -321,21 +455,17 @@ for (int i = 0; i < tblTablaFamiliasEncuesta.getColumnCount(); i++) {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCerrarSesion;
-    private javax.swing.JButton btnFamiliasEncuestadas;
-    private javax.swing.JButton btnGenerarInformes;
     private javax.swing.JButton btnVerFamilia;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel lblCriticoDigitador;
     private javax.swing.JLabel lblDane;
     private javax.swing.JLabel lblDepartamento;
     private javax.swing.JLabel lblEnph;
     private javax.swing.JLabel lblFamiliasEncuestadas;
-    private javax.swing.JLabel lblMenu;
     private javax.swing.JLabel lblMunicipio;
     private javax.swing.JLabel lblRegion;
     private javax.swing.JPanel pnlFamiliasEncuestadas;
     private javax.swing.JPanel pnlLogos;
-    private javax.swing.JPanel pnlMenu;
     private javax.swing.JScrollPane spTablaFamiliasEncuesta;
     private javax.swing.JTable tblTablaFamiliasEncuesta;
     private javax.swing.JTextField txtDepartamento;

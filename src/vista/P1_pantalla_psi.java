@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package vista;
-
+import javax.swing.JOptionPane;
 /**
  *
  * @author VALENTINA
@@ -81,7 +81,7 @@ public P1_pantalla_psi(String nombreRepresentante, int idEncuesta) {
         lblBienvenida = new javax.swing.JLabel();
         lblDescicion = new javax.swing.JLabel();
         btnRegistrarCapitulo = new javax.swing.JButton();
-        btnRevisarEncuesta = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -292,9 +292,8 @@ public P1_pantalla_psi(String nombreRepresentante, int idEncuesta) {
         btnRegistrarCapitulo.setBorderPainted(false);
         btnRegistrarCapitulo.addActionListener(this::btnRegistrarCapituloActionPerformed);
 
-        btnRevisarEncuesta.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btnRevisarEncuesta.setText("Revisar encuesta");
-        btnRevisarEncuesta.addActionListener(this::btnRevisarEncuestaActionPerformed);
+        jButton2.setText("Cerra sesión");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
 
         javax.swing.GroupLayout pnlBienvenidaLayout = new javax.swing.GroupLayout(pnlBienvenida);
         pnlBienvenida.setLayout(pnlBienvenidaLayout);
@@ -307,11 +306,17 @@ public P1_pantalla_psi(String nombreRepresentante, int idEncuesta) {
                         .addComponent(lblBienvenida)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(pnlBienvenidaLayout.createSequentialGroup()
-                        .addGroup(pnlBienvenidaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnRevisarEncuesta, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnRegistrarCapitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblDescicion))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addComponent(lblDescicion)
+                        .addGap(0, 571, Short.MAX_VALUE))))
+            .addGroup(pnlBienvenidaLayout.createSequentialGroup()
+                .addGroup(pnlBienvenidaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlBienvenidaLayout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(btnRegistrarCapitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlBienvenidaLayout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         pnlBienvenidaLayout.setVerticalGroup(
             pnlBienvenidaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -320,11 +325,11 @@ public P1_pantalla_psi(String nombreRepresentante, int idEncuesta) {
                 .addComponent(lblBienvenida)
                 .addGap(18, 18, 18)
                 .addComponent(lblDescicion)
-                .addGap(32, 32, 32)
-                .addComponent(btnRegistrarCapitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnRevisarEncuesta, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(163, Short.MAX_VALUE))
+                .addGap(44, 44, 44)
+                .addComponent(btnRegistrarCapitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addGap(27, 27, 27))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -355,139 +360,108 @@ public P1_pantalla_psi(String nombreRepresentante, int idEncuesta) {
 
     private void btnRegistrarCapituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarCapituloActionPerformed
         // TODO add your handling code here:
-   
- if (cedulaRepresentante == null
-            || cedulaRepresentante.trim().isEmpty()) {
-
-        javax.swing.JOptionPane.showMessageDialog(
-                this,
-                "No se recibió la cédula del representante.",
-                "Error",
-                javax.swing.JOptionPane.ERROR_MESSAGE
-        );
-        return;
-    }
-
-    try {
-        modelo.RepresentanteDAO dao =
-                new modelo.RepresentanteDAO();
-
-        idEncuesta =
-                dao.obtenerIdEncuestaPorCedula(cedulaRepresentante);
-
-    } catch (java.sql.SQLException e) {
-
-        javax.swing.JOptionPane.showMessageDialog(
-                this,
-                "Error al consultar la encuesta en Oracle: "
-                        + e.getMessage(),
-                "Error",
-                javax.swing.JOptionPane.ERROR_MESSAGE
-        );
-        e.printStackTrace();
-        return;
-    }
-
-    if (idEncuesta <= 0) {
-        javax.swing.JOptionPane.showMessageDialog(
-                this,
-                "La cédula " + cedulaRepresentante
-                        + " no tiene ninguna encuesta asignada.",
-                "Encuesta no encontrada",
-                javax.swing.JOptionPane.WARNING_MESSAGE
-        );
-        return;
-    }
-
-    javax.swing.JSpinner selector =
-            new javax.swing.JSpinner(
-                    new javax.swing.SpinnerNumberModel(1, 1, 100, 1)
-            );
-
-    javax.swing.JPanel panel =
-            new javax.swing.JPanel(new java.awt.GridLayout(2, 1, 5, 10));
-
-    panel.add(new javax.swing.JLabel(
-            "¿Cuántos productos desea registrar?"
-    ));
-    panel.add(selector);
-
-    Object[] botones = {"Continuar", "Cancelar"};
-
-    int respuesta = javax.swing.JOptionPane.showOptionDialog(
+ if (cedulaRepresentante == null || cedulaRepresentante.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(
             this,
-            panel,
-            "Registrar capítulo: Gastos Diarios",
-            javax.swing.JOptionPane.DEFAULT_OPTION,
-            javax.swing.JOptionPane.QUESTION_MESSAGE,
-            null,
-            botones,
-            botones[0]
-    );
-
-    if (respuesta == 0) {
-
-    int cantidad = (int) selector.getValue();
-
-    P3_pantalla_psi pantalla =
-            new P3_pantalla_psi(cantidad, idEncuesta);
-
-    pantalla.setLocationRelativeTo(null);
-    pantalla.setVisible(true);
-
-    // Ocultar la pantalla 1 sin cerrarla
-    this.setVisible(false);
-    }
-    }//GEN-LAST:event_btnRegistrarCapituloActionPerformed
-
-    private void btnRevisarEncuestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRevisarEncuestaActionPerformed
-    if (cedulaRepresentante == null
-            || cedulaRepresentante.trim().isEmpty()) {
-
-        javax.swing.JOptionPane.showMessageDialog(
-                this,
-                "No se recibió la cédula del representante."
+            "No se encontró la cédula del representante. Inicia sesión nuevamente.",
+            "Error",
+            JOptionPane.ERROR_MESSAGE
         );
         return;
     }
 
-    try {
-        modelo.RepresentanteDAO dao =
-                new modelo.RepresentanteDAO();
+    modelo.RepresentanteDAO dao = new modelo.RepresentanteDAO();
 
-        idEncuesta =
-                dao.obtenerIdEncuestaPorCedula(cedulaRepresentante);
+    try {
+        // Buscar la encuesta del representante
+        idEncuesta = dao.obtenerIdEncuestaPorCedula(cedulaRepresentante);
 
         if (idEncuesta <= 0) {
-            javax.swing.JOptionPane.showMessageDialog(
-                    this,
-                    "No se encontró una encuesta para este representante."
+            JOptionPane.showMessageDialog(
+                this,
+                "No se encontró una encuesta para este representante.",
+                "Encuesta no encontrada",
+                JOptionPane.WARNING_MESSAGE
             );
             return;
         }
 
-        // Abrir la pantalla 5 pasando los datos del representante
-        // y el identificador de su encuesta.
+        // Verificar si la encuesta ya cumplió los 14 días
+        boolean encuestaFinalizada =
+                dao.verificarYFinalizarEncuesta(idEncuesta);
 
-P5_pantalla_psi pantalla = new P5_pantalla_psi(
-        idEncuesta, cedulaRepresentante, this);
+        if (encuestaFinalizada) {
+            JOptionPane.showMessageDialog(
+                this,
+                "La encuesta ha finalizado porque se cumplió el plazo de 14 días. "
+                + "Ya no puedes registrar más productos.",
+                "Encuesta finalizada",
+                JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
 
+        // Preguntar cuántos productos va a registrar
+        javax.swing.JSpinner selectorCantidad =
+                new javax.swing.JSpinner(
+                    new javax.swing.SpinnerNumberModel(1, 1, 100, 1)
+                );
 
-        pantalla.setLocationRelativeTo(this);
-        pantalla.setVisible(true);
+        int opcion = JOptionPane.showConfirmDialog(
+            this,
+            selectorCantidad,
+            "¿Cuántos productos deseas registrar?",
+            JOptionPane.OK_CANCEL_OPTION,
+            JOptionPane.QUESTION_MESSAGE
+        );
 
-        // Ocultar la pantalla 1 sin cerrarla.
+        if (opcion != JOptionPane.OK_OPTION) {
+            return;
+        }
+
+        int cantidad = (Integer) selectorCantidad.getValue();
+
+        // Abrir la pantalla de registro de productos
+        P3_pantalla_psi pantallaGastos =
+                new P3_pantalla_psi(cantidad, idEncuesta);
+
+        pantallaGastos.setLocationRelativeTo(this);
+        pantallaGastos.setVisible(true);
+
         this.setVisible(false);
 
     } catch (java.sql.SQLException e) {
-        javax.swing.JOptionPane.showMessageDialog(
-                this,
-                "Error al consultar la encuesta: " + e.getMessage(),
-                "Error",
-                javax.swing.JOptionPane.ERROR_MESSAGE
+        JOptionPane.showMessageDialog(
+            this,
+            "Ocurrió un error al consultar la encuesta:\n" + e.getMessage(),
+            "Error de base de datos",
+            JOptionPane.ERROR_MESSAGE
         );
+
+        e.printStackTrace();
     }
-    }//GEN-LAST:event_btnRevisarEncuestaActionPerformed
+    }//GEN-LAST:event_btnRegistrarCapituloActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        
+         int respuesta = JOptionPane.showConfirmDialog(
+            this,
+            "¿Deseas cerrar sesión?",
+            "Cerrar sesión",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE
+    );
+
+    if (respuesta == JOptionPane.YES_OPTION) {
+
+        Iniciar_Sesion pantalla = new Iniciar_Sesion();
+        pantalla.setLocationRelativeTo(null);
+        pantalla.setVisible(true);
+
+        this.dispose();
+    }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -516,8 +490,8 @@ P5_pantalla_psi pantalla = new P5_pantalla_psi(
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegistrarCapitulo;
-    private javax.swing.JButton btnRevisarEncuesta;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

@@ -29,11 +29,6 @@ public class P21_pantalla_Criticodigi extends javax.swing.JFrame {
     private void initComponents() {
 
         jTextField6 = new javax.swing.JTextField();
-        pnlMenu = new javax.swing.JPanel();
-        lblMenu = new javax.swing.JLabel();
-        btnFamiliasEncuestadas = new javax.swing.JButton();
-        btnCerrarSesion = new javax.swing.JButton();
-        btnGenerarInformes = new javax.swing.JButton();
         pnlVerFamilia = new javax.swing.JPanel();
         btnObservarRespuestas = new javax.swing.JButton();
         lblVerFamilia = new javax.swing.JLabel();
@@ -55,59 +50,13 @@ public class P21_pantalla_Criticodigi extends javax.swing.JFrame {
         txtCedula = new javax.swing.JTextField();
         txtTelefono = new javax.swing.JTextField();
         txtCorreo = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
         pnlLogos = new javax.swing.JPanel();
         lblDane = new javax.swing.JLabel();
         lblEnph = new javax.swing.JLabel();
         lblCriticoDigitador = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        pnlMenu.setBackground(new java.awt.Color(227, 223, 223));
-        pnlMenu.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 1, 0, new java.awt.Color(0, 0, 0)));
-
-        lblMenu.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        lblMenu.setText("Menú");
-
-        btnFamiliasEncuestadas.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btnFamiliasEncuestadas.setText("Familias encuestadas");
-
-        btnCerrarSesion.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btnCerrarSesion.setText("Cerrar sesión");
-        btnCerrarSesion.addActionListener(this::btnCerrarSesionActionPerformed);
-
-        btnGenerarInformes.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btnGenerarInformes.setText("Generar informes");
-
-        javax.swing.GroupLayout pnlMenuLayout = new javax.swing.GroupLayout(pnlMenu);
-        pnlMenu.setLayout(pnlMenuLayout);
-        pnlMenuLayout.setHorizontalGroup(
-            pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlMenuLayout.createSequentialGroup()
-                .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnFamiliasEncuestadas, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(pnlMenuLayout.createSequentialGroup()
-                            .addGap(93, 93, 93)
-                            .addComponent(lblMenu))
-                        .addGroup(pnlMenuLayout.createSequentialGroup()
-                            .addGap(21, 21, 21)
-                            .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(btnGenerarInformes, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(43, Short.MAX_VALUE))
-        );
-        pnlMenuLayout.setVerticalGroup(
-            pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlMenuLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(lblMenu)
-                .addGap(26, 26, 26)
-                .addComponent(btnFamiliasEncuestadas)
-                .addGap(18, 18, 18)
-                .addComponent(btnGenerarInformes)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 213, Short.MAX_VALUE)
-                .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18))
-        );
 
         pnlVerFamilia.setBackground(new java.awt.Color(255, 255, 255));
         pnlVerFamilia.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 1, 1, new java.awt.Color(0, 0, 0)));
@@ -150,6 +99,10 @@ public class P21_pantalla_Criticodigi extends javax.swing.JFrame {
 
         txtTelefono.addActionListener(this::txtTelefonoActionPerformed);
 
+        jButton1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jButton1.setText("Volver");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
+
         javax.swing.GroupLayout pnlVerFamiliaLayout = new javax.swing.GroupLayout(pnlVerFamilia);
         pnlVerFamilia.setLayout(pnlVerFamiliaLayout);
         pnlVerFamiliaLayout.setHorizontalGroup(
@@ -162,89 +115,104 @@ public class P21_pantalla_Criticodigi extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addGroup(pnlVerFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlVerFamiliaLayout.createSequentialGroup()
-                        .addGroup(pnlVerFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(pnlVerFamiliaLayout.createSequentialGroup()
-                                .addComponent(lblCorreo)
-                                .addGap(108, 108, 108))
-                            .addComponent(lblCedula, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblTelefono, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(6, 6, 6)
-                        .addGroup(pnlVerFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
-                            .addComponent(txtTelefono)
-                            .addComponent(txtCedula))
+                        .addGap(11, 11, 11)
+                        .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnObservarRespuestas)
                         .addGap(35, 35, 35))
                     .addGroup(pnlVerFamiliaLayout.createSequentialGroup()
                         .addGroup(pnlVerFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblNumeroVivienda)
-                            .addComponent(lblUbicacion)
-                            .addComponent(lblDireccion)
-                            .addComponent(lblBarrio)
+                            .addGroup(pnlVerFamiliaLayout.createSequentialGroup()
+                                .addGroup(pnlVerFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblNumeroVivienda)
+                                    .addComponent(lblUbicacion)
+                                    .addComponent(lblDireccion)
+                                    .addComponent(lblBarrio)
+                                    .addGroup(pnlVerFamiliaLayout.createSequentialGroup()
+                                        .addGap(195, 195, 195)
+                                        .addGroup(pnlVerFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtNumeroVivienda, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtBarrio, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(pnlVerFamiliaLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(lblEstrato)
+                                .addGap(140, 140, 140)
+                                .addComponent(txtEstrato, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(136, 136, 136)))
+                        .addGroup(pnlVerFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlVerFamiliaLayout.createSequentialGroup()
+                                .addGroup(pnlVerFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(pnlVerFamiliaLayout.createSequentialGroup()
+                                        .addComponent(lblCorreo)
+                                        .addGap(108, 108, 108))
+                                    .addComponent(lblCedula, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblTelefono, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addGap(6, 6, 6)
+                                .addGroup(pnlVerFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(txtCorreo)
+                                    .addComponent(txtTelefono)
+                                    .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(pnlVerFamiliaLayout.createSequentialGroup()
                                 .addComponent(lblRepresentanteHogar)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtRepresentanteHogar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlVerFamiliaLayout.createSequentialGroup()
-                                .addGap(195, 195, 195)
-                                .addGroup(pnlVerFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtNumeroVivienda, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtBarrio, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlVerFamiliaLayout.createSequentialGroup()
-                        .addComponent(lblEstrato)
-                        .addGap(140, 140, 140)
-                        .addComponent(txtEstrato, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(515, 515, 515))))
+                                .addComponent(txtRepresentanteHogar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(85, 85, 85))))
         );
         pnlVerFamiliaLayout.setVerticalGroup(
             pnlVerFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlVerFamiliaLayout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addComponent(lblVerFamilia)
-                .addGap(56, 56, 56)
-                .addGroup(pnlVerFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNumeroVivienda)
-                    .addComponent(txtNumeroVivienda, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6)
-                .addGroup(pnlVerFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblUbicacion)
-                    .addComponent(txtUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(7, 7, 7)
-                .addGroup(pnlVerFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDireccion)
-                    .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlVerFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblBarrio)
-                    .addComponent(txtBarrio, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlVerFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblEstrato)
-                    .addComponent(txtEstrato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnlVerFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlVerFamiliaLayout.createSequentialGroup()
-                        .addComponent(lblRepresentanteHogar)
-                        .addGap(7, 7, 7)
+                        .addGap(56, 56, 56)
                         .addGroup(pnlVerFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblCedula)
-                            .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(20, 20, 20)
+                            .addComponent(lblNumeroVivienda)
+                            .addComponent(txtNumeroVivienda, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(6, 6, 6)
+                        .addGroup(pnlVerFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblUbicacion)
+                            .addComponent(txtUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(7, 7, 7)
+                        .addGroup(pnlVerFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtDireccion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblDireccion))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnlVerFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblBarrio)
+                            .addComponent(txtBarrio, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnlVerFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblEstrato)
+                            .addComponent(txtEstrato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                        .addGroup(pnlVerFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnObservarRespuestas)
+                            .addComponent(jButton1))
+                        .addGap(87, 87, 87))
+                    .addGroup(pnlVerFamiliaLayout.createSequentialGroup()
+                        .addGap(48, 48, 48)
                         .addGroup(pnlVerFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlVerFamiliaLayout.createSequentialGroup()
-                                .addComponent(lblTelefono)
-                                .addGap(18, 18, 18)
-                                .addGroup(pnlVerFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblCorreo)
-                                    .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnObservarRespuestas)))
-                            .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(txtRepresentanteHogar, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(17, 17, 17))
+                                .addComponent(lblRepresentanteHogar)
+                                .addGap(7, 7, 7)
+                                .addGroup(pnlVerFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtCedula, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblCedula))
+                                .addGap(20, 20, 20)
+                                .addGroup(pnlVerFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pnlVerFamiliaLayout.createSequentialGroup()
+                                        .addComponent(lblTelefono)
+                                        .addGap(18, 18, 18)
+                                        .addGroup(pnlVerFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(lblCorreo)
+                                            .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtRepresentanteHogar, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pnlLogos.setBackground(new java.awt.Color(255, 235, 229));
@@ -289,7 +257,6 @@ public class P21_pantalla_Criticodigi extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnlLogos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(pnlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(pnlVerFamilia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -297,23 +264,24 @@ public class P21_pantalla_Criticodigi extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pnlLogos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlVerFamilia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(pnlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addComponent(pnlVerFamilia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCerrarSesionActionPerformed
-
     private void btnObservarRespuestasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObservarRespuestasActionPerformed
+
+
         // TODO add your handling code here:
-        int respuesta = javax.swing.JOptionPane.showConfirmDialog( this, "¿Está seguro?\n\n" + "Al hacerlo se transferirá la información que realizó " + "la familia en el capítulo D: Gastos Diarios.", "Confirmar transferencia", javax.swing.JOptionPane.OK_CANCEL_OPTION, javax.swing.JOptionPane.WARNING_MESSAGE ); if (respuesta == javax.swing.JOptionPane.OK_OPTION) { javax.swing.JOptionPane.showMessageDialog( this, "Has confirmado la transferencia del capítulo D: Gastos Diarios." ); }
+         P22_pantalla_Criticodigi pantalla =
+            new P22_pantalla_Criticodigi();
+
+    pantalla.setLocationRelativeTo(this);
+    pantalla.setVisible(true);
+
+    this.dispose();
+        
     }//GEN-LAST:event_btnObservarRespuestasActionPerformed
 
     private void txtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoActionPerformed
@@ -323,6 +291,20 @@ public class P21_pantalla_Criticodigi extends javax.swing.JFrame {
     private void txtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCedulaActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+      
+    P20_pantalla_Criticodigi pantalla =
+            new P20_pantalla_Criticodigi();
+
+    pantalla.setLocationRelativeTo(this);
+    pantalla.setVisible(true);
+
+    this.dispose();  
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -350,10 +332,8 @@ public class P21_pantalla_Criticodigi extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCerrarSesion;
-    private javax.swing.JButton btnFamiliasEncuestadas;
-    private javax.swing.JButton btnGenerarInformes;
     private javax.swing.JButton btnObservarRespuestas;
+    private javax.swing.JButton jButton1;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JLabel lblBarrio;
     private javax.swing.JLabel lblCedula;
@@ -363,14 +343,12 @@ public class P21_pantalla_Criticodigi extends javax.swing.JFrame {
     private javax.swing.JLabel lblDireccion;
     private javax.swing.JLabel lblEnph;
     private javax.swing.JLabel lblEstrato;
-    private javax.swing.JLabel lblMenu;
     private javax.swing.JLabel lblNumeroVivienda;
     private javax.swing.JLabel lblRepresentanteHogar;
     private javax.swing.JLabel lblTelefono;
     private javax.swing.JLabel lblUbicacion;
     private javax.swing.JLabel lblVerFamilia;
     private javax.swing.JPanel pnlLogos;
-    private javax.swing.JPanel pnlMenu;
     private javax.swing.JPanel pnlVerFamilia;
     private javax.swing.JTextField txtBarrio;
     private javax.swing.JTextField txtCedula;

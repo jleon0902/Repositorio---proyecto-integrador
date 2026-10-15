@@ -3,7 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package vista;
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 /**
  *
  * @author VALENTINA
@@ -80,6 +84,8 @@ public class P24_pantalla_Criticodigi extends javax.swing.JFrame {
     repaint();
         
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -96,7 +102,6 @@ public class P24_pantalla_Criticodigi extends javax.swing.JFrame {
         lblCriticoDigitador = new javax.swing.JLabel();
         pnlResumenGasto = new javax.swing.JPanel();
         lblResumenGasto = new javax.swing.JLabel();
-        lblSeleccioneInforme = new javax.swing.JLabel();
         lblGastoTotal = new javax.swing.JLabel();
         lblGastoTotalPromedio = new javax.swing.JLabel();
         lblCantidadPromedioProductos = new javax.swing.JLabel();
@@ -111,7 +116,6 @@ public class P24_pantalla_Criticodigi extends javax.swing.JFrame {
         txtGastoTotal = new javax.swing.JTextField();
         txtDiaMayorGasto = new javax.swing.JTextField();
         txtDiaMenorGasto = new javax.swing.JTextField();
-        txtInforme = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -158,9 +162,6 @@ public class P24_pantalla_Criticodigi extends javax.swing.JFrame {
 
         lblResumenGasto.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
         lblResumenGasto.setText("Resumen del gasto");
-
-        lblSeleccioneInforme.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        lblSeleccioneInforme.setText("Seleccione el informe que desea generar:");
 
         lblGastoTotal.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblGastoTotal.setText("Gasto promedio por día:");
@@ -221,26 +222,21 @@ public class P24_pantalla_Criticodigi extends javax.swing.JFrame {
                                                 .addComponent(lblDiaMayorGasto)
                                                 .addComponent(lblDiaMenorGasto)
                                                 .addComponent(lblDistribucionGasto))
-                                            .addGap(78, 78, 78)
+                                            .addGap(65, 65, 65)
                                             .addGroup(pnlResumenGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(txtDiaMenorGasto, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(txtDiaMayorGasto, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(txtCantidadPromedioProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGroup(pnlResumenGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                .addComponent(txtCantidadPromedioProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(txtDiaMenorGasto, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(pnlResumenGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addGroup(pnlResumenGastoLayout.createSequentialGroup()
-                                                .addComponent(lblSeleccioneInforme)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(txtInforme, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlResumenGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addGroup(pnlResumenGastoLayout.createSequentialGroup()
-                                                    .addComponent(lblGastoTotalPromedio)
-                                                    .addGap(139, 139, 139)
-                                                    .addComponent(txtGastoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGroup(pnlResumenGastoLayout.createSequentialGroup()
-                                                    .addComponent(lblGastoTotal)
-                                                    .addGap(126, 126, 126)
-                                                    .addComponent(txtGastoPromedioDia, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                                .addComponent(lblGastoTotalPromedio)
+                                                .addGap(139, 139, 139)
+                                                .addComponent(txtGastoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(pnlResumenGastoLayout.createSequentialGroup()
+                                                .addComponent(lblGastoTotal)
+                                                .addGap(126, 126, 126)
+                                                .addComponent(txtGastoPromedioDia, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 312, Short.MAX_VALUE)))
                 .addComponent(scrResumenGasto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -249,25 +245,18 @@ public class P24_pantalla_Criticodigi extends javax.swing.JFrame {
             .addGroup(pnlResumenGastoLayout.createSequentialGroup()
                 .addGap(44, 44, 44)
                 .addComponent(lblResumenGasto)
-                .addGap(21, 21, 21)
+                .addGap(63, 63, 63)
                 .addGroup(pnlResumenGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblSeleccioneInforme)
-                    .addComponent(txtInforme, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(pnlResumenGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlResumenGastoLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(pnlResumenGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblGastoTotal)
-                            .addComponent(txtGastoPromedioDia, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(20, 20, 20)
-                        .addComponent(lblGastoTotalPromedio)
-                        .addGap(23, 23, 23)
-                        .addComponent(lblCantidadPromedioProductos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlResumenGastoLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtGastoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtCantidadPromedioProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(lblGastoTotal)
+                    .addComponent(txtGastoPromedioDia, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(17, 17, 17)
+                .addGroup(pnlResumenGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblGastoTotalPromedio)
+                    .addComponent(txtGastoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(17, 17, 17)
+                .addGroup(pnlResumenGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCantidadPromedioProductos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCantidadPromedioProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(pnlResumenGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDiaMayorGasto)
@@ -300,7 +289,7 @@ public class P24_pantalla_Criticodigi extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pnlLogos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(pnlResumenGasto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(198, 198, 198))
         );
@@ -412,7 +401,6 @@ public class P24_pantalla_Criticodigi extends javax.swing.JFrame {
     private javax.swing.JLabel lblGastoTotal;
     private javax.swing.JLabel lblGastoTotalPromedio;
     private javax.swing.JLabel lblResumenGasto;
-    private javax.swing.JLabel lblSeleccioneInforme;
     private javax.swing.JPanel pnlGrafica;
     private javax.swing.JPanel pnlLogos;
     private javax.swing.JPanel pnlResumenGasto;
@@ -422,6 +410,5 @@ public class P24_pantalla_Criticodigi extends javax.swing.JFrame {
     private javax.swing.JTextField txtDiaMenorGasto;
     private javax.swing.JTextField txtGastoPromedioDia;
     private javax.swing.JTextField txtGastoTotal;
-    private javax.swing.JTextField txtInforme;
     // End of variables declaration//GEN-END:variables
 }

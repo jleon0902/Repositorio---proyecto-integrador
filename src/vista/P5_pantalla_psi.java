@@ -68,7 +68,12 @@ public P5_pantalla_psi(
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     configurarPantalla();
+    this.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
 }
+
+
+
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -105,6 +110,7 @@ public P5_pantalla_psi(
         btnSalir = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         pnlLogos = new javax.swing.JPanel();
         sepPantallas = new javax.swing.JSeparator();
         lblDane = new javax.swing.JLabel();
@@ -202,6 +208,9 @@ public P5_pantalla_psi(
         jButton2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jButton2.setText("Continuar");
 
+        jButton3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jButton3.setText("Anterior");
+
         javax.swing.GroupLayout pnlGastosDiariosLayout = new javax.swing.GroupLayout(pnlGastosDiarios);
         pnlGastosDiarios.setLayout(pnlGastosDiariosLayout);
         pnlGastosDiariosLayout.setHorizontalGroup(
@@ -216,6 +225,17 @@ public P5_pantalla_psi(
                     .addGroup(pnlGastosDiariosLayout.createSequentialGroup()
                         .addGroup(pnlGastosDiariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(pnlGastosDiariosLayout.createSequentialGroup()
+                                .addGap(104, 104, 104)
+                                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton3)
+                                .addGap(33, 33, 33)
+                                .addComponent(jButton2))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlGastosDiariosLayout.createSequentialGroup()
                                 .addGap(441, 441, 441)
                                 .addGroup(pnlGastosDiariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtCantidadAdquirida, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -231,17 +251,8 @@ public P5_pantalla_psi(
                                         .addComponent(txtValor)
                                         .addComponent(txtEquivalencia, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(txtNombreDelProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE))
-                            .addGroup(pnlGastosDiariosLayout.createSequentialGroup()
-                                .addGap(104, 104, 104)
-                                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(29, 29, 29)
-                                .addComponent(jButton1)
-                                .addGap(24, 24, 24)
-                                .addComponent(jButton2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(scrGastosDiarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(17, 17, 17))
                     .addGroup(pnlGastosDiariosLayout.createSequentialGroup()
@@ -313,10 +324,11 @@ public P5_pantalla_psi(
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                         .addGroup(pnlGastosDiariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                            .addComponent(jButton2)
                             .addGroup(pnlGastosDiariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton1)
-                                .addComponent(jButton2)))))
+                                .addComponent(jButton3)))))
                 .addContainerGap())
         );
 
@@ -419,50 +431,28 @@ public P5_pantalla_psi(
         pack();
     }// </editor-fold>//GEN-END:initComponents
 private void configurarPantalla() {
-    txtNombreDelProducto.setEditable(false);
+
     bloquearEdicion();
 
-    btnEditar.setEnabled(false);
-    jButton1.setEnabled(false);
+    scrGastosDiarios.setVisible(true);
+    scrGastosDiarios.setOrientation(
+            javax.swing.JScrollBar.VERTICAL
+    );
 
-        scrGastosDiarios.setVisible(true);
-        scrGastosDiarios.setMinimum(0);
-        // Suponemos una altura máxima ficticia que permita mover los componentes
-        scrGastosDiarios.setMaximum(400); 
-        
-        // Listener para que la barra mueva físicamente los componentes de la pantalla hacia arriba/abajo
-ultimoValorScroll = 0; // Inicializamos nuestra variable aquí
-        
-        scrGastosDiarios.addAdjustmentListener(e -> {
-            int valorNuevo = e.getValue();
-            // Calculamos cuánto se movió la barra desde la última vez
-            int diferencia = valorNuevo - ultimoValorScroll; 
-            
-            // Movemos todos los componentes del panel
-            java.awt.Component[] componentes = pnlGastosDiarios.getComponents();
-            for (java.awt.Component c : componentes) {
-                // Evitamos mover la barra en sí misma para que siga viéndose en el borde
-                if (c != scrGastosDiarios) {
-                    c.setLocation(c.getX(), c.getY() - diferencia);
-                }
-            }
-            
-            // Actualizamos el último valor registrado
-            ultimoValorScroll = valorNuevo;
-            pnlGastosDiarios.repaint();
-        });
-    lblDia.setText("Fecha: " +
-            java.time.LocalDate.now().format(
-                    java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+    scrGastosDiarios.setMinimum(0);
+    scrGastosDiarios.setValue(0);
+
+    lblDia.setText("Fecha: "
+            + java.time.LocalDate.now().format(
+                    java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy")
+            ));
 
     btnEditar.addActionListener(e -> habilitarEdicion());
-    jButton1.addActionListener(e -> {
-            guardarCambios();
-            if (!edicionActiva) {
-                continuarProducto();
-            }
-        });
+
+    jButton1.addActionListener(e -> guardarCambios());
+
     btnSalir.addActionListener(e -> salirDePantalla());
+
     jButton2.addActionListener(e -> continuarProducto());
 
     btnHogar.addActionListener(e -> {
@@ -478,7 +468,6 @@ ultimoValorScroll = 0; // Inicializamos nuestra variable aquí
             actualizarBotonesTipoGasto();
         }
     });
-
 
     cargarDatosDeHoy();
 }
@@ -531,9 +520,14 @@ private void cargarDatosDeHoy() {
                     "No hay productos registrados hoy para esta encuesta.");
             return;
         }
+scrGastosDiarios.setValues(
+        0,
+        1,
+        0,
+        Math.max(2, gastos.size())
+);
 
-            scrGastosDiarios.setEnabled(gastos.size() > 1);
-            scrGastosDiarios.setValues(0, 1, 0, gastos.size());
+scrGastosDiarios.setEnabled(gastos.size() > 1);
             // ==============================================================================================================
 
             btnEditar.setEnabled(true);
@@ -878,6 +872,7 @@ if (indiceActual < gastos.size() - 1) {
     private javax.swing.JComboBox<String> cmbUnidadMedida;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel lblCantidadAdquirida;
     private javax.swing.JLabel lblDane;
     private javax.swing.JLabel lblDia;
