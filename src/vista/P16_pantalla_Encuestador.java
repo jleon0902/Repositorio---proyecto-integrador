@@ -177,7 +177,7 @@ public void setCedulaEncuestador(String cedula) {
         lblMenu.setText("Menú");
 
         btnFamiliasAsignadas.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btnFamiliasAsignadas.setText("Familias asignadas");
+        btnFamiliasAsignadas.setText("Hogares asignados");
 
         btnCerrarSesion.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         btnCerrarSesion.setText("Cerrar sesión");

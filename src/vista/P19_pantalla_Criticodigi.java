@@ -221,23 +221,22 @@ private void cambiarDepartamento() {
                 .addComponent(lblDane)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblEnph)
-                .addGap(137, 137, 137)
+                .addGap(53, 53, 53)
                 .addComponent(lblCriticoDigitador)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlLogosLayout.setVerticalGroup(
             pnlLogosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlLogosLayout.createSequentialGroup()
-                .addGroup(pnlLogosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlLogosLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(pnlLogosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblDane)
-                            .addComponent(lblEnph)))
-                    .addGroup(pnlLogosLayout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(lblCriticoDigitador)))
+                .addGap(20, 20, 20)
+                .addGroup(pnlLogosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblDane)
+                    .addComponent(lblEnph))
                 .addContainerGap(20, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlLogosLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblCriticoDigitador)
+                .addGap(35, 35, 35))
         );
 
         pnlMenu.setBackground(new java.awt.Color(227, 223, 223));
@@ -247,7 +246,7 @@ private void cambiarDepartamento() {
         lblMenu.setText("Menú");
 
         btnFamiliasEncuestadas.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btnFamiliasEncuestadas.setText("Familias encuestadas");
+        btnFamiliasEncuestadas.setText("Hogares encuestados");
 
         btnCerrarSesion.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnCerrarSesion.setText("Cerrar sesión");
@@ -293,17 +292,17 @@ private void cambiarDepartamento() {
         pnlFamiliasEncuestadas.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
         btnMostrarFamilias.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btnMostrarFamilias.setText("Mostrar familias encuestadas");
+        btnMostrarFamilias.setText("Mostrar hogares encuestados");
         btnMostrarFamilias.addActionListener(this::btnMostrarFamiliasActionPerformed);
 
         lblFamiliasEncuestadas.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        lblFamiliasEncuestadas.setText("Familias encuestadas");
+        lblFamiliasEncuestadas.setText("Hogares encuestados");
 
         lblTotalFamilias.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        lblTotalFamilias.setText("Total familias encuestadas:");
+        lblTotalFamilias.setText("Total hogares encuestados:");
 
         lblMostrarFamilias.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        lblMostrarFamilias.setText("Mostrar familias por:");
+        lblMostrarFamilias.setText("Mostrar hogares por:");
 
         lblRegion.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblRegion.setText("Región:");
@@ -357,11 +356,11 @@ private void cambiarDepartamento() {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(pnlFamiliasEncuestadasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFamiliasEncuestadasLayout.createSequentialGroup()
-                        .addComponent(btnMostrarFamilias)
-                        .addGap(237, 237, 237))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFamiliasEncuestadasLayout.createSequentialGroup()
                         .addComponent(lblFamiliasEncuestadas)
-                        .addGap(219, 219, 219))))
+                        .addGap(219, 219, 219))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFamiliasEncuestadasLayout.createSequentialGroup()
+                        .addComponent(btnMostrarFamilias)
+                        .addGap(33, 33, 33))))
         );
         pnlFamiliasEncuestadasLayout.setVerticalGroup(
             pnlFamiliasEncuestadasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -388,7 +387,7 @@ private void cambiarDepartamento() {
                     .addComponent(cmbMunicipio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnMostrarFamilias)
-                .addGap(22, 22, 22))
+                .addGap(27, 27, 27))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

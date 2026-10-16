@@ -9,6 +9,7 @@ package vista;
  * @author VALENTINA
  */
 public class P23_pantalla_Criticodigi extends javax.swing.JFrame {
+    private String nombreCriticoDigitador;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(P23_pantalla_Criticodigi.class.getName());
 
@@ -19,8 +20,15 @@ public class P23_pantalla_Criticodigi extends javax.swing.JFrame {
         initComponents();
     }
     
+    
     public javax.swing.JPanel obtenerPanelInformes() {
     return pnlInformes;
+}
+
+ 
+public void setNombreCriticoDigitador(String nombre) {
+    this.nombreCriticoDigitador = nombre;
+    lblCriticoDigitador.setText("Crítico digitador: " + nombre);
 }
 
     /**
@@ -58,7 +66,7 @@ public class P23_pantalla_Criticodigi extends javax.swing.JFrame {
         lblEnph.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/logo2.png"))); // NOI18N
 
         lblCriticoDigitador.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
-        lblCriticoDigitador.setText("Crítico digitador");
+        lblCriticoDigitador.setText("Crítico digitador: ");
 
         javax.swing.GroupLayout pnlLogosLayout = new javax.swing.GroupLayout(pnlLogos);
         pnlLogos.setLayout(pnlLogosLayout);
@@ -69,7 +77,7 @@ public class P23_pantalla_Criticodigi extends javax.swing.JFrame {
                 .addComponent(lblDane)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblEnph)
-                .addGap(252, 252, 252)
+                .addGap(67, 67, 67)
                 .addComponent(lblCriticoDigitador)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -95,7 +103,7 @@ public class P23_pantalla_Criticodigi extends javax.swing.JFrame {
         lnlMenu.setText("Menú");
 
         btnFamiliasEncuestadas.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btnFamiliasEncuestadas.setText("Familias encuestadas");
+        btnFamiliasEncuestadas.setText("Hogares encuestados");
 
         btnCerrarSesion.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnCerrarSesion.setText("Cerrar sesión");
@@ -226,6 +234,16 @@ public class P23_pantalla_Criticodigi extends javax.swing.JFrame {
 
     private void btnResumenGastoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResumenGastoActionPerformed
         // TODO add your handling code here:
+    P24_pantalla_Criticodigi pantalla =
+        new P24_pantalla_Criticodigi();
+
+pantalla.setNombreCriticoDigitador(nombreCriticoDigitador);
+pantalla.setPantallaAnterior(this);
+
+pantalla.setLocationRelativeTo(null);
+pantalla.setVisible(true);
+
+this.dispose();
     }//GEN-LAST:event_btnResumenGastoActionPerformed
 
     private void btnAdquisicionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdquisicionActionPerformed

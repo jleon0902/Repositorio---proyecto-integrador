@@ -323,7 +323,7 @@ if (fechaInicio != null) {
         btnVolver4.addActionListener(this::btnVolver4ActionPerformed);
 
         lblVerFamilia4.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        lblVerFamilia4.setText("Ver Familia");
+        lblVerFamilia4.setText("Ver Hogar");
 
         lblEncuesta4.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblEncuesta4.setText("Encuesta:");
@@ -401,7 +401,7 @@ if (fechaInicio != null) {
 
         textDia.addActionListener(this::textDiaActionPerformed);
 
-        jlbInfo.setText("Los campos de la encuesta y del portátil están vacíos porque la familia seleccionada aún no ha iniciado la encuesta.");
+        jlbInfo.setText("Los campos de la encuesta y del portátil están vacíos porque el hogar seleccionado aún no ha iniciado la encuesta.");
 
         javax.swing.GroupLayout pnlDatosFamilias4Layout = new javax.swing.GroupLayout(pnlDatosFamilias4);
         pnlDatosFamilias4.setLayout(pnlDatosFamilias4Layout);
@@ -426,7 +426,7 @@ if (fechaInicio != null) {
                                 .addGroup(pnlDatosFamilias4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(pnlDatosFamilias4Layout.createSequentialGroup()
                                         .addGap(448, 448, 448)
-                                        .addComponent(txtCorreo4))
+                                        .addComponent(txtCorreo4, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))
                                     .addGroup(pnlDatosFamilias4Layout.createSequentialGroup()
                                         .addGap(18, 18, 18)
                                         .addGroup(pnlDatosFamilias4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -452,42 +452,36 @@ if (fechaInicio != null) {
                                                 .addComponent(textDia, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addGroup(pnlDatosFamilias4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(pnlDatosFamilias4Layout.createSequentialGroup()
+                                                .addGap(18, 18, 18)
+                                                .addComponent(Ibldia_de14, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(pnlDatosFamilias4Layout.createSequentialGroup()
+                                                .addGap(55, 55, 55)
+                                                .addGroup(pnlDatosFamilias4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(txtEstrato4, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                                                    .addComponent(txtEstado4))))
+                                        .addGap(51, 51, 51)
+                                        .addGroup(pnlDatosFamilias4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDatosFamilias4Layout.createSequentialGroup()
+                                                .addGroup(pnlDatosFamilias4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(lblTelefono4)
+                                                    .addComponent(lblCedula4)
+                                                    .addComponent(lblCorreo4)
+                                                    .addComponent(lblRepresentanteDelHogar4))
                                                 .addGroup(pnlDatosFamilias4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addGroup(pnlDatosFamilias4Layout.createSequentialGroup()
                                                         .addGap(18, 18, 18)
-                                                        .addComponent(Ibldia_de14, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                    .addGroup(pnlDatosFamilias4Layout.createSequentialGroup()
-                                                        .addGap(55, 55, 55)
                                                         .addGroup(pnlDatosFamilias4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                            .addComponent(txtEstrato4, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
-                                                            .addComponent(txtEstado4))))
-                                                .addGap(51, 51, 51)
-                                                .addGroup(pnlDatosFamilias4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDatosFamilias4Layout.createSequentialGroup()
-                                                        .addGroup(pnlDatosFamilias4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                            .addComponent(lblTelefono4)
-                                                            .addComponent(lblCedula4)
-                                                            .addComponent(lblCorreo4)
-                                                            .addComponent(lblRepresentanteDelHogar4))
-                                                        .addGroup(pnlDatosFamilias4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                            .addGroup(pnlDatosFamilias4Layout.createSequentialGroup()
-                                                                .addGap(18, 18, 18)
-                                                                .addGroup(pnlDatosFamilias4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                                    .addComponent(txtCedula4, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
-                                                                    .addComponent(txtRepresentanteHogar4)))
-                                                            .addGroup(pnlDatosFamilias4Layout.createSequentialGroup()
-                                                                .addGap(18, 18, 18)
-                                                                .addComponent(txtTelefono4, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDatosFamilias4Layout.createSequentialGroup()
-                                                        .addGroup(pnlDatosFamilias4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                            .addComponent(lblPortatil4)
-                                                            .addComponent(lblNombre4))
-                                                        .addGap(93, 93, 93)
-                                                        .addComponent(txtNombre4, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                            .addComponent(txtCedula4, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+                                                            .addComponent(txtRepresentanteHogar4)))
+                                                    .addGroup(pnlDatosFamilias4Layout.createSequentialGroup()
+                                                        .addGap(18, 18, 18)
+                                                        .addComponent(txtTelefono4, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDatosFamilias4Layout.createSequentialGroup()
-                                                .addGap(266, 266, 266)
-                                                .addComponent(lblVerFamilia4)
-                                                .addGap(262, 262, 262))))
+                                                .addGroup(pnlDatosFamilias4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(lblPortatil4)
+                                                    .addComponent(lblNombre4))
+                                                .addGap(93, 93, 93)
+                                                .addComponent(txtNombre4, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                     .addGroup(pnlDatosFamilias4Layout.createSequentialGroup()
                                         .addGroup(pnlDatosFamilias4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(lblFechaFinalizacion4)
@@ -498,6 +492,10 @@ if (fechaInicio != null) {
                                             .addComponent(txtFechaInicio4))))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(104, 104, 104))))
+            .addGroup(pnlDatosFamilias4Layout.createSequentialGroup()
+                .addGap(392, 392, 392)
+                .addComponent(lblVerFamilia4)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlDatosFamilias4Layout.setVerticalGroup(
             pnlDatosFamilias4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -511,7 +509,7 @@ if (fechaInicio != null) {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDatosFamilias4Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(lblVerFamilia4)
-                        .addGap(13, 13, 13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlDatosFamilias4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblRepresentanteDelHogar4)
                             .addComponent(txtRepresentanteHogar4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))

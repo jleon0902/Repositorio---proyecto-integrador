@@ -133,7 +133,7 @@
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" attributes="0">
                                               <EmptySpace min="448" pref="448" max="-2" attributes="0"/>
-                                              <Component id="txtCorreo4" max="32767" attributes="0"/>
+                                              <Component id="txtCorreo4" pref="175" max="32767" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
                                               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -165,57 +165,48 @@
                                                   </Group>
                                               </Group>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Group type="102" attributes="0">
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                                                      <Component id="Ibldia_de14" min="-2" pref="50" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+                                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                          <Component id="txtEstrato4" pref="178" max="32767" attributes="0"/>
+                                                          <Component id="txtEstado4" max="32767" attributes="0"/>
+                                                      </Group>
+                                                  </Group>
+                                              </Group>
+                                              <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                  <Group type="102" alignment="1" attributes="0">
                                                       <Group type="103" groupAlignment="0" attributes="0">
+                                                          <Component id="lblTelefono4" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                          <Component id="lblCedula4" min="-2" max="-2" attributes="0"/>
+                                                          <Component id="lblCorreo4" min="-2" max="-2" attributes="0"/>
+                                                          <Component id="lblRepresentanteDelHogar4" min="-2" max="-2" attributes="0"/>
+                                                      </Group>
+                                                      <Group type="103" groupAlignment="0" attributes="0">
+                                                          <Group type="102" attributes="0">
+                                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                                  <Component id="txtCedula4" pref="159" max="32767" attributes="0"/>
+                                                                  <Component id="txtRepresentanteHogar4" max="32767" attributes="0"/>
+                                                              </Group>
+                                                          </Group>
                                                           <Group type="102" alignment="0" attributes="0">
                                                               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                                                              <Component id="Ibldia_de14" min="-2" pref="50" max="-2" attributes="0"/>
-                                                          </Group>
-                                                          <Group type="102" alignment="0" attributes="0">
-                                                              <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
-                                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                                  <Component id="txtEstrato4" pref="178" max="32767" attributes="0"/>
-                                                                  <Component id="txtEstado4" max="32767" attributes="0"/>
-                                                              </Group>
-                                                          </Group>
-                                                      </Group>
-                                                      <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
-                                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                          <Group type="102" alignment="1" attributes="0">
-                                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                                  <Component id="lblTelefono4" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                                  <Component id="lblCedula4" min="-2" max="-2" attributes="0"/>
-                                                                  <Component id="lblCorreo4" min="-2" max="-2" attributes="0"/>
-                                                                  <Component id="lblRepresentanteDelHogar4" min="-2" max="-2" attributes="0"/>
-                                                              </Group>
-                                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                                  <Group type="102" attributes="0">
-                                                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                                          <Component id="txtCedula4" pref="159" max="32767" attributes="0"/>
-                                                                          <Component id="txtRepresentanteHogar4" max="32767" attributes="0"/>
-                                                                      </Group>
-                                                                  </Group>
-                                                                  <Group type="102" alignment="0" attributes="0">
-                                                                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                                                                      <Component id="txtTelefono4" min="-2" pref="159" max="-2" attributes="0"/>
-                                                                  </Group>
-                                                              </Group>
-                                                          </Group>
-                                                          <Group type="102" alignment="1" attributes="0">
-                                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                                  <Component id="lblPortatil4" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                                  <Component id="lblNombre4" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                              </Group>
-                                                              <EmptySpace min="-2" pref="93" max="-2" attributes="0"/>
-                                                              <Component id="txtNombre4" min="-2" pref="159" max="-2" attributes="0"/>
+                                                              <Component id="txtTelefono4" min="-2" pref="159" max="-2" attributes="0"/>
                                                           </Group>
                                                       </Group>
                                                   </Group>
                                                   <Group type="102" alignment="1" attributes="0">
-                                                      <EmptySpace min="-2" pref="266" max="-2" attributes="0"/>
-                                                      <Component id="lblVerFamilia4" min="-2" max="-2" attributes="0"/>
-                                                      <EmptySpace min="-2" pref="262" max="-2" attributes="0"/>
+                                                      <Group type="103" groupAlignment="0" attributes="0">
+                                                          <Component id="lblPortatil4" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                          <Component id="lblNombre4" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                      </Group>
+                                                      <EmptySpace min="-2" pref="93" max="-2" attributes="0"/>
+                                                      <Component id="txtNombre4" min="-2" pref="159" max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
                                           </Group>
@@ -238,6 +229,11 @@
                           </Group>
                       </Group>
                   </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="392" max="-2" attributes="0"/>
+                      <Component id="lblVerFamilia4" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -254,7 +250,7 @@
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="lblVerFamilia4" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="lblRepresentanteDelHogar4" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="txtRepresentanteHogar4" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -376,7 +372,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Times New Roman" size="18" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Ver Familia"/>
+                <Property name="text" type="java.lang.String" value="Ver Hogar"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblEncuesta4">
@@ -583,7 +579,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jlbInfo">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Los campos de la encuesta y del port&#xe1;til est&#xe1;n vac&#xed;os porque la familia seleccionada a&#xfa;n no ha iniciado la encuesta."/>
+                <Property name="text" type="java.lang.String" value="Los campos de la encuesta y del port&#xe1;til est&#xe1;n vac&#xed;os porque el hogar seleccionado a&#xfa;n no ha iniciado la encuesta."/>
               </Properties>
             </Component>
           </SubComponents>

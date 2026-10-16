@@ -512,12 +512,12 @@ public int getIdEncuestaCreada() {
         cmbRepresentanteHogar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         lblPortatilVinculadoFamilia.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        lblPortatilVinculadoFamilia.setText("Pórtatil vinculado con la familia:");
+        lblPortatilVinculadoFamilia.setText("Seleccione el portatil que desea vincular:");
 
         txtFechaEntrega.addActionListener(this::txtFechaEntregaActionPerformed);
 
         lblFechaEntrega.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        lblFechaEntrega.setText("Fecha entrega");
+        lblFechaEntrega.setText("Fecha");
 
         cmbPortatilFamilia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 

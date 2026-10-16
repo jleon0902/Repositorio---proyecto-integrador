@@ -213,7 +213,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Times New Roman" size="18" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="P&#xf3;rtatil vinculado con la familia:"/>
+                <Property name="text" type="java.lang.String" value="Seleccione el portatil que desea vincular:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtFechaEntrega">
@@ -226,7 +226,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Times New Roman" size="18" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Fecha entrega"/>
+                <Property name="text" type="java.lang.String" value="Fecha"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="cmbPortatilFamilia">

@@ -132,7 +132,7 @@ public void mostrarContenido(javax.swing.JPanel panel) {
         pnlVentana.setLayout(pnlVentanaLayout);
         pnlVentanaLayout.setHorizontalGroup(
             pnlVentanaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 611, Short.MAX_VALUE)
+            .addGap(0, 670, Short.MAX_VALUE)
         );
         pnlVentanaLayout.setVerticalGroup(
             pnlVentanaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,7 +158,7 @@ public void mostrarContenido(javax.swing.JPanel panel) {
                 .addComponent(lblDane)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblEnph)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 274, Short.MAX_VALUE)
                 .addComponent(lblEncuestador)
                 .addGap(77, 77, 77))
         );
@@ -182,7 +182,7 @@ public void mostrarContenido(javax.swing.JPanel panel) {
         lblMenu.setText("Menú");
 
         btnFamiliasAsignadas.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btnFamiliasAsignadas.setText("Familias asignadas");
+        btnFamiliasAsignadas.setText("Hogares asignados");
 
         btnCerrarSesion.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnCerrarSesion.setText("Cerrar sesión");
@@ -195,24 +195,24 @@ public void mostrarContenido(javax.swing.JPanel panel) {
         pnlMenuLayout.setHorizontalGroup(
             pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMenuLayout.createSequentialGroup()
-                .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnVincularPortatil, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFamiliasAsignadas, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(pnlMenuLayout.createSequentialGroup()
-                            .addGap(93, 93, 93)
-                            .addComponent(lblMenu))
-                        .addGroup(pnlMenuLayout.createSequentialGroup()
-                            .addGap(21, 21, 21)
-                            .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlMenuLayout.createSequentialGroup()
+                        .addGap(93, 93, 93)
+                        .addComponent(lblMenu))
+                    .addGroup(pnlMenuLayout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnFamiliasAsignadas, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnVincularPortatil, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlMenuLayout.setVerticalGroup(
             pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMenuLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addGap(42, 42, 42)
                 .addComponent(lblMenu)
-                .addGap(63, 63, 63)
+                .addGap(42, 42, 42)
                 .addComponent(btnFamiliasAsignadas)
                 .addGap(18, 18, 18)
                 .addComponent(btnVincularPortatil)

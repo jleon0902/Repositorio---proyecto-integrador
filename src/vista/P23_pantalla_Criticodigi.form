@@ -67,7 +67,7 @@
                   <Component id="lblDane" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="lblEnph" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="252" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
                   <Component id="lblCriticoDigitador" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -114,7 +114,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Times New Roman" size="24" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Cr&#xed;tico digitador"/>
+            <Property name="text" type="java.lang.String" value="Cr&#xed;tico digitador: "/>
           </Properties>
         </Component>
       </SubComponents>
@@ -183,7 +183,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Times New Roman" size="18" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Familias encuestadas"/>
+            <Property name="text" type="java.lang.String" value="Hogares encuestados"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnCerrarSesion">

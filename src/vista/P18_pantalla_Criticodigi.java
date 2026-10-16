@@ -10,6 +10,8 @@ package vista;
  */
 public class P18_pantalla_Criticodigi extends javax.swing.JFrame {
     
+    private String nombreCriticoDigitador;
+    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(P18_pantalla_Criticodigi.class.getName());
 
     /**
@@ -20,6 +22,7 @@ public class P18_pantalla_Criticodigi extends javax.swing.JFrame {
     }
     
 public void setNombreCriticoDigitador(String nombre) {
+    nombreCriticoDigitador = nombre;
     lblCriticoDigitador.setText("Crítico digitador: " + nombre);
 }
 
@@ -65,9 +68,9 @@ public void setNombreCriticoDigitador(String nombre) {
                 .addComponent(lblDane)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblEnph)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(58, 58, 58)
                 .addComponent(lblCriticoDigitador)
-                .addGap(77, 77, 77))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlLogosLayout.setVerticalGroup(
             pnlLogosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -75,11 +78,12 @@ public void setNombreCriticoDigitador(String nombre) {
                 .addGap(20, 20, 20)
                 .addGroup(pnlLogosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblDane)
-                    .addComponent(lblEnph)
-                    .addGroup(pnlLogosLayout.createSequentialGroup()
-                        .addComponent(lblCriticoDigitador)
-                        .addGap(17, 17, 17)))
+                    .addComponent(lblEnph))
                 .addContainerGap(20, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlLogosLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblCriticoDigitador)
+                .addGap(32, 32, 32))
         );
 
         pnlMenu.setBackground(new java.awt.Color(255, 255, 255));
@@ -103,7 +107,7 @@ public void setNombreCriticoDigitador(String nombre) {
         lblMenu.setText("Menú");
 
         btnFamiliasEncuestadas.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btnFamiliasEncuestadas.setText("Familias encuestadas");
+        btnFamiliasEncuestadas.setText("Hogares Encuestados");
         btnFamiliasEncuestadas.addActionListener(this::btnFamiliasEncuestadasActionPerformed);
 
         btnCerrarSesion.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
@@ -191,6 +195,9 @@ public void setNombreCriticoDigitador(String nombre) {
     private void btnGenerarInformesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarInformesActionPerformed
 P23_pantalla_Criticodigi pantalla =
             new P23_pantalla_Criticodigi();
+
+    pantalla.setNombreCriticoDigitador(nombreCriticoDigitador);
+
 
     javax.swing.JPanel contenido = pantalla.obtenerPanelInformes();
 

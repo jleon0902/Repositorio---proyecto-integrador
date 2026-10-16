@@ -13,17 +13,34 @@ import javax.swing.JOptionPane;
  * @author VALENTINA
  */
 public class P24_pantalla_Criticodigi extends javax.swing.JFrame {
-    
+    private String nombreCriticoDigitador;
+    private P23_pantalla_Criticodigi pantallaAnterior;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(P24_pantalla_Criticodigi.class.getName());
 
     /**
      * Creates new form P24_pantalla_Criticodigi
      */
+    
     public P24_pantalla_Criticodigi() {
         initComponents();
+        System.out.println("SE ABRIO LA PANTALLA P24");
+        cargarGastoPromedioDia();
+        cargarGastoTotal();
+        cargarCantidadPromedioProductos();
+        cargarDiaMayorGasto();
+        cargarDiaMenorGasto();
+        cargarGraficaGastos();
+        
+          // Evitar que el usuario modifique los datos mostrados
+    txtGastoPromedioDia.setEditable(false);
+    txtGastoTotal.setEditable(false);
+    txtCantidadPromedioProductos.setEditable(false);
+    txtDiaMayorGasto.setEditable(false);
+    txtDiaMenorGasto.setEditable(false);
+    jtfValorProHogar.setEditable(false);
+    jtfValorProPersonal.setEditable(false);
  
-    // Crear la gráfica antes de configurar el desplazamiento
-    mostrarGrafica();
+    
 
     // Guardar el tamaño original del contenido
     java.awt.Dimension tamContenido = pnlResumenGasto.getPreferredSize();
@@ -85,7 +102,375 @@ public class P24_pantalla_Criticodigi extends javax.swing.JFrame {
         
     }
     
+    public void setPantallaAnterior(P23_pantalla_Criticodigi pantalla) {
+    this.pantallaAnterior = pantalla;
+}
     
+    public void setNombreCriticoDigitador(String nombre) {
+        System.out.println(
+        "P24 recibe el nombre: " + this.nombreCriticoDigitador
+    );
+    this.nombreCriticoDigitador = nombre;
+    lblCriticoDigitador.setText("Crítico digitador: " + nombre);
+}
+    
+private void cargarGastoPromedioDia() {
+
+    String sql = "SELECT NVL(AVG(PROMEDIO_FAMILIA), 0) AS GASTO_PROMEDIO_DIA "
+               + "FROM ( "
+               + "    SELECT E.ID, SUM(G.VALOR) / 14 AS PROMEDIO_FAMILIA "
+               + "    FROM ENCUESTA E "
+               + "    INNER JOIN GASTOS_DIARIOS G ON E.ID = G.ID_ENCUESTA "
+               + "    WHERE E.ESTADO = 'Finalizado' "
+               + "    GROUP BY E.ID "
+               + ")";
+
+    try (Connection con = modelo.conexion.conectar();
+         PreparedStatement ps = con.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+
+        if (rs.next()) {
+            double promedio = rs.getDouble("GASTO_PROMEDIO_DIA");
+
+            txtGastoPromedioDia.setText(
+                String.format(java.util.Locale.US, "%,.2f", promedio)
+            );
+        }
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(
+            this,
+            "Error al calcular el gasto promedio diario: " + e.getMessage(),
+            "Error",
+            JOptionPane.ERROR_MESSAGE
+        );
+    }
+}
+
+
+private void cargarGastoTotal() {
+
+    String sql = "SELECT NVL(AVG(GASTO_FAMILIA), 0) AS GASTO_TOTAL_PROMEDIO "
+               + "FROM ( "
+               + "    SELECT E.ID, SUM(G.VALOR) AS GASTO_FAMILIA "
+               + "    FROM ENCUESTA E "
+               + "    INNER JOIN GASTOS_DIARIOS G "
+               + "        ON E.ID = G.ID_ENCUESTA "
+               + "    WHERE E.ESTADO = 'Finalizado' "
+               + "    GROUP BY E.ID "
+               + ")";
+
+    try (Connection con = modelo.conexion.conectar();
+         PreparedStatement ps = con.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+
+        if (rs.next()) {
+            double gastoTotal = rs.getDouble("GASTO_TOTAL_PROMEDIO");
+
+            txtGastoTotal.setText(
+                String.format(java.util.Locale.US, "%,.0f", gastoTotal)
+            );
+        }
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(
+            this,
+            "Error al calcular el gasto total promedio: " + e.getMessage(),
+            "Error",
+            JOptionPane.ERROR_MESSAGE
+        );
+    }
+}
+
+
+private void cargarCantidadPromedioProductos() {
+
+    String sql = "SELECT NVL(AVG(CANTIDAD_PRODUCTOS), 0) AS PROMEDIO_PRODUCTOS "
+               + "FROM ( "
+               + "    SELECT E.ID, COUNT(G.ID) AS CANTIDAD_PRODUCTOS "
+               + "    FROM ENCUESTA E "
+               + "    INNER JOIN GASTOS_DIARIOS G "
+               + "        ON E.ID = G.ID_ENCUESTA "
+               + "    WHERE E.ESTADO = 'Finalizado' "
+               + "    GROUP BY E.ID "
+               + ")";
+
+    try (Connection con = modelo.conexion.conectar();
+         PreparedStatement ps = con.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+
+        if (rs.next()) {
+            double promedio = rs.getDouble("PROMEDIO_PRODUCTOS");
+
+            txtCantidadPromedioProductos.setText(
+                String.format(java.util.Locale.US, "%.2f", promedio)
+            );
+        }
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(
+            this,
+            "Error al calcular la cantidad promedio de productos: "
+                + e.getMessage(),
+            "Error",
+            JOptionPane.ERROR_MESSAGE
+        );
+    }
+}
+
+
+private void cargarDiaMayorGasto() {
+
+    String sql = "SELECT 'Día ' || DIA || ' de 14' AS DIA_MAYOR_GASTO "
+               + "FROM ( "
+               + "    SELECT DIA, COUNT(*) AS REPETICIONES "
+               + "    FROM ( "
+               + "        SELECT ID_ENCUESTA, DIA, GASTO_DIA, "
+               + "               ROW_NUMBER() OVER ( "
+               + "                   PARTITION BY ID_ENCUESTA "
+               + "                   ORDER BY GASTO_DIA DESC, DIA ASC "
+               + "               ) AS POSICION "
+               + "        FROM ( "
+               + "            SELECT E.ID AS ID_ENCUESTA, "
+               + "                   TRUNC(G.FECHA) - TRUNC(E.FECHA_INICIO) + 1 AS DIA, "
+               + "                   SUM(G.VALOR) AS GASTO_DIA "
+               + "            FROM ENCUESTA E "
+               + "            INNER JOIN GASTOS_DIARIOS G "
+               + "                ON E.ID = G.ID_ENCUESTA "
+               + "            WHERE E.ESTADO = 'Finalizado' "
+               + "              AND TRUNC(G.FECHA) >= TRUNC(E.FECHA_INICIO) "
+               + "              AND TRUNC(G.FECHA) < TRUNC(E.FECHA_INICIO) + 14 "
+               + "            GROUP BY E.ID, E.FECHA_INICIO, TRUNC(G.FECHA) "
+               + "        ) "
+               + "    ) "
+               + "    WHERE POSICION = 1 "
+               + "    GROUP BY DIA "
+               + "    ORDER BY REPETICIONES DESC, DIA ASC "
+               + ") "
+               + "WHERE ROWNUM = 1";
+
+    try (Connection con = modelo.conexion.conectar();
+         PreparedStatement ps = con.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+
+        if (rs.next()) {
+            txtDiaMayorGasto.setText(rs.getString("DIA_MAYOR_GASTO"));
+        } else {
+            txtDiaMayorGasto.setText("Sin datos");
+        }
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(
+            this,
+            "Error al calcular el día de mayor gasto: " + e.getMessage(),
+            "Error",
+            JOptionPane.ERROR_MESSAGE
+        );
+    }
+}
+
+
+private void cargarDiaMenorGasto() {
+
+    String sql = "SELECT 'Día ' || DIA || ' de 14' AS DIA_MENOR_GASTO "
+               + "FROM ( "
+               + "    SELECT DIA, COUNT(*) AS REPETICIONES "
+               + "    FROM ( "
+               + "        SELECT ID_ENCUESTA, DIA, GASTO_DIA, "
+               + "               ROW_NUMBER() OVER ( "
+               + "                   PARTITION BY ID_ENCUESTA "
+               + "                   ORDER BY GASTO_DIA ASC, DIA ASC "
+               + "               ) AS POSICION "
+               + "        FROM ( "
+               + "            SELECT E.ID AS ID_ENCUESTA, "
+               + "                   TRUNC(G.FECHA) - TRUNC(E.FECHA_INICIO) + 1 AS DIA, "
+               + "                   SUM(G.VALOR) AS GASTO_DIA "
+               + "            FROM ENCUESTA E "
+               + "            INNER JOIN GASTOS_DIARIOS G "
+               + "                ON E.ID = G.ID_ENCUESTA "
+               + "            WHERE E.ESTADO = 'Finalizado' "
+               + "              AND TRUNC(G.FECHA) >= TRUNC(E.FECHA_INICIO) "
+               + "              AND TRUNC(G.FECHA) < TRUNC(E.FECHA_INICIO) + 14 "
+               + "            GROUP BY E.ID, E.FECHA_INICIO, TRUNC(G.FECHA) "
+               + "        ) "
+               + "    ) "
+               + "    WHERE POSICION = 1 "
+               + "    GROUP BY DIA "
+               + "    ORDER BY REPETICIONES DESC, DIA ASC "
+               + ") "
+               + "WHERE ROWNUM = 1";
+
+    try (Connection con = modelo.conexion.conectar();
+         PreparedStatement ps = con.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+
+        if (rs.next()) {
+            txtDiaMenorGasto.setText(rs.getString("DIA_MENOR_GASTO"));
+        } else {
+            txtDiaMenorGasto.setText("Sin datos");
+        }
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(
+            this,
+            "Error al calcular el día de menor gasto: " + e.getMessage(),
+            "Error",
+            JOptionPane.ERROR_MESSAGE
+        );
+    }
+}
+
+
+private void cargarGraficaGastos() {
+
+    String sql =
+        "SELECT " +
+        "    NVL(SUM(TOTAL_HOGAR), 0) AS TOTAL_HOGAR, " +
+        "    NVL(SUM(TOTAL_PERSONAL), 0) AS TOTAL_PERSONAL, " +
+        "    NVL(AVG(TOTAL_HOGAR), 0) AS PROMEDIO_HOGAR, " +
+        "    NVL(AVG(TOTAL_PERSONAL), 0) AS PROMEDIO_PERSONAL " +
+        "FROM ( " +
+        "    SELECT " +
+        "        E.ID AS ID_ENCUESTA, " +
+        "        SUM(CASE WHEN G.TIPO_GASTO = 'Hogar' " +
+        "                 THEN G.VALOR ELSE 0 END) AS TOTAL_HOGAR, " +
+        "        SUM(CASE WHEN G.TIPO_GASTO = 'Personal' " +
+        "                 THEN G.VALOR ELSE 0 END) AS TOTAL_PERSONAL " +
+        "    FROM ENCUESTA E " +
+        "    INNER JOIN GASTOS_DIARIOS G " +
+        "        ON E.ID = G.ID_ENCUESTA " +
+        "    WHERE E.ESTADO = 'Finalizado' " +
+        "    GROUP BY E.ID " +
+        ")";
+
+    try (Connection con = modelo.conexion.conectar();
+         PreparedStatement ps = con.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+
+        if (rs.next()) {
+
+            double totalHogar = rs.getDouble("TOTAL_HOGAR");
+            double totalPersonal = rs.getDouble("TOTAL_PERSONAL");
+
+            double promedioHogar = rs.getDouble("PROMEDIO_HOGAR");
+            double promedioPersonal = rs.getDouble("PROMEDIO_PERSONAL");
+
+            // Mostrar el promedio de dinero gastado por familia
+            jtfValorProHogar.setText(
+                String.format(
+                    java.util.Locale.US,
+                    "%,.2f",
+                    promedioHogar
+                )
+            );
+
+            jtfValorProPersonal.setText(
+                String.format(
+                    java.util.Locale.US,
+                    "%,.2f",
+                    promedioPersonal
+                )
+            );
+
+            // Calcular porcentajes sobre el gasto total registrado
+            double gastoTotal = totalHogar + totalPersonal;
+
+            double porcentajeHogar = 0;
+            double porcentajePersonal = 0;
+
+            if (gastoTotal > 0) {
+                porcentajeHogar = totalHogar * 100.0 / gastoTotal;
+                porcentajePersonal = totalPersonal * 100.0 / gastoTotal;
+            }
+
+            // Crear la gráfica circular
+            org.jfree.data.general.DefaultPieDataset datos =
+                new org.jfree.data.general.DefaultPieDataset();
+
+            if (gastoTotal > 0) {
+                datos.setValue("Hogar", totalHogar);
+                datos.setValue("Personal", totalPersonal);
+            }
+
+            org.jfree.chart.JFreeChart grafica =
+                org.jfree.chart.ChartFactory.createPieChart(
+                    "Distribución del gasto total: Hogar y Personal",
+                    datos,
+                    true,
+                    true,
+                    false
+                );
+
+            org.jfree.chart.plot.PiePlot plot =
+                (org.jfree.chart.plot.PiePlot) grafica.getPlot();
+
+            plot.setSectionPaint(
+                "Hogar",
+                new java.awt.Color(52, 152, 219)
+            );
+
+            plot.setSectionPaint(
+                "Personal",
+                new java.awt.Color(243, 156, 18)
+            );
+
+            
+            plot.setSimpleLabels(true);
+
+            plot.setLabelGenerator(
+                new org.jfree.chart.labels.StandardPieSectionLabelGenerator(
+                    "{2}",
+                    new java.text.DecimalFormat("#,##0.00"),
+                    new java.text.DecimalFormat("0.00%")
+                )
+            );
+
+            plot.setLabelFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 12));
+            plot.setLabelBackgroundPaint(java.awt.Color.WHITE);
+            plot.setLabelOutlinePaint(null);
+            plot.setLabelShadowPaint(null);
+
+
+            // Mostrar la gráfica en pnlGrafica
+            pnlGrafica.removeAll();
+            pnlGrafica.setLayout(new java.awt.BorderLayout());
+
+            
+            org.jfree.chart.ChartPanel panelGrafica =
+                    new org.jfree.chart.ChartPanel(grafica);
+
+            panelGrafica.setMouseWheelEnabled(false);
+
+            panelGrafica.setPreferredSize(
+                    new java.awt.Dimension(260, 220)
+            );
+            panelGrafica.setMaximumDrawWidth(260);
+            panelGrafica.setMaximumDrawHeight(220);
+            panelGrafica.setMinimumDrawWidth(220);
+            panelGrafica.setMinimumDrawHeight(180);
+
+            pnlGrafica.removeAll();
+            pnlGrafica.setLayout(new java.awt.GridBagLayout());
+
+            pnlGrafica.add(panelGrafica);
+
+            pnlGrafica.revalidate();
+            pnlGrafica.repaint();
+
+
+        }
+
+    } catch (SQLException e) {
+
+        JOptionPane.showMessageDialog(
+            this,
+            "Error al cargar la gráfica de gastos: "
+                + e.getMessage(),
+            "Error",
+            JOptionPane.ERROR_MESSAGE
+        );
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -116,6 +501,10 @@ public class P24_pantalla_Criticodigi extends javax.swing.JFrame {
         txtGastoTotal = new javax.swing.JTextField();
         txtDiaMayorGasto = new javax.swing.JTextField();
         txtDiaMenorGasto = new javax.swing.JTextField();
+        jlvalorPromedioH = new javax.swing.JLabel();
+        jlvalorPromedioP = new javax.swing.JLabel();
+        jtfValorProHogar = new javax.swing.JTextField();
+        jtfValorProPersonal = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -138,23 +527,22 @@ public class P24_pantalla_Criticodigi extends javax.swing.JFrame {
                 .addComponent(lblDane)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblEnph)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 155, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblCriticoDigitador)
-                .addGap(100, 100, 100))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlLogosLayout.setVerticalGroup(
             pnlLogosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlLogosLayout.createSequentialGroup()
-                .addGroup(pnlLogosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlLogosLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(pnlLogosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblDane)
-                            .addComponent(lblEnph)))
-                    .addGroup(pnlLogosLayout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(lblCriticoDigitador)))
+                .addGap(20, 20, 20)
+                .addGroup(pnlLogosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblDane)
+                    .addComponent(lblEnph))
                 .addContainerGap(20, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlLogosLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblCriticoDigitador)
+                .addGap(32, 32, 32))
         );
 
         pnlResumenGasto.setBackground(new java.awt.Color(255, 255, 255));
@@ -196,82 +584,111 @@ public class P24_pantalla_Criticodigi extends javax.swing.JFrame {
             .addGap(0, 216, Short.MAX_VALUE)
         );
 
+        jlvalorPromedioH.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jlvalorPromedioH.setText("Valor promedio de lo que gasto en el hogar:");
+
+        jlvalorPromedioP.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jlvalorPromedioP.setText("Valor promedio de lo que gasto en gastos personales:");
+
         javax.swing.GroupLayout pnlResumenGastoLayout = new javax.swing.GroupLayout(pnlResumenGasto);
         pnlResumenGasto.setLayout(pnlResumenGastoLayout);
         pnlResumenGastoLayout.setHorizontalGroup(
             pnlResumenGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlResumenGastoLayout.createSequentialGroup()
                 .addGroup(pnlResumenGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlResumenGastoLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnAceptar)
-                        .addGap(69, 69, 69))
                     .addGroup(pnlResumenGastoLayout.createSequentialGroup()
-                        .addGroup(pnlResumenGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(pnlGrafica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(pnlResumenGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(pnlResumenGastoLayout.createSequentialGroup()
-                                    .addGap(249, 249, 249)
-                                    .addComponent(lblResumenGasto))
-                                .addGroup(pnlResumenGastoLayout.createSequentialGroup()
-                                    .addGap(55, 55, 55)
+                        .addGap(47, 47, 47)
+                        .addGroup(pnlResumenGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlResumenGastoLayout.createSequentialGroup()
+                                .addGroup(pnlResumenGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(pnlResumenGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(pnlResumenGastoLayout.createSequentialGroup()
-                                            .addGroup(pnlResumenGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(lblCantidadPromedioProductos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(lblDiaMayorGasto)
-                                                .addComponent(lblDiaMenorGasto)
-                                                .addComponent(lblDistribucionGasto))
-                                            .addGap(65, 65, 65)
-                                            .addGroup(pnlResumenGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(txtDiaMayorGasto, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(txtCantidadPromedioProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(txtDiaMenorGasto, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGroup(pnlResumenGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(lblGastoTotalPromedio)
+                                        .addComponent(lblGastoTotal)
+                                        .addComponent(lblDiaMayorGasto)
+                                        .addComponent(lblDistribucionGasto)
+                                        .addComponent(lblCantidadPromedioProductos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(pnlResumenGastoLayout.createSequentialGroup()
+                                        .addComponent(lblDiaMenorGasto)
+                                        .addGap(20, 20, 20)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(pnlResumenGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pnlResumenGastoLayout.createSequentialGroup()
+                                        .addGroup(pnlResumenGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtGastoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtDiaMayorGasto, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtDiaMenorGasto, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtCantidadPromedioProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(30, 30, 30))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlResumenGastoLayout.createSequentialGroup()
+                                        .addComponent(txtGastoPromedioDia, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(137, 137, 137))))
+                            .addGroup(pnlResumenGastoLayout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addGroup(pnlResumenGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btnAceptar)
+                                    .addGroup(pnlResumenGastoLayout.createSequentialGroup()
+                                        .addComponent(pnlGrafica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(28, 28, 28)
+                                        .addGroup(pnlResumenGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jlvalorPromedioH)
+                                            .addComponent(jlvalorPromedioP)
                                             .addGroup(pnlResumenGastoLayout.createSequentialGroup()
-                                                .addComponent(lblGastoTotalPromedio)
-                                                .addGap(139, 139, 139)
-                                                .addComponent(txtGastoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(pnlResumenGastoLayout.createSequentialGroup()
-                                                .addComponent(lblGastoTotal)
-                                                .addGap(126, 126, 126)
-                                                .addComponent(txtGastoPromedioDia, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 312, Short.MAX_VALUE)))
+                                                .addGap(6, 6, 6)
+                                                .addGroup(pnlResumenGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jtfValorProHogar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jtfValorProPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlResumenGastoLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblResumenGasto)
+                        .addGap(229, 229, 229)))
                 .addComponent(scrResumenGasto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         pnlResumenGastoLayout.setVerticalGroup(
             pnlResumenGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlResumenGastoLayout.createSequentialGroup()
-                .addGap(44, 44, 44)
+                .addGap(30, 30, 30)
                 .addComponent(lblResumenGasto)
-                .addGap(63, 63, 63)
+                .addGap(31, 31, 31)
                 .addGroup(pnlResumenGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblGastoTotal)
                     .addComponent(txtGastoPromedioDia, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(17, 17, 17)
+                .addGap(18, 18, 18)
                 .addGroup(pnlResumenGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblGastoTotalPromedio)
                     .addComponent(txtGastoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(17, 17, 17)
-                .addGroup(pnlResumenGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCantidadPromedioProductos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCantidadPromedioProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlResumenGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCantidadPromedioProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCantidadPromedioProductos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlResumenGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtDiaMayorGasto, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDiaMayorGasto))
                 .addGap(18, 18, 18)
                 .addGroup(pnlResumenGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDiaMayorGasto)
-                    .addComponent(txtDiaMayorGasto, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14)
-                .addGroup(pnlResumenGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDiaMenorGasto)
-                    .addComponent(txtDiaMenorGasto, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-                .addComponent(lblDistribucionGasto)
-                .addGap(37, 37, 37)
-                .addComponent(pnlGrafica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addComponent(btnAceptar)
-                .addGap(24, 24, 24))
+                    .addComponent(txtDiaMenorGasto, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDiaMenorGasto))
+                .addGroup(pnlResumenGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlResumenGastoLayout.createSequentialGroup()
+                        .addGap(107, 107, 107)
+                        .addComponent(jlvalorPromedioH)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtfValorProHogar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24)
+                        .addComponent(jlvalorPromedioP)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jtfValorProPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlResumenGastoLayout.createSequentialGroup()
+                        .addGap(53, 53, 53)
+                        .addGroup(pnlResumenGastoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnAceptar)
+                            .addGroup(pnlResumenGastoLayout.createSequentialGroup()
+                                .addComponent(lblDistribucionGasto)
+                                .addGap(18, 18, 18)
+                                .addComponent(pnlGrafica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(25, 25, Short.MAX_VALUE))
             .addGroup(pnlResumenGastoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(scrResumenGasto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -289,9 +706,8 @@ public class P24_pantalla_Criticodigi extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pnlLogos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(pnlResumenGasto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(198, 198, 198))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnlResumenGasto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -299,71 +715,20 @@ public class P24_pantalla_Criticodigi extends javax.swing.JFrame {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
+        
+    if (pantallaAnterior != null) {
+        pantallaAnterior.setVisible(true);
+        this.dispose();
+    } else {
+        JOptionPane.showMessageDialog(
+            this,
+            "No se encontró la pantalla anterior."
+        );
+    }
+
     }//GEN-LAST:event_btnAceptarActionPerformed
-//----grafica-----------
-    private void mostrarGrafica() {
- // Datos de la gráfica: solo dos categorías
-    org.jfree.data.general.DefaultPieDataset datos =
-            new org.jfree.data.general.DefaultPieDataset();
 
-    datos.setValue("Gastos necesarios", 70);
-    datos.setValue("Otros gastos", 30);
-
-    // Crear la gráfica circular
-    org.jfree.chart.JFreeChart grafica =
-            org.jfree.chart.ChartFactory.createPieChart(
-                    "Distribución del gasto",
-                    datos,
-                    true,
-                    true,
-                    false
-            );
-
-    // Asignar los dos colores
-    org.jfree.chart.plot.PiePlot plot =
-            (org.jfree.chart.plot.PiePlot) grafica.getPlot();
-
-    plot.setSectionPaint(
-            "Gastos necesarios",
-            new java.awt.Color(255, 204, 153)
-    );
-
-    plot.setSectionPaint(
-            "Otros gastos",
-            new java.awt.Color(153, 204, 255)
-    );
-
-    // Mejorar la presentación
-    plot.setBackgroundPaint(java.awt.Color.WHITE);
-    plot.setOutlineVisible(false);
-
-    // Crear el panel de la gráfica con tamaño reducido
-    org.jfree.chart.ChartPanel panelGrafica =
-            new org.jfree.chart.ChartPanel(grafica);
-
-    panelGrafica.setPreferredSize(
-            new java.awt.Dimension(280, 250)
-    );
-
-    panelGrafica.setMaximumDrawWidth(280);
-    panelGrafica.setMaximumDrawHeight(250);
-    panelGrafica.setMinimumDrawWidth(200);
-    panelGrafica.setMinimumDrawHeight(180);
-
-    // Colocar la gráfica dentro de pnlGrafica
-    pnlGrafica.setLayout(new java.awt.BorderLayout());
-    pnlGrafica.removeAll();
-    pnlGrafica.add(panelGrafica, java.awt.BorderLayout.CENTER);
-
-    // Reducir el tamaño del espacio que contiene la gráfica
-    pnlGrafica.setPreferredSize(
-            new java.awt.Dimension(300, 270)
-    );
-
-    pnlGrafica.revalidate();
-    pnlGrafica.repaint();
-}
-    
+   
     /**
      * @param args the command line arguments
      */
@@ -391,6 +756,10 @@ public class P24_pantalla_Criticodigi extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
+    private javax.swing.JLabel jlvalorPromedioH;
+    private javax.swing.JLabel jlvalorPromedioP;
+    private javax.swing.JTextField jtfValorProHogar;
+    private javax.swing.JTextField jtfValorProPersonal;
     private javax.swing.JLabel lblCantidadPromedioProductos;
     private javax.swing.JLabel lblCriticoDigitador;
     private javax.swing.JLabel lblDane;

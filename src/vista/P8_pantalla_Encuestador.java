@@ -257,7 +257,7 @@ public class P8_pantalla_Encuestador extends javax.swing.JFrame {
         btnHogarAsignado.setText("Hogar asignado");
 
         btnFamiliasAsignadas.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btnFamiliasAsignadas.setText("Familias asignadas");
+        btnFamiliasAsignadas.setText("Hogares asignados");
 
         btnSincronizar.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnSincronizar.setText("Sincronizar");

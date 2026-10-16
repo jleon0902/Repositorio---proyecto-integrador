@@ -295,13 +295,13 @@ public javax.swing.JPanel getPanelContenido() {
         pnlFamiliasAsignadas.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 1, 1, new java.awt.Color(0, 0, 0)));
 
         lblFamiliasAsignadas.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
-        lblFamiliasAsignadas.setText("Familias asignadas");
+        lblFamiliasAsignadas.setText("Hogares asignados");
 
         lblTextoFamiliasAsignadas.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        lblTextoFamiliasAsignadas.setText("Familias asignadas:");
+        lblTextoFamiliasAsignadas.setText("Total hogares asignados:");
 
         btnVerFamilias.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btnVerFamilias.setText("Ver familias");
+        btnVerFamilias.setText("Ver Hogares");
         btnVerFamilias.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         btnVerFamilias.setBorderPainted(false);
 
@@ -336,29 +336,26 @@ public javax.swing.JPanel getPanelContenido() {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFamiliasAsignadasLayout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addComponent(btnVerFamilias, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(64, 613, Short.MAX_VALUE))
+                .addGap(64, 653, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFamiliasAsignadasLayout.createSequentialGroup()
+                .addContainerGap(214, Short.MAX_VALUE)
+                .addComponent(lblFamiliasAsignadas)
+                .addGap(296, 296, 296))
             .addGroup(pnlFamiliasAsignadasLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addComponent(lblTextoFamiliasAsignadas)
-                .addGap(0, 587, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFamiliasAsignadasLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnlFamiliasAsignadasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFamiliasAsignadasLayout.createSequentialGroup()
-                        .addComponent(lblFamiliasAsignadas)
-                        .addGap(256, 256, 256))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFamiliasAsignadasLayout.createSequentialGroup()
-                        .addComponent(spTablaFamilias, javax.swing.GroupLayout.PREFERRED_SIZE, 673, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                    .addComponent(lblTextoFamiliasAsignadas)
+                    .addComponent(spTablaFamilias, javax.swing.GroupLayout.PREFERRED_SIZE, 699, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         pnlFamiliasAsignadasLayout.setVerticalGroup(
             pnlFamiliasAsignadasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlFamiliasAsignadasLayout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addComponent(lblFamiliasAsignadas)
-                .addGap(37, 37, 37)
+                .addGap(47, 47, 47)
                 .addComponent(lblTextoFamiliasAsignadas)
-                .addGap(28, 28, 28)
+                .addGap(18, 18, 18)
                 .addComponent(spTablaFamilias, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37)
                 .addComponent(btnVerFamilias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -372,7 +369,8 @@ public javax.swing.JPanel getPanelContenido() {
         lblMenu.setText("Menú");
 
         btnFamiliasAsignadas.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btnFamiliasAsignadas.setText("Familias asignadas");
+        btnFamiliasAsignadas.setText("Hogares asignados");
+        btnFamiliasAsignadas.addActionListener(this::btnFamiliasAsignadasActionPerformed);
 
         btnCerrarSesion.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         btnCerrarSesion.setText("Cerrar sesión");
@@ -441,6 +439,10 @@ public javax.swing.JPanel getPanelContenido() {
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
+
+    private void btnFamiliasAsignadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFamiliasAsignadasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnFamiliasAsignadasActionPerformed
 
     /**
      * @param args the command line arguments

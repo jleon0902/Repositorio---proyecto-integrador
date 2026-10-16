@@ -222,11 +222,11 @@ private void configurarSeleccionUnica() {
         pnlFamiliasEncuestadas.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
         btnVerFamilia.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btnVerFamilia.setText("Ver familia");
+        btnVerFamilia.setText("Ver hogar");
         btnVerFamilia.addActionListener(this::btnVerFamiliaActionPerformed);
 
         lblFamiliasEncuestadas.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        lblFamiliasEncuestadas.setText("Familias encuestadas");
+        lblFamiliasEncuestadas.setText("Hogares encuestados");
 
         lblRegion.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblRegion.setText("Región:");
@@ -267,60 +267,55 @@ private void configurarSeleccionUnica() {
         pnlFamiliasEncuestadas.setLayout(pnlFamiliasEncuestadasLayout);
         pnlFamiliasEncuestadasLayout.setHorizontalGroup(
             pnlFamiliasEncuestadasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlFamiliasEncuestadasLayout.createSequentialGroup()
-                .addGroup(pnlFamiliasEncuestadasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlFamiliasEncuestadasLayout.createSequentialGroup()
-                        .addGap(520, 520, 520)
-                        .addComponent(lblFamiliasEncuestadas))
-                    .addGroup(pnlFamiliasEncuestadasLayout.createSequentialGroup()
-                        .addGroup(pnlFamiliasEncuestadasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlFamiliasEncuestadasLayout.createSequentialGroup()
-                                .addGap(195, 195, 195)
-                                .addGroup(pnlFamiliasEncuestadasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblRegion)
-                                    .addComponent(lblMunicipio))
-                                .addGap(46, 46, 46))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFamiliasEncuestadasLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(lblDepartamento)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                        .addGroup(pnlFamiliasEncuestadasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtRegion, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
-                            .addComponent(txtDepartamento)
-                            .addComponent(txtMunicipio))))
-                .addContainerGap(347, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFamiliasEncuestadasLayout.createSequentialGroup()
                 .addGroup(pnlFamiliasEncuestadasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pnlFamiliasEncuestadasLayout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(spTablaFamiliasEncuesta))
                     .addGroup(pnlFamiliasEncuestadasLayout.createSequentialGroup()
                         .addGap(59, 59, 59)
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnVerFamilia)))
+                        .addComponent(btnVerFamilia))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlFamiliasEncuestadasLayout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addGroup(pnlFamiliasEncuestadasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(spTablaFamiliasEncuesta, javax.swing.GroupLayout.DEFAULT_SIZE, 1005, Short.MAX_VALUE)
+                            .addGroup(pnlFamiliasEncuestadasLayout.createSequentialGroup()
+                                .addGroup(pnlFamiliasEncuestadasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(pnlFamiliasEncuestadasLayout.createSequentialGroup()
+                                        .addComponent(lblMunicipio)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(txtMunicipio, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(pnlFamiliasEncuestadasLayout.createSequentialGroup()
+                                        .addComponent(lblRegion)
+                                        .addGap(105, 105, 105)
+                                        .addComponent(txtRegion, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(pnlFamiliasEncuestadasLayout.createSequentialGroup()
+                                        .addComponent(lblDepartamento)
+                                        .addGap(54, 54, 54)
+                                        .addComponent(txtDepartamento, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(37, 37, 37))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFamiliasEncuestadasLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lblFamiliasEncuestadas)
+                .addGap(425, 425, 425))
         );
         pnlFamiliasEncuestadasLayout.setVerticalGroup(
             pnlFamiliasEncuestadasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlFamiliasEncuestadasLayout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(28, 28, 28)
                 .addComponent(lblFamiliasEncuestadas)
-                .addGap(15, 15, 15)
-                .addGroup(pnlFamiliasEncuestadasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblRegion)
-                    .addComponent(txtRegion, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(pnlFamiliasEncuestadasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlFamiliasEncuestadasLayout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addComponent(lblMunicipio))
-                    .addGroup(pnlFamiliasEncuestadasLayout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addGroup(pnlFamiliasEncuestadasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtDepartamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblDepartamento))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtMunicipio, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(pnlFamiliasEncuestadasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtRegion, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblRegion))
+                .addGap(11, 11, 11)
+                .addGroup(pnlFamiliasEncuestadasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtDepartamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDepartamento))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlFamiliasEncuestadasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtMunicipio, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblMunicipio))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(spTablaFamiliasEncuesta, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -349,9 +344,9 @@ private void configurarSeleccionUnica() {
                 .addComponent(lblDane)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblEnph)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(80, 80, 80)
                 .addComponent(lblCriticoDigitador)
-                .addGap(77, 77, 77))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlLogosLayout.setVerticalGroup(
             pnlLogosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -359,11 +354,12 @@ private void configurarSeleccionUnica() {
                 .addGap(20, 20, 20)
                 .addGroup(pnlLogosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblDane)
-                    .addComponent(lblEnph)
-                    .addGroup(pnlLogosLayout.createSequentialGroup()
-                        .addComponent(lblCriticoDigitador)
-                        .addGap(17, 17, 17)))
+                    .addComponent(lblEnph))
                 .addContainerGap(20, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlLogosLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblCriticoDigitador)
+                .addGap(35, 35, 35))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -372,13 +368,14 @@ private void configurarSeleccionUnica() {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnlLogos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 2, Short.MAX_VALUE)
                 .addComponent(pnlFamiliasEncuestadas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pnlLogos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(pnlFamiliasEncuestadas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
