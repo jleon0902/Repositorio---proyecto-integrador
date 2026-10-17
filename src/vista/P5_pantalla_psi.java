@@ -450,6 +450,10 @@ private void configurarPantalla() {
     btnSalir.addActionListener(e -> salirDePantalla());
 
     jButton2.addActionListener(e -> continuarProducto());
+    
+    jButton3.addActionListener(e -> anteriorProducto());
+    
+    jButton3.setVisible(false);
 
     btnHogar.addActionListener(e -> {
         if (edicionActiva) {
@@ -511,6 +515,10 @@ private void cargarDatosDeHoy() {
             lblProducto.setText("No hay productos registrados hoy");
             btnEditar.setEnabled(false);
             jButton1.setEnabled(false);
+
+            // CAMBIO 3: si no hay productos, deshabilitar la navegación.
+            jButton2.setEnabled(false);
+            jButton3.setVisible(false);
 
             javax.swing.JOptionPane.showMessageDialog(this,
                     "No hay productos registrados hoy para esta encuesta.");
@@ -579,8 +587,29 @@ private void mostrarGastoActual() {
 
     bloquearEdicion();
 scrGastosDiarios.setValue(0);
-}
 
+actualizarBotonesNavegacion();
+}
+private void actualizarBotonesNavegacion() {
+
+    if (gastos == null || gastos.isEmpty()) {
+        jButton2.setEnabled(false);
+        jButton3.setVisible(false);
+        return;
+    }
+
+    // Anterior solo aparece a partir del segundo producto.
+    jButton3.setVisible(indiceActual > 0);
+
+    // En el último producto, el botón Continuar pasa a llamarse Finalizar.
+    if (indiceActual == gastos.size() - 1) {
+        jButton2.setText("Finalizar");
+    } else {
+        jButton2.setText("Continuar");
+    }
+
+    jButton2.setEnabled(true);
+}
 private String buscarNombre(
             java.util.List<modelo.GastosDiariosDAO.OpcionCatalogo> catalogo,
             int id) {
@@ -728,8 +757,13 @@ private void bloquearEdicion() {
         }
     }
 
-    private void continuarProducto() {
-        // Validación: Si la edición está activa, preguntar al usuario
+private void continuarProducto() {
+
+        if (gastos == null || gastos.isEmpty()) {
+            return;
+        }
+
+        // Si se está editando, resolver primero los cambios sin guardar.
         if (edicionActiva) {
             int respuesta = javax.swing.JOptionPane.showConfirmDialog(
                     this,
@@ -741,30 +775,47 @@ private void bloquearEdicion() {
 
             if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
                 guardarCambios();
-                // Si guardó exitosamente, ediciónActiva pasará a false. Si falló, se quedará en la pantalla.
-                if (edicionActiva) return; 
-            } else if (respuesta == javax.swing.JOptionPane.CANCEL_OPTION || respuesta == javax.swing.JOptionPane.CLOSED_OPTION) {
-                // El usuario canceló la acción de continuar
-                return;
+                // Si hubo un error al guardar, no avanzar ni finalizar.
+                if (edicionActiva) {
+                    return;
+                }
             } else if (respuesta == javax.swing.JOptionPane.NO_OPTION) {
-                // El usuario no quiso guardar. Bloqueamos la edición para descartar visualmente.
+                // Se descartan los cambios que solo estaban en pantalla.
                 bloquearEdicion();
+            } else {
+                // Cancelar o cerrar el diálogo mantiene el producto actual.
+                return;
             }
         }
+                if (indiceActual == gastos.size() - 1) {
+            int respuesta = javax.swing.JOptionPane.showConfirmDialog(
+                    this,
+                    "Has llegado al último producto. ¿Estás seguro de que deseas finalizar la revisión?",
+                    "Finalizar revisión",
+                    javax.swing.JOptionPane.YES_NO_OPTION,
+                    javax.swing.JOptionPane.QUESTION_MESSAGE
+            );
 
-        // Lógica normal de continuar al siguiente producto
-        if (gastos == null || gastos.isEmpty()) return;
-        
-        if (indiceActual < gastos.size() - 1) {
-            indiceActual++;
-            mostrarGastoActual();
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "Este es el último producto de la lista.");
+            if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
+                // Reutiliza la salida existente y vuelve a la pantalla anterior, si existe.
+                salirDePantalla();
+            }
+            // Si responde No o cierra el diálogo, permanece en el último producto.
+            return;
         }
+
+        // Avanzar al siguiente producto.
+        indiceActual++;
+        mostrarGastoActual();
     }
 
-    private void anteriorProducto() {
-        // Misma validación que al continuar
+ private void anteriorProducto() {
+
+        if (gastos == null || gastos.isEmpty()) {
+            return;
+        }
+
+        // Resolver cambios pendientes antes de retroceder.
         if (edicionActiva) {
             int respuesta = javax.swing.JOptionPane.showConfirmDialog(
                     this,
@@ -776,24 +827,22 @@ private void bloquearEdicion() {
 
             if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
                 guardarCambios();
-                if (edicionActiva) return; 
-            } else if (respuesta == javax.swing.JOptionPane.CANCEL_OPTION || respuesta == javax.swing.JOptionPane.CLOSED_OPTION) {
-                return;
+                if (edicionActiva) {
+                    return;
+                }
             } else if (respuesta == javax.swing.JOptionPane.NO_OPTION) {
                 bloquearEdicion();
+            } else {
+                return;
             }
         }
 
-        if (gastos == null || gastos.isEmpty()) return;
-        
+        // El botón está oculto en el primer producto, pero se conserva esta validación.
         if (indiceActual > 0) {
             indiceActual--;
             mostrarGastoActual();
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "Este es el primer producto de la lista.");
         }
     }
-
     private void salirDePantalla() {
         if (edicionActiva) {
             int respuesta = javax.swing.JOptionPane.showConfirmDialog(
