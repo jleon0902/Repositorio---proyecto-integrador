@@ -22,8 +22,8 @@ public class conexion {
         String url = "jdbc:oracle:thin:@" 
                 + localh + ":" + puerto + ":" + sid;
 
-        String usuario = "vcaj_encuesta";
-        String contraseña = "vcaj_encuesta_1234";
+        String usuario = "enph_vcaj";
+        String contraseña = "enph_vcaj_1234";
 
         try {
 

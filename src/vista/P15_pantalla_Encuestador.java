@@ -17,6 +17,8 @@ import java.util.List;
 public class P15_pantalla_Encuestador extends javax.swing.JFrame {
     private String cedulaEncuestador;
     private int idEncuestaCreada = -1;
+    private boolean modoEdicion = false;
+private int idEncuestaEditando = -1;
     
     
     private List<String> cedulasRepresentantes = new java.util.ArrayList<>();
@@ -27,6 +29,21 @@ public class P15_pantalla_Encuestador extends javax.swing.JFrame {
      */
     public P15_pantalla_Encuestador() {
         initComponents();
+        
+        javax.swing.table.DefaultTableModel modeloTabla =
+        (javax.swing.table.DefaultTableModel)
+                jtbPortatilesVinculados.getModel();
+
+modeloTabla.setColumnIdentifiers(new Object[]{
+    "#", "Cédula", "Representante",
+    "Portatil Asignado", "ID Encuesta"
+});
+
+// Ocultar la columna del ID, pero conservarla en el modelo.
+jtbPortatilesVinculados.removeColumn(
+        jtbPortatilesVinculados.getColumnModel().getColumn(4)
+);
+        
         
         btnGuardar.addActionListener(this::btnGuardarActionPerformed);
         // Cargar los portátiles disponibles al abrir la pantalla
@@ -390,7 +407,74 @@ private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
                     idPortatil = rs.getInt("ID");
                 }
             }
+            
+            // Si estamos editando, actualizar la encuesta existente.
+if (modoEdicion) {
 
+    String sqlActualizar =
+            "UPDATE ENCUESTA SET " +
+            "CEDULA_REPRESENTANTE = ?, " +
+            "ID_PORTATIL = ?, " +
+            "FECHA_INICIO = ?, " +
+            "FECHA_FIN = ? " +
+            "WHERE ID = ?";
+
+    try (PreparedStatement ps =
+            cn.prepareStatement(sqlActualizar)) {
+
+        ps.setString(1, cedulaRepresentante);
+        ps.setInt(2, idPortatil);
+
+        ps.setDate(
+                3,
+                new java.sql.Date(fechaInicio.getTime())
+        );
+
+        ps.setDate(
+                4,
+                new java.sql.Date(fechaFin.getTime())
+        );
+
+        ps.setInt(5, idEncuestaEditando);
+
+        int filasActualizadas = ps.executeUpdate();
+
+        if (filasActualizadas == 0) {
+            throw new SQLException(
+                    "No se encontró la encuesta que se desea editar."
+            );
+        }
+    }
+
+    cn.commit();
+
+    int idActualizado = idEncuestaEditando;
+
+    // Salir del modo edición.
+    modoEdicion = false;
+    idEncuestaEditando = -1;
+
+    // Actualizar la información mostrada.
+    cargarTablaPortatilesVinculados();
+    cargarPortatilesDisponibles();
+    cargarRepresentantes(cedulasRepresentantes);
+
+    // Limpiar los campos.
+    cmbRepresentanteHogar.setSelectedIndex(0);
+    cmbPortatilFamilia.setSelectedIndex(0);
+    txtFechaEntrega.setText("");
+
+    JOptionPane.showMessageDialog(
+            this,
+            "La encuesta " + idActualizado
+            + " se actualizó correctamente."
+    );
+
+    return;
+}
+            
+            
+            
             // Generar el ID de la encuesta
             // (si todavía no existe una secuencia o IDENTITY)
             int idEncuesta;
@@ -548,11 +632,12 @@ private void cargarTablaPortatilesVinculados() {
 
             while (rs.next()) {
                 Object[] fila = {
-                    numero,
-                    rs.getString("CEDULA"),
-                    rs.getString("NOMBRE"),
-                    rs.getString("NUMERO_SERIE")
-                };
+                numero,
+                rs.getString("CEDULA"),
+                rs.getString("NOMBRE"),
+                rs.getString("NUMERO_SERIE"),
+                rs.getInt("ID")
+            };
 
                 modeloTabla.addRow(fila);
                 numero++;
@@ -570,7 +655,67 @@ private void cargarTablaPortatilesVinculados() {
     }
 }
 
+private void cargarRepresentantesParaEdicion(
+        String cedulaRepresentanteActual) {
 
+    cmbRepresentanteHogar.removeAllItems();
+    cmbRepresentanteHogar.addItem("Seleccione");
+
+    if (cedulasRepresentantes == null
+            || cedulasRepresentantes.isEmpty()) {
+        return;
+    }
+
+    String marcadores = String.join(
+            ",",
+            java.util.Collections.nCopies(
+                    cedulasRepresentantes.size(), "?")
+    );
+
+    String sql =
+            "SELECT R.CEDULA, R.NOMBRE " +
+            "FROM REPRESENTANTE R " +
+            "WHERE R.CEDULA IN (" + marcadores + ") " +
+            "AND ( " +
+            "    NOT EXISTS ( " +
+            "        SELECT 1 FROM ENCUESTA E " +
+            "        WHERE E.CEDULA_REPRESENTANTE = R.CEDULA " +
+            "    ) " +
+            "    OR R.CEDULA = ? " +
+            ") " +
+            "ORDER BY R.NOMBRE";
+
+    try (Connection cn = modelo.conexion.conectar();
+         PreparedStatement ps = cn.prepareStatement(sql)) {
+
+        int parametro = 1;
+
+        for (String cedula : cedulasRepresentantes) {
+            ps.setString(parametro++, cedula);
+        }
+
+        ps.setString(parametro, cedulaRepresentanteActual);
+
+        try (ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                cmbRepresentanteHogar.addItem(
+                        rs.getString("CEDULA") + " / "
+                        + rs.getString("NOMBRE")
+                );
+            }
+        }
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(
+                this,
+                "Error al cargar los representantes: "
+                + e.getMessage(),
+                "Error de base de datos",
+                JOptionPane.ERROR_MESSAGE
+        );
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -667,6 +812,7 @@ private void cargarTablaPortatilesVinculados() {
 
         jbnEliminar.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jbnEliminar.setText("Eliminar");
+        jbnEliminar.addActionListener(this::jbnEliminarActionPerformed);
 
         jbnEditar.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jbnEditar.setText("Editar");
@@ -704,7 +850,7 @@ private void cargarTablaPortatilesVinculados() {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(btnGuardar))
                                 .addComponent(jScrollPane1)
-                                .addGroup(pnlRegistrarEntregaFormatoLayout.createSequentialGroup()
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlRegistrarEntregaFormatoLayout.createSequentialGroup()
                                     .addComponent(jbnEditar)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jbnEliminar))))))
@@ -857,7 +1003,290 @@ private void cargarTablaPortatilesVinculados() {
 
     private void jbnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnEditarActionPerformed
         // TODO add your handling code here:
+         int filaSeleccionada = jtbPortatilesVinculados.getSelectedRow();
+
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(
+                this,
+                "Seleccione una familia de la tabla para editar."
+        );
+        return;
+    }
+
+    int filaModelo = jtbPortatilesVinculados
+            .convertRowIndexToModel(filaSeleccionada);
+
+    javax.swing.table.DefaultTableModel modeloTabla =
+            (javax.swing.table.DefaultTableModel)
+                    jtbPortatilesVinculados.getModel();
+
+    int idEncuesta = Integer.parseInt(
+            modeloTabla.getValueAt(filaModelo, 4).toString()
+    );
+
+    try (Connection cn = modelo.conexion.conectar()) {
+
+        if (cn == null) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "No se pudo conectar con la base de datos."
+            );
+            return;
+        }
+
+        // 1. Comprobar que la encuesta no tenga gastos diarios.
+        String sqlGastos =
+                "SELECT COUNT(*) AS TOTAL " +
+                "FROM GASTOS_DIARIOS " +
+                "WHERE ID_ENCUESTA = ?";
+
+        try (PreparedStatement ps = cn.prepareStatement(sqlGastos)) {
+
+            ps.setInt(1, idEncuesta);
+
+            try (ResultSet rs = ps.executeQuery()) {
+
+                if (rs.next() && rs.getInt("TOTAL") > 0) {
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "No se puede editar esta encuesta porque "
+                            + "ya tiene productos registrados en "
+                            + "GASTOS_DIARIOS."
+                    );
+                    return;
+                }
+            }
+        }
+
+        // 2. Consultar los datos actuales de la encuesta.
+        String sqlDatos =
+                "SELECT E.ID, E.FECHA_INICIO, " +
+                "E.CEDULA_REPRESENTANTE, R.NOMBRE, " +
+                "E.ID_PORTATIL, P.NUMERO_SERIE " +
+                "FROM ENCUESTA E " +
+                "INNER JOIN REPRESENTANTE R " +
+                "ON R.CEDULA = E.CEDULA_REPRESENTANTE " +
+                "INNER JOIN PORTATIL P " +
+                "ON P.ID = E.ID_PORTATIL " +
+                "WHERE E.ID = ?";
+
+        try (PreparedStatement ps = cn.prepareStatement(sqlDatos)) {
+
+            ps.setInt(1, idEncuesta);
+
+            try (ResultSet rs = ps.executeQuery()) {
+
+                if (!rs.next()) {
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "No se encontró la encuesta seleccionada."
+                    );
+                    return;
+                }
+
+                String cedulaRepresentante =
+                        rs.getString("CEDULA_REPRESENTANTE");
+
+                String nombreRepresentante =
+                        rs.getString("NOMBRE");
+
+                String numeroSerie =
+                        rs.getString("NUMERO_SERIE");
+
+                java.sql.Date fechaInicio =
+                        rs.getDate("FECHA_INICIO");
+
+                // Guardar el ID para actualizar esta misma encuesta.
+                idEncuestaEditando = rs.getInt("ID");
+                modoEdicion = true;
+
+                // 3. Cargar los representantes disponibles,
+                // incluyendo al representante actual.
+                cargarRepresentantesParaEdicion(
+                        cedulaRepresentante
+                );
+
+                cmbRepresentanteHogar.setSelectedItem(
+                        cedulaRepresentante + " / "
+                        + nombreRepresentante
+                );
+
+                // 4. Cargar los portátiles disponibles.
+                cargarPortatilesDisponibles();
+
+                // El portátil actual no aparece en la consulta
+                // de disponibles porque ya está asignado.
+                boolean existePortatil = false;
+
+                for (int i = 0;
+                        i < cmbPortatilFamilia.getItemCount();
+                        i++) {
+
+                    if (numeroSerie.equals(
+                            cmbPortatilFamilia.getItemAt(i))) {
+                        existePortatil = true;
+                        break;
+                    }
+                }
+
+                // Se permite conservar el portátil actual.
+                if (!existePortatil) {
+                    cmbPortatilFamilia.addItem(numeroSerie);
+                }
+
+                cmbPortatilFamilia.setSelectedItem(numeroSerie);
+
+                // 5. Mostrar la fecha de inicio actual.
+                java.text.SimpleDateFormat formato =
+                        new java.text.SimpleDateFormat("dd/MM/yyyy");
+
+                txtFechaEntrega.setText(
+                        formato.format(fechaInicio)
+                );
+
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Puede editar los datos de la encuesta "
+                        + idEncuestaEditando + "."
+                );
+            }
+        }
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(
+                this,
+                "Error al consultar la encuesta: " + e.getMessage(),
+                "Error de base de datos",
+                JOptionPane.ERROR_MESSAGE
+        );
+    }
     }//GEN-LAST:event_jbnEditarActionPerformed
+
+    private void jbnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnEliminarActionPerformed
+        // TODO add your handling code here:
+        // 1. Verificar que se haya seleccionado una familia.
+    int filaSeleccionada = jtbPortatilesVinculados.getSelectedRow();
+
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(
+                this,
+                "Seleccione una familia de la tabla para eliminar."
+        );
+        return;
+    }
+
+    // Obtener la fila del modelo, aunque la tabla esté ordenada.
+    int filaModelo = jtbPortatilesVinculados
+            .convertRowIndexToModel(filaSeleccionada);
+
+    javax.swing.table.DefaultTableModel modeloTabla =
+            (javax.swing.table.DefaultTableModel)
+                    jtbPortatilesVinculados.getModel();
+
+    // La columna 4 contiene el ID de la encuesta y está oculta.
+    int idEncuesta = Integer.parseInt(
+            modeloTabla.getValueAt(filaModelo, 4).toString()
+    );
+
+    String nombreRepresentante =
+            modeloTabla.getValueAt(filaModelo, 2).toString();
+
+    // 2. Verificar si la encuesta tiene gastos diarios.
+    String sqlGastos =
+            "SELECT COUNT(*) AS TOTAL " +
+            "FROM GASTOS_DIARIOS " +
+            "WHERE ID_ENCUESTA = ?";
+
+    String sqlEliminar =
+            "DELETE FROM ENCUESTA WHERE ID = ?";
+
+    try (Connection cn = modelo.conexion.conectar()) {
+
+        if (cn == null) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "No se pudo conectar con la base de datos.",
+                    "Error de conexión",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+
+        try (PreparedStatement ps = cn.prepareStatement(sqlGastos)) {
+
+            ps.setInt(1, idEncuesta);
+
+            try (ResultSet rs = ps.executeQuery()) {
+
+                if (rs.next() && rs.getInt("TOTAL") > 0) {
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "No se puede eliminar el registro de "
+                            + nombreRepresentante
+                            + " porque su encuesta tiene registros "
+                            + "en GASTOS_DIARIOS.",
+                            "No se puede eliminar",
+                            JOptionPane.WARNING_MESSAGE
+                    );
+                    return;
+                }
+            }
+        }
+
+        // 3. Pedir confirmación antes de eliminar.
+        int respuesta = JOptionPane.showConfirmDialog(
+                this,
+                "¿Está seguro de eliminar la encuesta del representante "
+                + nombreRepresentante + "?",
+                "Confirmar eliminación",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
+        );
+
+        if (respuesta != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        // 4. Eliminar únicamente la encuesta seleccionada.
+        try (PreparedStatement ps = cn.prepareStatement(sqlEliminar)) {
+
+            ps.setInt(1, idEncuesta);
+
+            int filasEliminadas = ps.executeUpdate();
+
+            if (filasEliminadas > 0) {
+
+                JOptionPane.showMessageDialog(
+                        this,
+                        "La encuesta del representante "
+                        + nombreRepresentante
+                        + " se eliminó correctamente."
+                );
+
+                // 5. Actualizar la tabla y las listas de selección.
+                cargarTablaPortatilesVinculados();
+                cargarPortatilesDisponibles();
+                cargarRepresentantes(cedulasRepresentantes);
+
+            } else {
+                JOptionPane.showMessageDialog(
+                        this,
+                        "No se encontró la encuesta que desea eliminar.",
+                        "Aviso",
+                        JOptionPane.WARNING_MESSAGE
+                );
+            }
+        }
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(
+                this,
+                "Error al eliminar la encuesta: " + e.getMessage(),
+                "Error de base de datos",
+                JOptionPane.ERROR_MESSAGE
+        );
+    }
+    }//GEN-LAST:event_jbnEliminarActionPerformed
 
     /**
      * @param args the command line arguments

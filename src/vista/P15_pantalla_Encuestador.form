@@ -116,7 +116,7 @@
                                           <Component id="btnGuardar" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
-                                      <Group type="102" alignment="0" attributes="0">
+                                      <Group type="102" alignment="1" attributes="0">
                                           <Component id="jbnEditar" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="32767" attributes="0"/>
                                           <Component id="jbnEliminar" min="-2" max="-2" attributes="0"/>
@@ -291,6 +291,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Eliminar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbnEliminarActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jbnEditar">
               <Properties>
