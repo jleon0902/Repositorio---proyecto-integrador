@@ -57,6 +57,8 @@ btnVincularPortatil.addActionListener(e -> {
     pantalla.setNombreEncuestador(
             lblEncuestador.getText().replace("Encuestador: ", "")
     );
+    
+    pantalla.setCedulaEncuestador(cedulaEncuestador);
 
     pantalla.setCedulasRepresentantes(
             familias.getCedulasRepresentantes()

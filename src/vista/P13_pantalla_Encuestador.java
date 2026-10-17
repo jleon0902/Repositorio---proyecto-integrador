@@ -132,6 +132,7 @@ tblTablaFamilias.setSelectionMode(
         P15_pantalla_Encuestador pantalla =
             new P15_pantalla_Encuestador();
 
+        pantalla.setCedulaEncuestador(cedulaEncuestador);
         pantalla.setCedulasRepresentantes(cedulasRepresentantes);
         pantalla.setLocationRelativeTo(this);
         pantalla.setVisible(true);

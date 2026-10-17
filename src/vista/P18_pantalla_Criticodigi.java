@@ -178,6 +178,7 @@ public void setNombreCriticoDigitador(String nombre) {
 
     P19_pantalla_Criticodigi pantalla =
             new P19_pantalla_Criticodigi();
+    
 
     javax.swing.JPanel contenido = pantalla.obtenerPanelFamilias();
 

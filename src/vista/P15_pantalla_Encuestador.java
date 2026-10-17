@@ -113,11 +113,37 @@ public class P15_pantalla_Encuestador extends javax.swing.JFrame {
     public void setNombreEncuestador(String nombre) {
     lblUsuario.setText("Encuestador: " + nombre);
 }
+    
+    
+public void setCedulaEncuestador(String cedula) {
+    this.cedulaEncuestador = cedula;
+    cargarTablaPortatilesVinculados();
+}
+
+
 
 
 public javax.swing.JPanel getPanelContenido() {
-    return pnlRegistrarEntregaFormato;
+
+    javax.swing.JPanel contenedor =
+            new javax.swing.JPanel(new java.awt.BorderLayout());
+
+    javax.swing.JScrollPane scroll =
+            new javax.swing.JScrollPane(
+                    pnlRegistrarEntregaFormato);
+
+    scroll.setVerticalScrollBarPolicy(
+            javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+    scroll.setHorizontalScrollBarPolicy(
+            javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+    contenedor.add(scroll, java.awt.BorderLayout.CENTER);
+
+    return contenedor;
 }
+
+
 
 
 public void setCedulasRepresentantes(List<String> cedulas) {
@@ -130,7 +156,11 @@ public void setCedulasRepresentantes(List<String> cedulas) {
     }
 
     cargarRepresentantes(this.cedulasRepresentantes);
+
+    // Actualizar la tabla con las cédulas recibidas desde P13.
+    cargarTablaPortatilesVinculados();
 }
+
 
 
 
@@ -400,6 +430,8 @@ private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
 
             cn.commit();
             
+            cargarTablaPortatilesVinculados();
+            
             idEncuestaCreada = idEncuesta;
             
             javax.swing.JOptionPane.showMessageDialog(
@@ -457,6 +489,89 @@ public int getIdEncuestaCreada() {
 
 
 
+private void cargarTablaPortatilesVinculados() {
+
+    javax.swing.table.DefaultTableModel modeloTabla =
+        (javax.swing.table.DefaultTableModel)
+            jtbPortatilesVinculados.getModel();
+
+    modeloTabla.setRowCount(0);
+
+    // Necesitamos conocer al encuestador.
+    if (cedulaEncuestador == null
+            || cedulaEncuestador.trim().isEmpty()) {
+        return;
+    }
+
+    // Si P13 no ha enviado las cédulas, no mostrar filas.
+    if (cedulasRepresentantes == null
+            || cedulasRepresentantes.isEmpty()) {
+        return;
+    }
+
+    String marcadores = String.join(
+        ",",
+        java.util.Collections.nCopies(
+            cedulasRepresentantes.size(), "?")
+    );
+
+    String sql =
+        "SELECT DISTINCT " +
+        "R.CEDULA, R.NOMBRE, P.NUMERO_SERIE, E.ID " +
+        "FROM HOGAR H " +
+        "INNER JOIN REPRESENTANTE R " +
+        "ON R.CEDULA = H.CED_REPRESENTANTE " +
+        "INNER JOIN ENCUESTA E " +
+        "ON E.CEDULA_REPRESENTANTE = R.CEDULA " +
+        "INNER JOIN PORTATIL P " +
+        "ON P.ID = E.ID_PORTATIL " +
+        "WHERE H.CED_ENCUESTADOR = ? " +
+        "AND R.CEDULA IN (" + marcadores + ") " +
+        "ORDER BY E.ID ASC";
+
+    try (Connection cn = modelo.conexion.conectar();
+         PreparedStatement ps = cn.prepareStatement(sql)) {
+
+        int parametro = 1;
+
+        // Filtrar por el encuestador que inició sesión.
+        ps.setString(parametro++, cedulaEncuestador);
+
+        // Filtrar únicamente por las cédulas que llegan de P13.
+        for (String cedula : cedulasRepresentantes) {
+            ps.setString(parametro++, cedula);
+        }
+
+        try (ResultSet rs = ps.executeQuery()) {
+
+            int numero = 1;
+
+            while (rs.next()) {
+                Object[] fila = {
+                    numero,
+                    rs.getString("CEDULA"),
+                    rs.getString("NOMBRE"),
+                    rs.getString("NUMERO_SERIE")
+                };
+
+                modeloTabla.addRow(fila);
+                numero++;
+            }
+        }
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(
+            this,
+            "Error al cargar los portátiles vinculados: "
+                + e.getMessage(),
+            "Error de base de datos",
+            JOptionPane.ERROR_MESSAGE
+        );
+    }
+}
+
+
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -478,6 +593,11 @@ public int getIdEncuestaCreada() {
         txtFechaEntrega = new javax.swing.JTextField();
         lblFechaEntrega = new javax.swing.JLabel();
         cmbPortatilFamilia = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtbPortatilesVinculados = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jbnEliminar = new javax.swing.JButton();
+        jbnEditar = new javax.swing.JButton();
         pnlLogos = new javax.swing.JPanel();
         lblDane = new javax.swing.JLabel();
         lblEnph = new javax.swing.JLabel();
@@ -521,6 +641,37 @@ public int getIdEncuestaCreada() {
 
         cmbPortatilFamilia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        jtbPortatilesVinculados.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "#", "Cédula", "Representante", "Portatil Asignado"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jtbPortatilesVinculados);
+
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel1.setText("Portatiles Vinculados a Representantes del Hogar");
+
+        jbnEliminar.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jbnEliminar.setText("Eliminar");
+
+        jbnEditar.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jbnEditar.setText("Editar");
+        jbnEditar.addActionListener(this::jbnEditarActionPerformed);
+
         javax.swing.GroupLayout pnlRegistrarEntregaFormatoLayout = new javax.swing.GroupLayout(pnlRegistrarEntregaFormato);
         pnlRegistrarEntregaFormato.setLayout(pnlRegistrarEntregaFormatoLayout);
         pnlRegistrarEntregaFormatoLayout.setHorizontalGroup(
@@ -528,29 +679,36 @@ public int getIdEncuestaCreada() {
             .addGroup(pnlRegistrarEntregaFormatoLayout.createSequentialGroup()
                 .addGroup(pnlRegistrarEntregaFormatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlRegistrarEntregaFormatoLayout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addGroup(pnlRegistrarEntregaFormatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(pnlRegistrarEntregaFormatoLayout.createSequentialGroup()
-                                .addComponent(btnCancelar)
-                                .addGap(411, 411, 411)
-                                .addComponent(btnGuardar))
-                            .addGroup(pnlRegistrarEntregaFormatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(pnlRegistrarEntregaFormatoLayout.createSequentialGroup()
+                        .addGap(264, 264, 264)
+                        .addComponent(lblRegistrarEntrega))
+                    .addGroup(pnlRegistrarEntregaFormatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnlRegistrarEntregaFormatoLayout.createSequentialGroup()
+                            .addGap(40, 40, 40)
+                            .addComponent(lblSeleccioneRepresentante, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(94, 94, 94)
+                            .addComponent(cmbRepresentanteHogar, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlRegistrarEntregaFormatoLayout.createSequentialGroup()
+                            .addContainerGap()
+                            .addGroup(pnlRegistrarEntregaFormatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel1)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlRegistrarEntregaFormatoLayout.createSequentialGroup()
                                     .addComponent(lblFechaEntrega)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(txtFechaEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(pnlRegistrarEntregaFormatoLayout.createSequentialGroup()
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlRegistrarEntregaFormatoLayout.createSequentialGroup()
                                     .addComponent(lblPortatilVinculadoFamilia)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGap(94, 94, 94)
                                     .addComponent(cmbPortatilFamilia, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlRegistrarEntregaFormatoLayout.createSequentialGroup()
+                                    .addComponent(btnCancelar)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnGuardar))
+                                .addComponent(jScrollPane1)
                                 .addGroup(pnlRegistrarEntregaFormatoLayout.createSequentialGroup()
-                                    .addComponent(lblSeleccioneRepresentante, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(66, 66, 66)
-                                    .addComponent(cmbRepresentanteHogar, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addGroup(pnlRegistrarEntregaFormatoLayout.createSequentialGroup()
-                        .addGap(235, 235, 235)
-                        .addComponent(lblRegistrarEntrega)))
-                .addContainerGap(68, Short.MAX_VALUE))
+                                    .addComponent(jbnEditar)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jbnEliminar))))))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         pnlRegistrarEntregaFormatoLayout.setVerticalGroup(
             pnlRegistrarEntregaFormatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -561,28 +719,34 @@ public int getIdEncuestaCreada() {
                 .addGroup(pnlRegistrarEntregaFormatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(cmbRepresentanteHogar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblSeleccioneRepresentante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(48, 48, 48)
+                .addGap(20, 20, 20)
                 .addGroup(pnlRegistrarEntregaFormatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblPortatilVinculadoFamilia)
-                    .addComponent(cmbPortatilFamilia, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
+                    .addComponent(cmbPortatilFamilia, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblPortatilVinculadoFamilia, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16)
                 .addGroup(pnlRegistrarEntregaFormatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblFechaEntrega)
                     .addComponent(txtFechaEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addGap(20, 20, 20)
                 .addGroup(pnlRegistrarEntregaFormatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(42, 42, 42))
+                    .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(47, 47, 47)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addGroup(pnlRegistrarEntregaFormatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbnEliminar)
+                    .addComponent(jbnEditar))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlRegistrarEntregaLayout = new javax.swing.GroupLayout(pnlRegistrarEntrega);
         pnlRegistrarEntrega.setLayout(pnlRegistrarEntregaLayout);
         pnlRegistrarEntregaLayout.setHorizontalGroup(
             pnlRegistrarEntregaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlRegistrarEntregaLayout.createSequentialGroup()
-                .addComponent(pnlRegistrarEntregaFormato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(pnlRegistrarEntregaFormato, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnlRegistrarEntregaLayout.setVerticalGroup(
             pnlRegistrarEntregaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -632,7 +796,7 @@ public int getIdEncuestaCreada() {
                         .addGap(43, 43, 43)
                         .addComponent(lblUsuario))
                     .addComponent(pnlLogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(115, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlLogosLayout.setVerticalGroup(
             pnlLogosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -658,9 +822,7 @@ public int getIdEncuestaCreada() {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnlRegistrarEntrega, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(pnlLogos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(pnlLogos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -680,18 +842,22 @@ public int getIdEncuestaCreada() {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
         int respuesta = JOptionPane.showConfirmDialog(
-        this,
-        "¿Está seguro de que quiere cancelar?",
-        "Confirmar cancelación",
-        JOptionPane.YES_NO_OPTION
-);
+            this,
+            "¿Está seguro de que quiere cancelar?",
+            "Confirmar cancelación",
+            JOptionPane.YES_NO_OPTION
+        );
 
-if (respuesta == JOptionPane.YES_OPTION) {
-    cmbRepresentanteHogar.setSelectedIndex(0);
-    cmbPortatilFamilia.setSelectedIndex(0);
-    txtFechaEntrega.setText("");
-}
+        if (respuesta == JOptionPane.YES_OPTION) {
+            cmbRepresentanteHogar.setSelectedIndex(0);
+            cmbPortatilFamilia.setSelectedIndex(0);
+            txtFechaEntrega.setText("");
+        }
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void jbnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnEditarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbnEditarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -723,8 +889,13 @@ if (respuesta == JOptionPane.YES_OPTION) {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JComboBox<String> cmbPortatilFamilia;
     private javax.swing.JComboBox<String> cmbRepresentanteHogar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JButton jbnEditar;
+    private javax.swing.JButton jbnEliminar;
+    private javax.swing.JTable jtbPortatilesVinculados;
     private javax.swing.JLabel lblDane;
     private javax.swing.JLabel lblEnph;
     private javax.swing.JLabel lblFechaEntrega;
