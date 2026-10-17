@@ -225,13 +225,12 @@ public P5_pantalla_psi(
                     .addGroup(pnlGastosDiariosLayout.createSequentialGroup()
                         .addGroup(pnlGastosDiariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(pnlGastosDiariosLayout.createSequentialGroup()
-                                .addGap(104, 104, 104)
                                 .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
                                 .addComponent(jButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(18, 18, 18)
                                 .addComponent(jButton3)
                                 .addGap(33, 33, 33)
                                 .addComponent(jButton2))
@@ -239,7 +238,7 @@ public P5_pantalla_psi(
                                 .addGap(441, 441, 441)
                                 .addGroup(pnlGastosDiariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(cmbUnidadMedida, 0, 245, Short.MAX_VALUE)
-                                    .addComponent(cmbFormaAdquisicion, 0, 245, Short.MAX_VALUE)
+                                    .addComponent(cmbFormaAdquisicion, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(pnlGastosDiariosLayout.createSequentialGroup()
                                         .addComponent(btnHogar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(28, 28, 28)
@@ -247,7 +246,7 @@ public P5_pantalla_psi(
                                     .addComponent(cmbLugarCompra, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(cmbFrecuenciaCompra, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(txtValor)
-                                    .addComponent(txtEquivalencia, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
+                                    .addComponent(txtEquivalencia)
                                     .addComponent(txtNombreDelProducto)
                                     .addComponent(txtCantidadAdquirida))
                                 .addGap(0, 0, Short.MAX_VALUE)))
@@ -266,7 +265,7 @@ public P5_pantalla_psi(
                             .addComponent(lblLugarDeCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblFrecuenciaCompra)
                             .addComponent(lblTipoGasto))
-                        .addContainerGap(433, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         pnlGastosDiariosLayout.setVerticalGroup(
             pnlGastosDiariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -320,14 +319,14 @@ public P5_pantalla_psi(
                             .addGroup(pnlGastosDiariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(btnHogar)
                                 .addComponent(btnPersonal)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                        .addGroup(pnlGastosDiariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                        .addGroup(pnlGastosDiariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton2)
-                            .addGroup(pnlGastosDiariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1)
-                                .addComponent(jButton3)))))
+                            .addComponent(jButton3)
+                            .addComponent(jButton1)
+                            .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)))
                 .addContainerGap())
         );
 
@@ -380,7 +379,7 @@ public P5_pantalla_psi(
                         .addGroup(pnlLogosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblUsuario)
                             .addComponent(lblDia))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 197, Short.MAX_VALUE))
                     .addGroup(pnlLogosLayout.createSequentialGroup()
                         .addComponent(pnlLogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -415,15 +414,13 @@ public P5_pantalla_psi(
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnlLogos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(pnlGastosDiarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(pnlGastosDiarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pnlLogos, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(pnlGastosDiarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -614,162 +611,220 @@ private String buscarNombre(
         return 0;
     }
 
-    private void bloquearEdicion() {
 
+private void bloquearEdicion() {
         edicionActiva = false;
 
-        txtNombreDelProducto.setEditable(false);
-        txtCantidadAdquirida.setEditable(false);
-        txtEquivalencia.setEditable(false);
-        txtValor.setEditable(false);
+        // Deshabilitar campos de texto
+        txtNombreDelProducto.setEnabled(false); // Siempre bloqueado porque viene de catálogo
+        txtCantidadAdquirida.setEnabled(false);
+        txtEquivalencia.setEnabled(false);
+        txtValor.setEnabled(false);
 
+        // Deshabilitar comboboxes
         cmbUnidadMedida.setEnabled(false);
         cmbFormaAdquisicion.setEnabled(false);
         cmbLugarCompra.setEnabled(false);
         cmbFrecuenciaCompra.setEnabled(false);
 
+        // Deshabilitar botones de tipo de gasto
         btnHogar.setEnabled(false);
         btnPersonal.setEnabled(false);
 
-        btnEditar.setEnabled(!gastos.isEmpty());
-        jButton1.setEnabled(false);
-        jButton2.setEnabled(!gastos.isEmpty());
+        // Apagar el botón "Guardar" y encender "Editar"
+        jButton1.setEnabled(false); 
+        btnEditar.setEnabled(true);
     }
 
     private void habilitarEdicion() {
-        if (gastos.isEmpty()) {
-            return;
-        }
-
         edicionActiva = true;
 
-        txtNombreDelProducto.setEditable(false);
-        txtCantidadAdquirida.setEditable(true);
-        txtEquivalencia.setEditable(true);
-        txtValor.setEditable(true);
+        // El nombre del producto NUNCA se debe habilitar porque su texto depende de la BD
+        txtNombreDelProducto.setEnabled(false); 
 
+        // Habilitar el resto de campos de texto
+        txtCantidadAdquirida.setEnabled(true);
+        txtEquivalencia.setEnabled(true);
+        txtValor.setEnabled(true);
+
+        // Habilitar comboboxes
         cmbUnidadMedida.setEnabled(true);
         cmbFormaAdquisicion.setEnabled(true);
         cmbLugarCompra.setEnabled(true);
         cmbFrecuenciaCompra.setEnabled(true);
 
+        // Habilitar botones de tipo de gasto
         btnHogar.setEnabled(true);
         btnPersonal.setEnabled(true);
 
+        // Encender el botón "Guardar" y apagar "Editar"
+        jButton1.setEnabled(true); 
         btnEditar.setEnabled(false);
-        jButton1.setEnabled(true);
-    }
-
-    private void actualizarBotonesTipoGasto() {
-        if ("Hogar".equalsIgnoreCase(tipoGastoActual)) {
-            btnHogar.setText("Hogar ✓");
-            btnPersonal.setText("Personal");
-        } else if ("Personal".equalsIgnoreCase(tipoGastoActual)) {
-            btnHogar.setText("Hogar");
-            btnPersonal.setText("Personal ✓");
-        } else {
-            btnHogar.setText("Hogar");
-            btnPersonal.setText("Personal");
-        }
     }
 
     private void guardarCambios() {
-        if (!edicionActiva || gastos.isEmpty()) {
+        if (!edicionActiva || gastos.isEmpty() || indiceActual < 0 || indiceActual >= gastos.size()) {
             return;
         }
 
         try {
-            int cantidad = Integer.parseInt(
-                    txtCantidadAdquirida.getText().trim());
+            // 1. Obtener el gasto actual
+            modelo.GastosDiariosDAO.GastoDiario gastoActual = gastos.get(indiceActual);
 
-            int valor = Integer.parseInt(
-                    txtValor.getText().trim());
-
-            String textoEquivalencia = txtEquivalencia.getText().trim();
-            Integer equivalencia = textoEquivalencia.isEmpty()
-                    ? null
-                    : Integer.valueOf(textoEquivalencia);
-
-            if (cantidad <= 0 || valor < 0
-                    || (equivalencia != null && equivalencia < 0)) {
-                javax.swing.JOptionPane.showMessageDialog(this,
-                        "La cantidad debe ser mayor que cero. "
-                        + "El valor y la equivalencia no pueden ser negativos.");
+            // 2. Validar que la cantidad sea un número
+            try {
+                gastoActual.cantidad = Integer.parseInt(txtCantidadAdquirida.getText());
+            } catch (NumberFormatException e) {
+                javax.swing.JOptionPane.showMessageDialog(this, "La cantidad debe ser un número entero.");
                 return;
             }
 
-            int idUnidad = buscarId(
-                    unidades, cmbUnidadMedida.getSelectedItem());
+            // 3. Validar equivalencia (puede estar vacía)
+            if (!txtEquivalencia.getText().trim().isEmpty()) {
+                try {
+                    gastoActual.equivalencia = Integer.parseInt(txtEquivalencia.getText());
+                } catch (NumberFormatException e) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "La equivalencia debe ser un número entero.");
+                    return;
+                }
+            } else {
+                gastoActual.equivalencia = null;
+            }
 
-            int idForma = buscarId(
-                    formas, cmbFormaAdquisicion.getSelectedItem());
-
-            int idLugar = buscarId(
-                    lugares, cmbLugarCompra.getSelectedItem());
-
-            int idFrecuencia = buscarId(
-                    frecuencias, cmbFrecuenciaCompra.getSelectedItem());
-
-            if (idUnidad <= 0 || idForma <= 0 || idFrecuencia <= 0) {
-                javax.swing.JOptionPane.showMessageDialog(this,
-                        "Selecciona la unidad de medida, la forma de adquisición "
-                        + "y la frecuencia de compra.");
+            // 4. Validar que el valor sea un número
+            try {
+                gastoActual.valor = Integer.parseInt(txtValor.getText());
+            } catch (NumberFormatException e) {
+                javax.swing.JOptionPane.showMessageDialog(this, "El valor debe ser un número entero.");
                 return;
             }
 
-            if (tipoGastoActual == null
-                    || (!tipoGastoActual.equalsIgnoreCase("Hogar")
-                    && !tipoGastoActual.equalsIgnoreCase("Personal"))) {
-                javax.swing.JOptionPane.showMessageDialog(this,
-                        "Selecciona el tipo de gasto: Hogar o Personal.");
-                return;
+            // 5. Capturar los IDs de los ComboBox
+            gastoActual.idUnidadMedida = buscarId(unidades, cmbUnidadMedida.getSelectedItem());
+            gastoActual.idFormaAdquisicion = buscarId(formas, cmbFormaAdquisicion.getSelectedItem());
+            
+            if (cmbLugarCompra.getSelectedIndex() > 0) {
+                gastoActual.idLugarCompra = buscarId(lugares, cmbLugarCompra.getSelectedItem());
+            } else {
+                gastoActual.idLugarCompra = 0; 
+            }
+            
+            gastoActual.idFrecuenciaCompra = buscarId(frecuencias, cmbFrecuenciaCompra.getSelectedItem());
+            gastoActual.tipoGasto = tipoGastoActual;
+
+            // 6. Enviar a la base de datos usando el DAO
+            boolean exito = dao.actualizarGasto(gastoActual, this.idEncuesta);
+
+            if (exito) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Gasto actualizado correctamente.");
+                bloquearEdicion(); // Bloquea los campos porque ya se guardó
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "No se pudo actualizar en la base de datos.");
             }
 
-            modelo.GastosDiariosDAO.GastoDiario gasto =
-                    gastos.get(indiceActual);
+        } catch (Exception ex) {
+             logger.log(java.util.logging.Level.SEVERE, "Error al guardar", ex);
+             javax.swing.JOptionPane.showMessageDialog(this, "Error al guardar: " + ex.getMessage());
+        }
+    }
 
-            boolean actualizado = dao.actualizarGasto(
-                    gasto.id,
-                    idEncuesta,
-                    cantidad,
-                    equivalencia,
-                    valor,
-                    tipoGastoActual,
-                    idUnidad,
-                    idForma,
-                    idLugar,
-                    idFrecuencia
+    private void continuarProducto() {
+        // Validación: Si la edición está activa, preguntar al usuario
+        if (edicionActiva) {
+            int respuesta = javax.swing.JOptionPane.showConfirmDialog(
+                    this,
+                    "Tienes cambios sin guardar. ¿Deseas guardarlos antes de continuar?",
+                    "Cambios sin guardar",
+                    javax.swing.JOptionPane.YES_NO_CANCEL_OPTION,
+                    javax.swing.JOptionPane.WARNING_MESSAGE
             );
 
-            if (actualizado) {
-                gasto.cantidad = cantidad;
-                gasto.equivalencia = equivalencia;
-                gasto.valor = valor;
-                gasto.tipoGasto = tipoGastoActual;
-                gasto.idUnidadMedida = idUnidad;
-                gasto.idFormaAdquisicion = idForma;
-                gasto.idLugarCompra = idLugar;
-                gasto.idFrecuenciaCompra = idFrecuencia;
-
+            if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
+                guardarCambios();
+                // Si guardó exitosamente, ediciónActiva pasará a false. Si falló, se quedará en la pantalla.
+                if (edicionActiva) return; 
+            } else if (respuesta == javax.swing.JOptionPane.CANCEL_OPTION || respuesta == javax.swing.JOptionPane.CLOSED_OPTION) {
+                // El usuario canceló la acción de continuar
+                return;
+            } else if (respuesta == javax.swing.JOptionPane.NO_OPTION) {
+                // El usuario no quiso guardar. Bloqueamos la edición para descartar visualmente.
                 bloquearEdicion();
-                mostrarGastoActual();
-
-                javax.swing.JOptionPane.showMessageDialog(this,
-                        "Los cambios se guardaron correctamente.");
-            } else {
-                javax.swing.JOptionPane.showMessageDialog(this,
-                        "No se actualizó el producto. Comprueba que pertenezca "
-                        + "a esta encuesta y que esté registrado hoy.");
             }
+        }
 
-        } catch (NumberFormatException ex) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "La cantidad, el valor y la equivalencia deben ser números enteros.");
-        } catch (java.sql.SQLException ex) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "Error al guardar los cambios: " + ex.getMessage(),
-                    "Error de base de datos",
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        // Lógica normal de continuar al siguiente producto
+        if (gastos == null || gastos.isEmpty()) return;
+        
+        if (indiceActual < gastos.size() - 1) {
+            indiceActual++;
+            mostrarGastoActual();
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Este es el último producto de la lista.");
+        }
+    }
+
+    private void anteriorProducto() {
+        // Misma validación que al continuar
+        if (edicionActiva) {
+            int respuesta = javax.swing.JOptionPane.showConfirmDialog(
+                    this,
+                    "Tienes cambios sin guardar. ¿Deseas guardarlos antes de retroceder?",
+                    "Cambios sin guardar",
+                    javax.swing.JOptionPane.YES_NO_CANCEL_OPTION,
+                    javax.swing.JOptionPane.WARNING_MESSAGE
+            );
+
+            if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
+                guardarCambios();
+                if (edicionActiva) return; 
+            } else if (respuesta == javax.swing.JOptionPane.CANCEL_OPTION || respuesta == javax.swing.JOptionPane.CLOSED_OPTION) {
+                return;
+            } else if (respuesta == javax.swing.JOptionPane.NO_OPTION) {
+                bloquearEdicion();
+            }
+        }
+
+        if (gastos == null || gastos.isEmpty()) return;
+        
+        if (indiceActual > 0) {
+            indiceActual--;
+            mostrarGastoActual();
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Este es el primer producto de la lista.");
+        }
+    }
+
+    private void salirDePantalla() {
+        if (edicionActiva) {
+            int respuesta = javax.swing.JOptionPane.showConfirmDialog(
+                    this,
+                    "Tienes cambios sin guardar. ¿Deseas salir de todos modos y perder los cambios?",
+                    "Salir sin guardar",
+                    javax.swing.JOptionPane.YES_NO_OPTION,
+                    javax.swing.JOptionPane.WARNING_MESSAGE
+            );
+            
+            if (respuesta != javax.swing.JOptionPane.YES_OPTION) {
+                return; // Se queda en la pantalla
+            }
+        }
+
+        if (pantallaAnterior != null) {
+            pantallaAnterior.setVisible(true);
+        }
+        this.dispose();
+    }
+
+    private void actualizarBotonesTipoGasto() {
+        if ("Hogar".equals(tipoGastoActual)) {
+            btnHogar.setBackground(java.awt.Color.LIGHT_GRAY);
+            btnPersonal.setBackground(java.awt.Color.WHITE);
+        } else if ("Personal".equals(tipoGastoActual)) {
+            btnPersonal.setBackground(java.awt.Color.LIGHT_GRAY);
+            btnHogar.setBackground(java.awt.Color.WHITE);
+        } else {
+            btnHogar.setBackground(java.awt.Color.WHITE);
+            btnPersonal.setBackground(java.awt.Color.WHITE);
         }
     }
 
@@ -778,46 +833,14 @@ private String buscarNombre(
         txtCantidadAdquirida.setText("");
         txtEquivalencia.setText("");
         txtValor.setText("");
-
-        cmbUnidadMedida.setSelectedIndex(-1);
-        cmbFormaAdquisicion.setSelectedIndex(-1);
-        cmbLugarCompra.setSelectedIndex(-1);
-        cmbFrecuenciaCompra.setSelectedIndex(-1);
-
+        
+        if (cmbUnidadMedida.getItemCount() > 0) cmbUnidadMedida.setSelectedIndex(0);
+        if (cmbFormaAdquisicion.getItemCount() > 0) cmbFormaAdquisicion.setSelectedIndex(0);
+        if (cmbLugarCompra.getItemCount() > 0) cmbLugarCompra.setSelectedIndex(0);
+        if (cmbFrecuenciaCompra.getItemCount() > 0) cmbFrecuenciaCompra.setSelectedIndex(0);
+        
         tipoGastoActual = null;
         actualizarBotonesTipoGasto();
-        bloquearEdicion();
-    }
-
-    private void salirDePantalla() {
-        if (pantallaAnterior != null) {
-            pantallaAnterior.setVisible(true);
-        }
-
-        dispose();
-    }
-
-    private void continuarProducto() {
-
-        if (edicionActiva) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "Primero guarda los cambios del producto actual.");
-            return;
-        }
-
-        if (gastos.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "No hay productos para mostrar.");
-            return;
-        }
-
-if (indiceActual < gastos.size() - 1) {
-            indiceActual++;
-            mostrarGastoActual();
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "Has llegado al último producto registrado hoy.");
-        }
     }
     private void txtCantidadAdquiridaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantidadAdquiridaActionPerformed
         // TODO add your handling code here:

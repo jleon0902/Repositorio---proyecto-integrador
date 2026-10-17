@@ -175,17 +175,7 @@ public class GastosDiariosDAO {
 
     // Actualiza un registro solo si pertenece a la encuesta
     // indicada y su fecha corresponde al día actual.
-    public boolean actualizarGasto(
-            int idGasto,
-            int idEncuesta,
-            int cantidad,
-            Integer equivalencia,
-            int valor,
-            String tipoGasto,
-            int idUnidad,
-            int idForma,
-            int idLugar,
-            int idFrecuencia) throws SQLException {
+    public boolean actualizarGasto(GastoDiario gasto, int idEncuesta) throws SQLException {
 
         String sql =
                 "UPDATE GASTOS_DIARIOS SET "
@@ -209,32 +199,33 @@ public class GastosDiariosDAO {
 
             try (PreparedStatement ps = cn.prepareStatement(sql)) {
 
-                ps.setInt(1, cantidad);
+                ps.setInt(1, gasto.cantidad);
 
-                if (equivalencia == null) {
+                if (gasto.equivalencia == null) {
                     ps.setNull(2, java.sql.Types.NUMERIC);
                 } else {
-                    ps.setInt(2, equivalencia);
+                    ps.setInt(2, gasto.equivalencia);
                 }
 
-                ps.setInt(3, valor);
-                ps.setString(4, tipoGasto);
-                ps.setInt(5, idUnidad);
-                ps.setInt(6, idForma);
+                ps.setInt(3, gasto.valor);
+                ps.setString(4, gasto.tipoGasto);
+                ps.setInt(5, gasto.idUnidadMedida);
+                ps.setInt(6, gasto.idFormaAdquisicion);
 
-                if (idLugar <= 0) {
+                // Si no hay lugar de compra seleccionado
+                if (gasto.idLugarCompra <= 0) {
                     ps.setNull(7, java.sql.Types.NUMERIC);
                 } else {
-                    ps.setInt(7, idLugar);
+                    ps.setInt(7, gasto.idLugarCompra);
                 }
 
-                ps.setInt(8, idFrecuencia);
-                ps.setInt(9, idGasto);
+                ps.setInt(8, gasto.idFrecuenciaCompra);
+                ps.setInt(9, gasto.id); 
                 ps.setInt(10, idEncuesta);
 
+                // executeUpdate devuelve el número de filas afectadas, si es 1 fue exitoso
                 return ps.executeUpdate() == 1;
             }
         }
     }
 }
-
