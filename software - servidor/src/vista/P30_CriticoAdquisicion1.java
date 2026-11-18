@@ -1,0 +1,585 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package vista;
+
+/**
+ *
+ * @author usuario
+ */
+import javax.swing.JFrame;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+public class P30_CriticoAdquisicion1 extends javax.swing.JFrame {
+    
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(P30_CriticoAdquisicion1.class.getName());
+
+    /**
+     * Creates new form iniciarSesion
+     */
+    public P30_CriticoAdquisicion1() {
+        initComponents();
+
+        // 1. Configuración de tamaño inicial y permitir redimensionar
+        this.setResizable(true);
+        this.setSize(956, 670);
+        this.setLocationRelativeTo(null);
+
+        // 2. Layout absoluto en el frame principal
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        // 3. Crear contenedor recortador (máscara) para la zona blanca
+        javax.swing.JPanel pnlContenedor = new javax.swing.JPanel();
+        pnlContenedor.setLayout(null);
+        pnlContenedor.setBackground(java.awt.Color.WHITE);
+
+        // Remover pnlAdquisicion del frame y moverlo dentro del contenedor recortador
+        getContentPane().remove(pnlAdquisicion);
+        pnlAdquisicion.setBorder(null);
+        pnlContenedor.add(pnlAdquisicion);
+
+        // 4. Establecer el tamaño vertical real del contenido deslizable
+        int altoContenido = 1025;
+
+        // 5. Configurar el comportamiento del scrollbar manual
+        jScrollBar1.setMinimum(0);
+        jScrollBar1.setUnitIncrement(20);
+        jScrollBar1.setBlockIncrement(100);
+
+        jScrollBar1.addAdjustmentListener(e -> {
+            int valorScroll = e.getValue();
+            pnlAdquisicion.setLocation(0, -valorScroll);
+            pnlContenedor.repaint();
+        });
+
+        // Habilitar desplazamiento con la rueda del ratón
+        pnlContenedor.addMouseWheelListener(e -> {
+            int pasos = e.getWheelRotation();
+            int nuevoValor = jScrollBar1.getValue() + (pasos * 25);
+            jScrollBar1.setValue(nuevoValor);
+        });
+
+        // 6. Listener para adaptar la franja rosa, el área blanca y el scrollbar al maximizar
+        Runnable reajustarDimensiones = () -> {
+            int anchoVentana = getContentPane().getWidth();
+            int altoVentana = getContentPane().getHeight();
+
+            int altoHeader = 110;
+            int anchoScroll = 20;
+            int altoAreaInferior = Math.max(100, altoVentana - altoHeader);
+            int anchoBlanco = Math.max(915, anchoVentana - anchoScroll);
+
+            // Reubicar la barra superior de logos al 100% del ancho
+            getContentPane().remove(pnlLogos);
+            getContentPane().add(pnlLogos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, anchoVentana, altoHeader));
+
+            // Reubicar el contenedor con borde inferior/izquierdo continuo
+            getContentPane().remove(pnlContenedor);
+            pnlContenedor.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 1, 0, java.awt.Color.BLACK));
+            pnlContenedor.setBounds(0, altoHeader, anchoBlanco, altoAreaInferior);
+
+            // Ajustar tamaño y posición del panel interno
+            pnlAdquisicion.setBounds(0, pnlAdquisicion.getY(), anchoBlanco, altoContenido);
+
+            // Reubicar la barra de desplazamiento a la derecha
+            getContentPane().remove(jScrollBar1);
+            getContentPane().add(jScrollBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(anchoVentana - anchoScroll, altoHeader, anchoScroll, altoAreaInferior));
+
+            // Actualizar el valor máximo según el alto visible actual
+            jScrollBar1.setMaximum(Math.max(0, altoContenido - altoAreaInferior));
+
+            getContentPane().add(pnlContenedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, altoHeader, anchoBlanco, altoAreaInferior));
+
+            getContentPane().revalidate();
+            getContentPane().repaint();
+        };
+
+        this.addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent e) {
+                reajustarDimensiones.run();
+            }
+        });
+
+        reajustarDimensiones.run();
+    }
+    
+    private void volver() {
+    int respuesta = javax.swing.JOptionPane.showConfirmDialog(
+            this,
+            "¿Está seguro de que desea volver?",
+            "Confirmar regreso",
+            javax.swing.JOptionPane.YES_NO_OPTION
+    );
+
+    if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
+        this.dispose();
+    }
+}
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel4 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        pnlLogos = new javax.swing.JPanel();
+        lblAdministrador = new javax.swing.JLabel();
+        lblUsuario = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        pnlAdquisicion = new javax.swing.JPanel();
+        lblAdquisicion = new javax.swing.JLabel();
+        btnVolver = new javax.swing.JButton();
+        lblPorcentajeFormasAdquisicion = new javax.swing.JLabel();
+        pnlMuestreo = new javax.swing.JPanel();
+        lblLugaresCompraConcurridos = new javax.swing.JLabel();
+        pnlEstrato3A4 = new javax.swing.JPanel();
+        lblEstrato3A4 = new javax.swing.JLabel();
+        lblMasConcurridos3A4 = new javax.swing.JLabel();
+        lblMenosConcurridos3A4 = new javax.swing.JLabel();
+        lblInfor3A4 = new javax.swing.JLabel();
+        lbl2Infor3A4 = new javax.swing.JLabel();
+        pnlEstrato5A6 = new javax.swing.JPanel();
+        lblEstrato5A6 = new javax.swing.JLabel();
+        lblMasConcurridos5A6 = new javax.swing.JLabel();
+        lblMenosConcurrido5A6 = new javax.swing.JLabel();
+        lblInfo5A6 = new javax.swing.JLabel();
+        lbl2Info5A6 = new javax.swing.JLabel();
+        pnlEstrato1A3 = new javax.swing.JPanel();
+        lblEstrato1A3 = new javax.swing.JLabel();
+        lblMasConcurridos1A3 = new javax.swing.JLabel();
+        lblMenosConcurrido1A3 = new javax.swing.JLabel();
+        lblInfo1A3 = new javax.swing.JLabel();
+        lbl2Info1A3 = new javax.swing.JLabel();
+        jScrollBar1 = new javax.swing.JScrollBar();
+
+        jPanel4.setBorder(new javax.swing.border.MatteBorder(null));
+
+        jLabel9.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel9.setText("Menú");
+
+        jLabel10.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel10.setText("Registrar usuarios");
+
+        jLabel11.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel11.setText("Usuarios");
+
+        jLabel12.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel12.setText("Registrar portátiles");
+
+        jLabel13.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel13.setText("Portatiles");
+
+        jLabel14.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel14.setText("Cerrar sesión");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel9)
+                .addGap(73, 73, 73))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel11)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel14)
+                        .addComponent(jLabel12)
+                        .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING)))
+                .addContainerGap(42, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel9)
+                .addGap(41, 41, 41)
+                .addComponent(jLabel10)
+                .addGap(48, 48, 48)
+                .addComponent(jLabel11)
+                .addGap(41, 41, 41)
+                .addComponent(jLabel12)
+                .addGap(44, 44, 44)
+                .addComponent(jLabel13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
+                .addComponent(jLabel14)
+                .addGap(23, 23, 23))
+        );
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        pnlLogos.setBackground(new java.awt.Color(255, 235, 229));
+        pnlLogos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        lblAdministrador.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        lblAdministrador.setText("Critico digitador");
+
+        lblUsuario.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        lblUsuario.setText("lblUsuario");
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/logoDane.png"))); // NOI18N
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/logoEnph.png"))); // NOI18N
+
+        javax.swing.GroupLayout pnlLogosLayout = new javax.swing.GroupLayout(pnlLogos);
+        pnlLogos.setLayout(pnlLogosLayout);
+        pnlLogosLayout.setHorizontalGroup(
+            pnlLogosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlLogosLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 235, Short.MAX_VALUE)
+                .addGroup(pnlLogosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblAdministrador, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblUsuario, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(103, 103, 103))
+        );
+        pnlLogosLayout.setVerticalGroup(
+            pnlLogosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlLogosLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(pnlLogosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addGroup(pnlLogosLayout.createSequentialGroup()
+                        .addComponent(lblAdministrador)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblUsuario)
+                        .addGap(8, 8, 8)))
+                .addContainerGap(24, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(pnlLogos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 940, 110));
+
+        pnlAdquisicion.setBackground(new java.awt.Color(255, 255, 255));
+        pnlAdquisicion.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 1, 1, new java.awt.Color(0, 0, 0)));
+        pnlAdquisicion.setPreferredSize(new java.awt.Dimension(800, 1025));
+
+        lblAdquisicion.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
+        lblAdquisicion.setText("Adquisición");
+
+        btnVolver.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        btnVolver.setText("Volver");
+        btnVolver.addActionListener(this::btnVolverActionPerformed);
+
+        lblPorcentajeFormasAdquisicion.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        lblPorcentajeFormasAdquisicion.setText("Porcentaje de las formas de adquisición de las familias");
+
+        javax.swing.GroupLayout pnlMuestreoLayout = new javax.swing.GroupLayout(pnlMuestreo);
+        pnlMuestreo.setLayout(pnlMuestreoLayout);
+        pnlMuestreoLayout.setHorizontalGroup(
+            pnlMuestreoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 230, Short.MAX_VALUE)
+        );
+        pnlMuestreoLayout.setVerticalGroup(
+            pnlMuestreoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 202, Short.MAX_VALUE)
+        );
+
+        lblLugaresCompraConcurridos.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        lblLugaresCompraConcurridos.setText("Lugares de compra más concurridos y menos concurridos por las familias según su exacto:");
+
+        pnlEstrato3A4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        lblEstrato3A4.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        lblEstrato3A4.setText("Estrato 3-4");
+
+        lblMasConcurridos3A4.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        lblMasConcurridos3A4.setText("Más concurridos");
+
+        lblMenosConcurridos3A4.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        lblMenosConcurridos3A4.setText("Menos concurrido");
+
+        lblInfor3A4.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        lblInfor3A4.setText("jLabel20");
+
+        lbl2Infor3A4.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        lbl2Infor3A4.setText("jLabel21");
+
+        javax.swing.GroupLayout pnlEstrato3A4Layout = new javax.swing.GroupLayout(pnlEstrato3A4);
+        pnlEstrato3A4.setLayout(pnlEstrato3A4Layout);
+        pnlEstrato3A4Layout.setHorizontalGroup(
+            pnlEstrato3A4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlEstrato3A4Layout.createSequentialGroup()
+                .addGroup(pnlEstrato3A4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlEstrato3A4Layout.createSequentialGroup()
+                        .addGap(73, 73, 73)
+                        .addComponent(lblEstrato3A4))
+                    .addGroup(pnlEstrato3A4Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addGroup(pnlEstrato3A4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblMenosConcurridos3A4)
+                            .addComponent(lblMasConcurridos3A4)
+                            .addComponent(lblInfor3A4)
+                            .addComponent(lbl2Infor3A4))))
+                .addContainerGap(80, Short.MAX_VALUE))
+        );
+        pnlEstrato3A4Layout.setVerticalGroup(
+            pnlEstrato3A4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlEstrato3A4Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(lblEstrato3A4)
+                .addGap(36, 36, 36)
+                .addComponent(lblMasConcurridos3A4)
+                .addGap(26, 26, 26)
+                .addComponent(lblInfor3A4)
+                .addGap(18, 18, 18)
+                .addComponent(lblMenosConcurridos3A4)
+                .addGap(18, 18, 18)
+                .addComponent(lbl2Infor3A4)
+                .addContainerGap(45, Short.MAX_VALUE))
+        );
+
+        pnlEstrato5A6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        lblEstrato5A6.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        lblEstrato5A6.setText("Estrato 5-6");
+
+        lblMasConcurridos5A6.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        lblMasConcurridos5A6.setText("Más concurridos");
+
+        lblMenosConcurrido5A6.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        lblMenosConcurrido5A6.setText("Menos concurrido");
+
+        lblInfo5A6.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        lblInfo5A6.setText("jLabel22");
+
+        lbl2Info5A6.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        lbl2Info5A6.setText("jLabel23");
+
+        javax.swing.GroupLayout pnlEstrato5A6Layout = new javax.swing.GroupLayout(pnlEstrato5A6);
+        pnlEstrato5A6.setLayout(pnlEstrato5A6Layout);
+        pnlEstrato5A6Layout.setHorizontalGroup(
+            pnlEstrato5A6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlEstrato5A6Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addGroup(pnlEstrato5A6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblMasConcurridos5A6)
+                    .addComponent(lblMenosConcurrido5A6)
+                    .addComponent(lblInfo5A6)
+                    .addComponent(lbl2Info5A6))
+                .addContainerGap(73, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlEstrato5A6Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblEstrato5A6)
+                .addGap(54, 54, 54))
+        );
+        pnlEstrato5A6Layout.setVerticalGroup(
+            pnlEstrato5A6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlEstrato5A6Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(lblEstrato5A6)
+                .addGap(33, 33, 33)
+                .addComponent(lblMasConcurridos5A6)
+                .addGap(18, 18, 18)
+                .addComponent(lblInfo5A6)
+                .addGap(36, 36, 36)
+                .addComponent(lblMenosConcurrido5A6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbl2Info5A6)
+                .addContainerGap(49, Short.MAX_VALUE))
+        );
+
+        pnlEstrato1A3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        pnlEstrato1A3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+
+        lblEstrato1A3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        lblEstrato1A3.setText("Estrato 1-3");
+
+        lblMasConcurridos1A3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        lblMasConcurridos1A3.setText("Más concurridos");
+
+        lblMenosConcurrido1A3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        lblMenosConcurrido1A3.setText("Menos concurrido");
+
+        lblInfo1A3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        lblInfo1A3.setText("jLabel18");
+
+        lbl2Info1A3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        lbl2Info1A3.setText("jLabel19");
+
+        javax.swing.GroupLayout pnlEstrato1A3Layout = new javax.swing.GroupLayout(pnlEstrato1A3);
+        pnlEstrato1A3.setLayout(pnlEstrato1A3Layout);
+        pnlEstrato1A3Layout.setHorizontalGroup(
+            pnlEstrato1A3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlEstrato1A3Layout.createSequentialGroup()
+                .addGroup(pnlEstrato1A3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlEstrato1A3Layout.createSequentialGroup()
+                        .addGap(66, 66, 66)
+                        .addComponent(lblEstrato1A3))
+                    .addGroup(pnlEstrato1A3Layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addGroup(pnlEstrato1A3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblMenosConcurrido1A3)
+                            .addComponent(lbl2Info1A3)
+                            .addComponent(lblInfo1A3)
+                            .addComponent(lblMasConcurridos1A3))))
+                .addContainerGap(83, Short.MAX_VALUE))
+        );
+        pnlEstrato1A3Layout.setVerticalGroup(
+            pnlEstrato1A3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlEstrato1A3Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(lblEstrato1A3)
+                .addGap(37, 37, 37)
+                .addComponent(lblMasConcurridos1A3)
+                .addGap(18, 18, 18)
+                .addComponent(lblInfo1A3)
+                .addGap(33, 33, 33)
+                .addComponent(lblMenosConcurrido1A3)
+                .addGap(18, 18, 18)
+                .addComponent(lbl2Info1A3)
+                .addContainerGap(38, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout pnlAdquisicionLayout = new javax.swing.GroupLayout(pnlAdquisicion);
+        pnlAdquisicion.setLayout(pnlAdquisicionLayout);
+        pnlAdquisicionLayout.setHorizontalGroup(
+            pnlAdquisicionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlAdquisicionLayout.createSequentialGroup()
+                .addGroup(pnlAdquisicionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlAdquisicionLayout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addGroup(pnlAdquisicionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(pnlMuestreo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblPorcentajeFormasAdquisicion, javax.swing.GroupLayout.Alignment.LEADING)))
+                    .addGroup(pnlAdquisicionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(pnlAdquisicionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblLugaresCompraConcurridos)
+                            .addGroup(pnlAdquisicionLayout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addComponent(pnlEstrato1A3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(74, 74, 74)
+                                .addComponent(pnlEstrato3A4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(81, 81, 81)
+                                .addComponent(pnlEstrato5A6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(pnlAdquisicionLayout.createSequentialGroup()
+                            .addGap(360, 360, 360)
+                            .addGroup(pnlAdquisicionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(btnVolver)
+                                .addGroup(pnlAdquisicionLayout.createSequentialGroup()
+                                    .addComponent(lblAdquisicion)
+                                    .addGap(346, 346, 346))))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addComponent(jScrollBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        pnlAdquisicionLayout.setVerticalGroup(
+            pnlAdquisicionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlAdquisicionLayout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addComponent(lblAdquisicion)
+                .addGap(78, 78, 78)
+                .addComponent(lblPorcentajeFormasAdquisicion)
+                .addGap(49, 49, 49)
+                .addComponent(pnlMuestreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblLugaresCompraConcurridos)
+                .addGap(64, 64, 64)
+                .addGroup(pnlAdquisicionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlEstrato3A4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnlEstrato1A3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnlEstrato5A6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(65, 65, 65)
+                .addComponent(btnVolver)
+                .addGap(53, 53, 53))
+            .addGroup(pnlAdquisicionLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(jScrollBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 912, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(pnlAdquisicion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 940, 910));
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+        // TODO add your handling code here:
+        volver();
+    }//GEN-LAST:event_btnVolverActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+            logger.log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(() -> new P30_CriticoAdquisicion1().setVisible(true));
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnVolver;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollBar jScrollBar1;
+    private javax.swing.JLabel lbl2Info1A3;
+    private javax.swing.JLabel lbl2Info5A6;
+    private javax.swing.JLabel lbl2Infor3A4;
+    private javax.swing.JLabel lblAdministrador;
+    private javax.swing.JLabel lblAdquisicion;
+    private javax.swing.JLabel lblEstrato1A3;
+    private javax.swing.JLabel lblEstrato3A4;
+    private javax.swing.JLabel lblEstrato5A6;
+    private javax.swing.JLabel lblInfo1A3;
+    private javax.swing.JLabel lblInfo5A6;
+    private javax.swing.JLabel lblInfor3A4;
+    private javax.swing.JLabel lblLugaresCompraConcurridos;
+    private javax.swing.JLabel lblMasConcurridos1A3;
+    private javax.swing.JLabel lblMasConcurridos3A4;
+    private javax.swing.JLabel lblMasConcurridos5A6;
+    private javax.swing.JLabel lblMenosConcurrido1A3;
+    private javax.swing.JLabel lblMenosConcurrido5A6;
+    private javax.swing.JLabel lblMenosConcurridos3A4;
+    private javax.swing.JLabel lblPorcentajeFormasAdquisicion;
+    private javax.swing.JLabel lblUsuario;
+    private javax.swing.JPanel pnlAdquisicion;
+    private javax.swing.JPanel pnlEstrato1A3;
+    private javax.swing.JPanel pnlEstrato3A4;
+    private javax.swing.JPanel pnlEstrato5A6;
+    private javax.swing.JPanel pnlLogos;
+    private javax.swing.JPanel pnlMuestreo;
+    // End of variables declaration//GEN-END:variables
+}
