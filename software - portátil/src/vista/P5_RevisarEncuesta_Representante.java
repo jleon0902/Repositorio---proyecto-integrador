@@ -65,6 +65,10 @@ public void mostrarNombreRepresentante(String nombre) {
     lbl_nombrerepresentante.setText(nombre);
 }
 
+public void mostrarDiaEncuesta(int dia) {
+    lblDia1.setText(String.valueOf(dia));
+}
+
 public void mostrarGasto(
         modelo.GastoDiarioConsulta gasto,
         int numeroActual,
@@ -193,6 +197,8 @@ private void bloquearCampos() {
 }
 
 
+
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -279,19 +285,19 @@ private void bloquearCampos() {
                 .addComponent(lbl_enph, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(pnl_logosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnl_logosLayout.createSequentialGroup()
-                        .addGap(53, 53, 53)
-                        .addGroup(pnl_logosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbl_nombrerepresentante)
-                            .addComponent(lbl_representante))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(pnl_logosLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lbl_dia)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblDia1)
                         .addGap(4, 4, 4)
                         .addComponent(lbl_dias)
-                        .addGap(21, 21, 21))))
+                        .addGap(21, 21, 21))
+                    .addGroup(pnl_logosLayout.createSequentialGroup()
+                        .addGap(158, 158, 158)
+                        .addGroup(pnl_logosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbl_nombrerepresentante, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_representante))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         pnl_logosLayout.setVerticalGroup(
             pnl_logosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -303,10 +309,8 @@ private void bloquearCampos() {
                         .addGap(0, 9, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_logosLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(lbl_representante)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lbl_nombrerepresentante)
-                        .addGap(7, 7, 7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(pnl_logosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lbl_dia)
                             .addComponent(lbl_dias)
@@ -314,7 +318,11 @@ private void bloquearCampos() {
                 .addContainerGap())
             .addGroup(pnl_logosLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(lbl_enph)
+                .addGroup(pnl_logosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnl_logosLayout.createSequentialGroup()
+                        .addComponent(lbl_representante)
+                        .addGap(11, 11, 11))
+                    .addComponent(lbl_enph))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 

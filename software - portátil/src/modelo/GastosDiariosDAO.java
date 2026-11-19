@@ -908,5 +908,35 @@ private Integer resolverId(
         return false;
     }
 } 
+    
+    // DESDE AQUI
+    
+    public int obtenerDiaEncuesta(String cedula) {
 
+    int dia = 0;
+
+    try {
+        Connection conexion = modelo.conexion.conectar();
+
+        CallableStatement llamada = conexion.prepareCall(
+            "{CALL PORTATIL_ENPH.SP_OBTENER_DIA_ENCUESTA(?, ?)}"
+        );
+
+        llamada.setString(1, cedula);
+
+        llamada.registerOutParameter(2, java.sql.Types.NUMERIC);
+
+        llamada.execute();
+
+        dia = llamada.getInt(2);
+
+        llamada.close();
+        conexion.close();
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return dia;
+}
 }

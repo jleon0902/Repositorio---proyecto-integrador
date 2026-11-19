@@ -36,6 +36,14 @@ public class EditarEncuestaControlador {
         this.gasto = gasto;
         this.dao = new GastosDiariosDAO();
         this.navegacion = navegacion;
+        
+        // Consultar el día actual de la encuesta.
+int diaEncuesta = dao.obtenerDiaEncuesta(
+        SesionUsuario.getCedula()
+);
+
+// Mostrar el día en la pantalla.
+vista.mostrarDiaEncuesta(diaEncuesta);
 
         cargarCombos();
         cargarDatos();

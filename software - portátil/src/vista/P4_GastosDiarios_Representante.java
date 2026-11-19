@@ -7,7 +7,6 @@ package vista;
  */
 
 import controlador.GastosDiariosControlador;
-import modelo.SesionUsuario;
 import controlador.NavegacionRepresentante;
 
 
@@ -31,14 +30,9 @@ public P4_GastosDiarios_Representante(
 
     initComponents();
 
-    lbl_nombrerepresentante.setText(
-            SesionUsuario.getNombre() + " " +
-            SesionUsuario.getApellido()
-    );
-
     this.cantidadProductos = cantidadProductos;
     this.navegacion = navegacion;
-
+    lblDia.setText("-");
     lbl_numero1.setText("1");
     lblProducto.setText(String.valueOf(cantidadProductos));
 
@@ -67,6 +61,18 @@ public P4_GastosDiarios_Representante(
     setLocationRelativeTo(null);
 }
     
+public void actualizarNombreRepresentante(String nombre) {
+    lbl_nombrerepresentante.setText(nombre);
+}
+
+public void actualizarDiaEncuesta(int dia) {
+    if (dia >= 1 && dia <= 14) {
+        lblDia.setText(String.valueOf(dia));
+    } else {
+        lblDia.setText("-");
+    }
+}
+
     public void actualizarNumeroProducto(int numero) {
     lbl_numero1.setText(String.valueOf(numero));
     }
@@ -290,7 +296,7 @@ public void habilitarBotonesTipoGasto() {
                     .addGroup(pnl_logosLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lbl_enph, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
+                        .addGap(121, 121, 121)
                         .addGroup(pnl_logosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbl_representante, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lbl_nombrerepresentante))
@@ -298,9 +304,9 @@ public void habilitarBotonesTipoGasto() {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_logosLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lbl_dia)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lblDia)
-                        .addGap(4, 4, 4)
+                        .addGap(10, 10, 10)
                         .addComponent(lbl_dias)
                         .addGap(21, 21, 21))))
         );
@@ -314,14 +320,15 @@ public void habilitarBotonesTipoGasto() {
                             .addComponent(lbl_dane, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(pnl_logosLayout.createSequentialGroup()
                                 .addGap(8, 8, 8)
-                                .addComponent(lbl_enph)))
+                                .addGroup(pnl_logosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pnl_logosLayout.createSequentialGroup()
+                                        .addComponent(lbl_representante)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(lbl_nombrerepresentante))
+                                    .addComponent(lbl_enph))))
                         .addGap(0, 9, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_logosLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(lbl_representante)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lbl_nombrerepresentante)
-                        .addGap(7, 7, 7)
                         .addGroup(pnl_logosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lbl_dia)
                             .addComponent(lbl_dias)

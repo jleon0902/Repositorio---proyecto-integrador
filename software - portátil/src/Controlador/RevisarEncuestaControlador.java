@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import modelo.SesionUsuario;
 import modelo.GastoDiarioConsulta;
 import modelo.GastosDiariosConsultaDAO;
+import modelo.GastosDiariosDAO;
 
 import vista.P3_MenuPrincipal_Representante;
 import vista.P5_RevisarEncuesta_Representante;
@@ -16,6 +17,7 @@ public class RevisarEncuestaControlador {
 
     private final P5_RevisarEncuesta_Representante vista;
     private final GastosDiariosConsultaDAO consultaDAO;
+    private final GastosDiariosDAO gastosDAO;
 
     private List<GastoDiarioConsulta> gastos;
     private int indiceActual;
@@ -29,6 +31,7 @@ public RevisarEncuestaControlador(
     this.vista = vista;
     this.navegacion = navegacion;
     this.consultaDAO = new GastosDiariosConsultaDAO();
+    this.gastosDAO = new GastosDiariosDAO();
     this.indiceActual = 0;
 
     if (!validarSesion()) {
@@ -45,11 +48,18 @@ public RevisarEncuestaControlador(
     }
 
     vista.mostrarNombreRepresentante(
-            SesionUsuario.getNombre() + " "
-            + SesionUsuario.getApellido()
-    );
+        SesionUsuario.getNombre() + " "
+        + SesionUsuario.getApellido()
+);
 
-    cargarGastos();
+// Consultar y mostrar el día actual de la encuesta.
+int dia = gastosDAO.obtenerDiaEncuesta(
+        SesionUsuario.getCedula()
+);
+
+vista.mostrarDiaEncuesta(dia);
+
+cargarGastos();
 }
     
 

@@ -1,20 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
 
 package modelo;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.CallableStatement;
 import java.sql.Types;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.time.format.DateTimeFormatter;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+import oracle.jdbc.OracleTypes;
 
 public class RevisarEncuestaDAO {
 
@@ -39,65 +36,51 @@ public class RevisarEncuestaDAO {
                 throw new Exception("No fue posible conectar con Oracle.");
             }
 
-            // 1. Obtener la cédula del representante desde ENCUESTA.
+            // 1. Consultar la cédula del representante mediante
+            // el procedimiento almacenado en PORTATIL_ENPH.
 
-            String sqlCedula =
-                    "SELECT CEDULA_REPRESENTANTE " +
-                    "FROM PORTATIL_ENPH.ENCUESTA";
+            String llamadaCedula =
+                    "{call PORTATIL_ENPH.SP_CONSULTAR_CEDULA_ENCUESTA(?)}";
 
-            try (PreparedStatement ps =
-                    con.prepareStatement(sqlCedula);
-                 ResultSet rs = ps.executeQuery()) {
+            try (CallableStatement cs =
+                    con.prepareCall(llamadaCedula)) {
 
-                if (!rs.next()) {
-                    throw new Exception(
-                            "No se encontró ninguna encuesta."
-                    );
-                }
+                cs.registerOutParameter(1, Types.VARCHAR);
 
-                cedula = rs.getString("CEDULA_REPRESENTANTE");
+                cs.execute();
 
-                if (rs.next()) {
-                    throw new Exception(
-                            "Se encontraron varias encuestas. " +
-                            "No se puede determinar cuál mostrar."
-                    );
-                }
+                cedula = cs.getString(1);
             }
 
-            // 2. Consultar los datos personales del representante.
+            // 2. Consultar los datos personales del representante
+            // mediante el procedimiento almacenado en PORTATIL_ENPH.
 
-            String sqlRepresentante =
-                    "SELECT NOMBRE, APELLIDO, TELEFONO, CORREO " +
-                    "FROM REPRESENTANTE " +
-                    "WHERE CEDULA = ?";
+            String llamadaRepresentante =
+                    "{call PORTATIL_ENPH.SP_CONSULTAR_REPRESENTANTE(?, ?, ?, ?, ?)}";
 
-            try (PreparedStatement ps =
-                    con.prepareStatement(sqlRepresentante)) {
+            try (CallableStatement cs =
+                    con.prepareCall(llamadaRepresentante)) {
 
-                ps.setString(1, cedula);
+                cs.setString(1, cedula);
 
-                try (ResultSet rs = ps.executeQuery()) {
+                cs.registerOutParameter(2, Types.VARCHAR);
+                cs.registerOutParameter(3, Types.VARCHAR);
+                cs.registerOutParameter(4, Types.VARCHAR);
+                cs.registerOutParameter(5, Types.VARCHAR);
 
-                    if (!rs.next()) {
-                        throw new Exception(
-                                "No se encontró el representante."
-                        );
-                    }
+                cs.execute();
 
-                    nombre = rs.getString("NOMBRE");
-                    apellido = rs.getString("APELLIDO");
-                    telefono = rs.getString("TELEFONO");
-                    correo = rs.getString("CORREO");
-                }
+                nombre = cs.getString(2);
+                apellido = cs.getString(3);
+                telefono = cs.getString(4);
+                correo = cs.getString(5);
             }
 
-            // 3. Ejecutar el procedimiento almacenado
-            // creado en PORTATIL_ENPH.
+            // 3. Consultar las fechas y el estado de la encuesta
+            // mediante el procedimiento almacenado existente.
 
             String llamada =
-                    "{call PORTATIL_ENPH.SP_CONSULTAR_DATOS_ENCUESTA(" +
-                    "?, ?, ?, ?)}";
+                     "{call PORTATIL_ENPH.SP_CONSULTAR_DATOS_ENCUESTA(?, ?, ?, ?)}";
 
             try (CallableStatement cs =
                     con.prepareCall(llamada)) {
@@ -160,4 +143,77 @@ public class RevisarEncuestaDAO {
             );
         }
     }
+      
+public List<DatosGastoDiario> consultarGastosDia(
+        String cedula, java.time.LocalDate fecha) throws Exception {
+
+    List<DatosGastoDiario> gastos = new ArrayList<>();
+
+    String llamada =
+            "{call PORTATIL_ENPH.SP_LISTAR_GASTOS_DIA(?, ?, ?)}";
+
+    try (Connection con = conexion.conectar()) {
+
+        if (con == null) {
+            throw new Exception("No fue posible conectar con Oracle.");
+        }
+
+        try (CallableStatement cs = con.prepareCall(llamada)) {
+
+            cs.setString(1, cedula);
+
+            cs.setDate(2, Date.valueOf(fecha));
+
+            cs.registerOutParameter(3, OracleTypes.CURSOR);
+
+            cs.execute();
+
+            try (ResultSet rs = (ResultSet) cs.getObject(3)) {
+
+                while (rs.next()) {
+
+                    DatosGastoDiario gasto = new DatosGastoDiario(
+                            rs.getInt("ID"),
+                            rs.getInt("NUMERO_ORDEN"),
+                            rs.getString("NOMBRE_PRODUCTO"),
+                            rs.getDouble("CANTIDAD_ADQUIRIDA"),
+                            rs.getString("NOMBRE_UNIDAD_MEDIDA"),
+                            rs.getDouble("CANTIDAD_MEDIDA_EQUI"),
+                            rs.getString("NOMBRE_TIPO_MEDIDA"),
+                            rs.getString("NOMBRE_UNIDAD_EQUIVALENCIA"),
+                            rs.getString("NOMBRE_FORMA_ADQUISICION"),
+                            rs.getString("NOMBRE_LUGAR_COMPRA"),
+                            rs.getDouble("VALOR"),
+                            rs.getString("NOMBRE_FRECUENCIA"),
+                            rs.getString("TIPO_GASTO")
+                    );
+
+                    gastos.add(gasto);
+                }
+            }
+        }
+    }
+
+    return gastos;
+}
+
+public void eliminarGastoDiario(Long idGasto) throws Exception {
+
+    try (Connection con = conexion.conectar()) {
+
+        if (con == null) {
+            throw new Exception("No fue posible conectar con Oracle.");
+        }
+
+        String llamada =
+                "{call PORTATIL_ENPH.SP_ELIMINAR_GASTO_DIARIO(?)}";
+
+        try (CallableStatement cs = con.prepareCall(llamada)) {
+
+            cs.setLong(1, idGasto);
+            cs.execute();
+        }
+    }
+}
+
 }

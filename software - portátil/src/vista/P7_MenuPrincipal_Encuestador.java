@@ -40,7 +40,9 @@ public class P7_MenuPrincipal_Encuestador extends javax.swing.JFrame {
     return btn_revisarencuesta;
 }
     
-
+public javax.swing.JButton getBtnSincronizar() {
+    return btn_sincronizar;
+}
 
     /**
      * This method is called from within the constructor to initialize the form.

@@ -29,6 +29,8 @@ public class P3_MenuPrincipal_Representante extends javax.swing.JFrame {
     lbl_representante.setText(
         SesionUsuario.getNombre() + " " + SesionUsuario.getApellido()
     );
+    
+    cargarDiaEncuesta();
 }
         
     public void setControlador(NavegacionRepresentante controlador) {
@@ -96,6 +98,20 @@ public class P3_MenuPrincipal_Representante extends javax.swing.JFrame {
     }
 }
     
+    // DESDE AQUI
+    private void cargarDiaEncuesta() {
+
+    modelo.GastosDiariosDAO dao = new modelo.GastosDiariosDAO();
+
+    int dia = dao.obtenerDiaEncuesta(SesionUsuario.getCedula());
+
+    if (dia >= 1 && dia <= 14) {
+        lblDia.setText(String.valueOf(dia));
+    } else {
+        lblDia.setText("-");
+    }
+}
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -113,6 +129,7 @@ public class P3_MenuPrincipal_Representante extends javax.swing.JFrame {
         lbl_días = new javax.swing.JLabel();
         lbl_dia = new javax.swing.JLabel();
         lblDia = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         pnl_menuprincipal = new javax.swing.JPanel();
         lbl_bienvenida = new javax.swing.JLabel();
         lbl_seleccioneopcion = new javax.swing.JLabel();
@@ -130,7 +147,7 @@ public class P3_MenuPrincipal_Representante extends javax.swing.JFrame {
         lbl_enph.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/Logo2.png"))); // NOI18N
 
         lbl_representante.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        lbl_representante.setText("Representante:");
+        lbl_representante.setText("NOMBRE REPRESENTANTE");
 
         lbl_días.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lbl_días.setText("de 14");
@@ -138,7 +155,11 @@ public class P3_MenuPrincipal_Representante extends javax.swing.JFrame {
         lbl_dia.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lbl_dia.setText("Día");
 
+        lblDia.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         lblDia.setText("jLabel1");
+
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel1.setText("Representante:");
 
         javax.swing.GroupLayout pnl_logosLayout = new javax.swing.GroupLayout(pnl_logos);
         pnl_logos.setLayout(pnl_logosLayout);
@@ -149,19 +170,17 @@ public class P3_MenuPrincipal_Representante extends javax.swing.JFrame {
                 .addComponent(lbl_dane, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lbl_enph, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnl_logosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnl_logosLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_logosLayout.createSequentialGroup()
                         .addComponent(lbl_dia)
                         .addGap(18, 18, 18)
                         .addComponent(lblDia)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lbl_días)
-                        .addGap(22, 22, 22))
-                    .addGroup(pnl_logosLayout.createSequentialGroup()
-                        .addGap(81, 81, 81)
-                        .addComponent(lbl_representante, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(18, 18, 18)
+                        .addComponent(lbl_días))
+                    .addComponent(lbl_representante, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(22, 22, 22))
         );
         pnl_logosLayout.setVerticalGroup(
             pnl_logosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,8 +194,10 @@ public class P3_MenuPrincipal_Representante extends javax.swing.JFrame {
                 .addContainerGap(18, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_logosLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lbl_representante)
-                .addGap(29, 29, 29)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnl_logosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_días)
                     .addComponent(lbl_dia)
@@ -278,6 +299,7 @@ public class P3_MenuPrincipal_Representante extends javax.swing.JFrame {
     private javax.swing.JButton btn_cerrarSesion;
     private javax.swing.JButton btn_registrarcapitulos;
     private javax.swing.JButton btn_revisarencuesta;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollBar jScrollBar1;
     private javax.swing.JLabel lblDia;
     private javax.swing.JLabel lbl_bienvenida;

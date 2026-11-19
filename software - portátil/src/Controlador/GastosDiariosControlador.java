@@ -4,6 +4,7 @@ package controlador;
 import vista.P4_GastosDiarios_Representante;
 import modelo.GastosDiariosDAO;
 import modelo.OpcionCombo;
+import modelo.SesionUsuario;
 import modelo.GastoDiarioTemporal;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
@@ -64,6 +65,14 @@ public GastosDiariosControlador(
     configurarRestriccionesNumericas();
 
     actualizarPantalla();
+    
+    vista.actualizarNombreRepresentante(
+    SesionUsuario.getNombre() + " " + SesionUsuario.getApellido()
+);
+
+int dia = dao.obtenerDiaEncuesta(SesionUsuario.getCedula());
+
+vista.actualizarDiaEncuesta(dia);
 }
     
 private void cargarCombos() {

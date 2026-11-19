@@ -38,25 +38,7 @@ tbl_revisarencuesta.getTableHeader().setReorderingAllowed(false);
     tbl_revisarencuesta.getColumnModel().getColumn(10).setPreferredWidth(145);
     tbl_revisarencuesta.getColumnModel().getColumn(11).setPreferredWidth(110);
     
-   btn_editar.addActionListener(e -> confirmarEdicion());
-    btn_eliminar.addActionListener(e -> confirmarEliminacion());
     }
-    private void confirmarEdicion() {
-    int respuesta = javax.swing.JOptionPane.showOptionDialog(
-        this,
-        "¿Está seguro de que desea editar este producto de la encuesta?",
-        "Confirmar edición",
-        javax.swing.JOptionPane.DEFAULT_OPTION,
-        javax.swing.JOptionPane.QUESTION_MESSAGE,
-        null,
-        new Object[]{"Cancelar", "Aceptar"},
-        "Cancelar"
-    );
-
-    if (respuesta == 1) {
-        // Aquí irá el código para editar.
-    }
-}
     
     public javax.swing.JPanel getPanelRevisarEncuesta() {
     return pnl_menuprincipalencuestador;
@@ -67,24 +49,121 @@ public javax.swing.JPanel getPanelMenu() {
 }
     
 
-    
-private void confirmarEliminacion() {
-    int respuesta = javax.swing.JOptionPane.showOptionDialog(
-        this,
-        "¿Está seguro de que desea eliminar este producto de la encuesta?",
-        "Confirmar eliminación",
-        javax.swing.JOptionPane.DEFAULT_OPTION,
-        javax.swing.JOptionPane.QUESTION_MESSAGE,
-        null,
-        new Object[]{"Cancelar", "Aceptar"},
-        "Cancelar"
-    );
+public void mostrarGastos(java.util.List<modelo.DatosGastoDiario> gastos) {
 
-    if (respuesta == 1) {
-        // Aquí irá el código para eliminar.
+    javax.swing.table.DefaultTableModel modelo =
+            (javax.swing.table.DefaultTableModel) tbl_revisarencuesta.getModel();
+
+    modelo.setRowCount(0);
+
+    for (modelo.DatosGastoDiario gasto : gastos) {
+
+        modelo.addRow(new Object[]{
+            gasto.getNumeroOrden(),
+            gasto.getProducto(),
+            gasto.getCantidadAdquirida(),
+            gasto.getUnidadMedida(),
+            gasto.getCantidadEquivalencia(),
+            gasto.getTipoMedida(),
+            gasto.getUnidadEquivalencia(),
+            gasto.getFormaAdquisicion(),
+            gasto.getLugarCompra(),
+            gasto.getValor(),
+            gasto.getFrecuenciaCompra(),
+            gasto.getTipoGasto()
+        });
     }
 }
-    
+
+public void mostrarDia(int dia, String fecha) {
+    lblDia.setText(String.valueOf(dia));
+    lbl_fechadia.setText(fecha);
+}
+
+public void habilitarNavegacion(boolean anterior, boolean continuar) {
+    btn_anterior.setEnabled(anterior);
+    btn_continuar.setEnabled(continuar);
+}
+
+public int obtenerFilaSeleccionada() {
+    return tbl_revisarencuesta.getSelectedRow();
+}
+
+public void configurarNavegacion(
+        Runnable accionAnterior,
+        Runnable accionContinuar) {
+
+    btn_anterior.addActionListener(e -> accionAnterior.run());
+
+    btn_continuar.addActionListener(e -> accionContinuar.run());
+}
+
+public javax.swing.JTable getTablaGastos() {
+    return tbl_revisarencuesta;
+}
+
+public javax.swing.JButton getBtnAnterior() {
+    return btn_anterior;
+}
+
+public javax.swing.JButton getBtnContinuar() {
+    return btn_continuar;
+}
+
+public javax.swing.JButton getBtnEditar() {
+    return btn_editar;
+}
+
+public javax.swing.JButton getBtnEliminar() {
+    return btn_eliminar;
+}
+
+private java.util.List<Long> idsGastos =
+        new java.util.ArrayList<>();
+
+public void mostrarGastosConIds(
+        java.util.List<modelo.DatosGastoDiario> gastos) {
+
+    javax.swing.table.DefaultTableModel modelo =
+            (javax.swing.table.DefaultTableModel)
+                    tbl_revisarencuesta.getModel();
+
+    modelo.setRowCount(0);
+    idsGastos.clear();
+
+    for (modelo.DatosGastoDiario gasto : gastos) {
+
+        idsGastos.add((long) gasto.getId());
+
+        modelo.addRow(new Object[]{
+            gasto.getNumeroOrden(),
+            gasto.getProducto(),
+            gasto.getCantidadAdquirida(),
+            gasto.getUnidadMedida(),
+            gasto.getCantidadEquivalencia(),
+            gasto.getTipoMedida(),
+            gasto.getUnidadEquivalencia(),
+            gasto.getFormaAdquisicion(),
+            gasto.getLugarCompra(),
+            gasto.getValor(),
+            gasto.getFrecuenciaCompra(),
+            gasto.getTipoGasto()
+        });
+    }
+}
+
+public Long getIdGastoSeleccionado() {
+
+    int fila = tbl_revisarencuesta.getSelectedRow();
+
+    if (fila == -1) {
+        return null;
+    }
+
+    return idsGastos.get(
+            tbl_revisarencuesta.convertRowIndexToModel(fila)
+    );
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

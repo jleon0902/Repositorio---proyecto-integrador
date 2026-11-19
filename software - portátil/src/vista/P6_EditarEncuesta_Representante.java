@@ -97,6 +97,10 @@ public void mostrarNombreRepresentante(String nombre) {
     lbl_nombrerepresentante.setText(nombre);
 }
 
+public void mostrarDiaEncuesta(int dia) {
+    lblDia1.setText(String.valueOf(dia));
+}
+
   public void cargarOpciones(
         List<String> productos,
         List<String> unidades,

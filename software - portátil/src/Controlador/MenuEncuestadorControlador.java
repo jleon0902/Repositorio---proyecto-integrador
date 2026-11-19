@@ -4,6 +4,7 @@ package controlador;
 import vista.P7_MenuPrincipal_Encuestador;
 import vista.P8_RepresentanteEncargado_Encuestador;
 import vista.P9_RevisarEncuesta_Encuestador;
+import vista.P11_Sincronizar_Encuestador;
 import modelo.SesionUsuario;
 
 import javax.swing.JPanel;
@@ -33,6 +34,11 @@ public class MenuEncuestadorControlador {
         vista.getBtnRevisarEncuesta().addActionListener(e -> {
             mostrarRevisarEncuesta();
         });
+        
+        // Conectar botón Sincronizar.
+        vista.getBtnSincronizar().addActionListener(e -> {
+            mostrarSincronizar();
+});
     }
 
     private void mostrarRepresentanteEncargado() {
@@ -74,7 +80,7 @@ public class MenuEncuestadorControlador {
         panelPrincipal.add(vista.getPanelMenu(), BorderLayout.WEST);
 
         panelPrincipal.add(
-        panel,
+        scroll,
         BorderLayout.CENTER
 );
 
@@ -90,6 +96,9 @@ public class MenuEncuestadorControlador {
         // Crear la pantalla P9.
         P9_RevisarEncuesta_Encuestador pantalla =
                 new P9_RevisarEncuesta_Encuestador();
+        
+        RevisarEncuestaEncuestadorControlador controladorP9 =
+        new RevisarEncuestaEncuestadorControlador(pantalla);
 
         // Obtener el panel principal de P9.
         JPanel panel = pantalla.getPanelRevisarEncuesta();
@@ -136,6 +145,58 @@ public class MenuEncuestadorControlador {
         // No abrir P9 como ventana independiente.
         pantalla.dispose();
     }
+    
+    public void mostrarSincronizar() {
+
+    // Crear la pantalla P11.
+    P11_Sincronizar_Encuestador pantalla =
+            new P11_Sincronizar_Encuestador();
+
+    // Obtener el panel principal de P11.
+    JPanel panel = pantalla.getPanelSincronizar();
+
+    // Quitar el menú lateral propio de P11.
+    panel.remove(pantalla.getPanelMenu());
+
+    // Crear el desplazamiento.
+    JScrollPane scroll = new JScrollPane(panel);
+
+    scroll.setVerticalScrollBarPolicy(
+            JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED
+    );
+
+    scroll.setHorizontalScrollBarPolicy(
+            JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED
+    );
+
+    // Obtener el panel principal de P7.
+    JPanel panelPrincipal = vista.getPanelPrincipal();
+
+    // Limpiar el contenido anterior.
+    panelPrincipal.removeAll();
+
+    // Organizar el panel.
+    panelPrincipal.setLayout(new BorderLayout());
+
+    // Mantener el menú lateral de P7.
+    panelPrincipal.add(
+            vista.getPanelMenu(),
+            BorderLayout.WEST
+    );
+
+    // Mostrar P11.
+    panelPrincipal.add(
+            scroll,
+            BorderLayout.CENTER
+    );
+
+    // Actualizar la interfaz.
+    panelPrincipal.revalidate();
+    panelPrincipal.repaint();
+
+    // No abrir P11 como ventana independiente.
+    pantalla.dispose();
+}
 
     // Cerrar la sesión del encuestador.
     public void cerrarSesion() {

@@ -17,8 +17,9 @@ public class GastosDiariosConsultaDAO {
 
         List<GastoDiarioConsulta> gastos = new ArrayList<>();
 
-        String procedimiento =
-        "{CALL PORTATIL_ENPH.SP_LISTAR_GASTOS_DIA(?, ?)}";
+        // Llamar al procedimiento exclusivo del recuentista.
+    String procedimiento =
+        "{CALL PORTATIL_ENPH.SP_LISTAR_GASTOS_DIA_REC(?, ?)}";
 
         try (Connection cn = conexion.conectar()) {
 

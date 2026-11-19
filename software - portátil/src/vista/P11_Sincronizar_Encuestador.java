@@ -12,9 +12,6 @@ public class P11_Sincronizar_Encuestador extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(P11_Sincronizar_Encuestador.class.getName());
 
-    /**
-     * Creates new form P8_MenuPrincipal_Encuestador
-     */
     public P11_Sincronizar_Encuestador() {
         initComponents();
         
@@ -36,7 +33,14 @@ public class P11_Sincronizar_Encuestador extends javax.swing.JFrame {
         }
     });
     }
+    
+    public javax.swing.JPanel getPanelSincronizar() {
+    return pnl_menuprincipalencuestador;
+}
 
+public javax.swing.JPanel getPanelMenu() {
+    return pnl_menu;
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -99,11 +103,11 @@ public class P11_Sincronizar_Encuestador extends javax.swing.JFrame {
                 .addComponent(lbl_dane, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lbl_enph, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(83, 83, 83)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnl_logosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbl_encuestador)
-                    .addComponent(lbl_nombreencuestador, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lbl_nombreencuestador, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(149, 149, 149))
         );
         pnl_logosLayout.setVerticalGroup(
             pnl_logosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -117,9 +121,9 @@ public class P11_Sincronizar_Encuestador extends javax.swing.JFrame {
                                 .addGap(8, 8, 8)
                                 .addComponent(lbl_enph))))
                     .addGroup(pnl_logosLayout.createSequentialGroup()
-                        .addGap(39, 39, 39)
+                        .addGap(33, 33, 33)
                         .addComponent(lbl_encuestador)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(12, 12, 12)
                         .addComponent(lbl_nombreencuestador)))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
@@ -198,7 +202,7 @@ public class P11_Sincronizar_Encuestador extends javax.swing.JFrame {
         lbl_encuestafinalizada.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         lbl_encuestafinalizada.setText("¡Encuesta finalizada!");
 
-        lbl_seleccionesincronizar.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        lbl_seleccionesincronizar.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         lbl_seleccionesincronizar.setText("Seleccione 'Sincronizar' para transferir la información al servidor");
 
         btn_sincronizarr.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
@@ -217,68 +221,67 @@ public class P11_Sincronizar_Encuestador extends javax.swing.JFrame {
             .addGroup(pnl_menuprincipalencuestadorLayout.createSequentialGroup()
                 .addComponent(pnl_menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(pnl_menuprincipalencuestadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_menuprincipalencuestadorLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 262, Short.MAX_VALUE)
-                        .addComponent(btn_sincronizarr)
-                        .addGap(203, 203, 203))
                     .addGroup(pnl_menuprincipalencuestadorLayout.createSequentialGroup()
-                        .addGap(31, 31, 31)
+                        .addGap(77, 77, 77)
                         .addGroup(pnl_menuprincipalencuestadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnl_menuprincipalencuestadorLayout.createSequentialGroup()
-                                .addGroup(pnl_menuprincipalencuestadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbl_encuestafinalizada)
-                                    .addComponent(lbl_seleccionesincronizar, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addComponent(lbl_seleccionesincronizar, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(120, Short.MAX_VALUE))
                             .addGroup(pnl_menuprincipalencuestadorLayout.createSequentialGroup()
                                 .addGroup(pnl_menuprincipalencuestadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_menuprincipalencuestadorLayout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(txt_representantehogar, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(pnl_menuprincipalencuestadorLayout.createSequentialGroup()
-                                        .addGap(3, 3, 3)
-                                        .addGroup(pnl_menuprincipalencuestadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lbl_cedula)
-                                            .addGroup(pnl_menuprincipalencuestadorLayout.createSequentialGroup()
-                                                .addComponent(lbl_dia)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(lblDia)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(lbl_14, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(lbl_representantehogar))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(txt_cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(32, 32, 32))))
-                    .addGroup(pnl_menuprincipalencuestadorLayout.createSequentialGroup()
-                        .addGap(229, 229, 229)
-                        .addComponent(lbl_sincronizar)
-                        .addContainerGap())))
+                                        .addComponent(lbl_dia)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lblDia)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lbl_14, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lbl_cedula)
+                                    .addComponent(lbl_representantehogar)
+                                    .addComponent(lbl_encuestafinalizada))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(pnl_menuprincipalencuestadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txt_representantehogar, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(84, 84, 84))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_menuprincipalencuestadorLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(pnl_menuprincipalencuestadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_menuprincipalencuestadorLayout.createSequentialGroup()
+                                .addComponent(btn_sincronizarr)
+                                .addGap(281, 281, 281))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_menuprincipalencuestadorLayout.createSequentialGroup()
+                                .addComponent(lbl_sincronizar)
+                                .addGap(288, 288, 288))))))
         );
         pnl_menuprincipalencuestadorLayout.setVerticalGroup(
             pnl_menuprincipalencuestadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnl_menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(pnl_menuprincipalencuestadorLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addGap(26, 26, 26)
                 .addComponent(lbl_sincronizar)
-                .addGap(30, 30, 30)
-                .addGroup(pnl_menuprincipalencuestadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txt_representantehogar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_representantehogar))
-                .addGap(45, 45, 45)
-                .addGroup(pnl_menuprincipalencuestadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_cedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_cedula))
-                .addGap(45, 45, 45)
-                .addGroup(pnl_menuprincipalencuestadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_14)
-                    .addComponent(lblDia)
-                    .addComponent(lbl_dia))
-                .addGap(18, 18, 18)
-                .addComponent(lbl_encuestafinalizada)
-                .addGap(30, 30, 30)
-                .addComponent(lbl_seleccionesincronizar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_sincronizarr)
-                .addGap(30, 30, 30))
+                .addGap(28, 28, 28)
+                .addGroup(pnl_menuprincipalencuestadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnl_menuprincipalencuestadorLayout.createSequentialGroup()
+                        .addComponent(lbl_representantehogar)
+                        .addGap(45, 45, 45)
+                        .addGroup(pnl_menuprincipalencuestadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txt_cedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_cedula))
+                        .addGap(45, 45, 45)
+                        .addGroup(pnl_menuprincipalencuestadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbl_14)
+                            .addComponent(lblDia)
+                            .addComponent(lbl_dia))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lbl_encuestafinalizada)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lbl_seleccionesincronizar)
+                        .addGap(32, 32, 32)
+                        .addComponent(btn_sincronizarr)
+                        .addGap(30, 30, 30))
+                    .addGroup(pnl_menuprincipalencuestadorLayout.createSequentialGroup()
+                        .addComponent(txt_representantehogar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -299,30 +302,6 @@ public class P11_Sincronizar_Encuestador extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new P11_Sincronizar_Encuestador().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_cerrarsesion;

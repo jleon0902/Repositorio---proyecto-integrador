@@ -71,59 +71,36 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                   <Component id="lbl_dane" min="-2" pref="209" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="lbl_enph" min="-2" pref="184" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="lbl_enph" min="-2" pref="184" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="lbl_encuestador" min="-2" pref="123" max="-2" attributes="0"/>
-                              <Component id="lbl_nombreencuestador" min="-2" pref="37" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="lbl_dia" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
-                          <Component id="lblDia1" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="lbl_dias" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="lbl_encuestador" min="-2" pref="123" max="-2" attributes="0"/>
+                      <Component id="lbl_nombreencuestador" min="-2" pref="150" max="-2" attributes="0"/>
                   </Group>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
+                  <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="lbl_dane" alignment="0" min="-2" pref="78" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                                  <Component id="lbl_enph" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <EmptySpace min="0" pref="9" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          <Component id="lbl_encuestador" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="lbl_nombreencuestador" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="lbl_dia" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="lbl_dias" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblDia1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                      <Component id="lbl_dane" alignment="0" min="-2" pref="78" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                          <Component id="lbl_enph" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
+                  <EmptySpace pref="15" max="32767" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  <Component id="lbl_encuestador" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
+                  <Component id="lbl_nombreencuestador" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -149,27 +126,6 @@
               <Font name="Times New Roman" size="18" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Encuestador:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="lbl_dia">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Times New Roman" size="18" style="0"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="D&#xed;a"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="lbl_dias">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Times New Roman" size="18" style="0"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="de 14"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="lblDia1">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel1"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lbl_nombreencuestador">
@@ -203,10 +159,6 @@
                                   <Component id="lbl_producto" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="lblProducto" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="lbl_de" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="lbl_cantidad" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Component id="lbl_cantidadadquirida" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="lbl_nombreproducto" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -224,11 +176,11 @@
                           <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="txt_cantidadadquirida" min="-2" pref="249" max="-2" attributes="0"/>
-                                      <Component id="txt_nombreproducto" min="-2" pref="249" max="-2" attributes="0"/>
-                                      <Component id="cmbox_unidadmedida" alignment="0" min="-2" pref="249" max="-2" attributes="0"/>
-                                      <Component id="cmb_formaadquisicion" alignment="0" min="-2" pref="249" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="txt_cantidadadquirida" pref="249" max="32767" attributes="0"/>
+                                      <Component id="cmbox_unidadmedida" alignment="0" pref="249" max="32767" attributes="0"/>
+                                      <Component id="cmb_formaadquisicion" alignment="0" pref="249" max="32767" attributes="0"/>
+                                      <Component id="cmb_nombreProducto" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
                               </Group>
@@ -236,7 +188,7 @@
                                   <Group type="103" groupAlignment="1" attributes="0">
                                       <Component id="btn_guardar" min="-2" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                          <Component id="cmb_unidadmedida" min="-2" pref="249" max="-2" attributes="0"/>
+                                          <Component id="cmb_medidaEquivalencia" min="-2" pref="249" max="-2" attributes="0"/>
                                           <Component id="cmb_tipomedida" min="-2" pref="249" max="-2" attributes="0"/>
                                           <Component id="txt_cantidadequivalencia" alignment="1" min="-2" pref="249" max="-2" attributes="0"/>
                                           <Component id="cmb_lugarcompraarticulo" alignment="1" min="-2" pref="249" max="-2" attributes="0"/>
@@ -281,15 +233,13 @@
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="lbl_producto" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="lblProducto" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lbl_de" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lbl_cantidad" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="lbl_nombreproducto" min="-2" max="-2" attributes="0"/>
-                                      <Component id="txt_nombreproducto" min="-2" pref="33" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="lbl_nombreproducto" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="cmb_nombreProducto" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="txt_cantidadadquirida" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                                       <Component id="lbl_cantidadadquirida" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -314,7 +264,7 @@
                           <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Component id="lbl_unidaddmedida" min="-2" max="-2" attributes="0"/>
-                              <Component id="cmb_unidadmedida" min="-2" pref="37" max="-2" attributes="0"/>
+                              <Component id="cmb_medidaEquivalencia" min="-2" pref="37" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -336,7 +286,7 @@
                       <Component id="cmb_frecuenciacompra" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
                       <Component id="lbl_frecuenciadecompra" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="40" max="32767" attributes="0"/>
+                  <EmptySpace pref="26" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btn_personal" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btn_hogar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -398,13 +348,6 @@
               <Font name="Times New Roman" size="18" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Unidad de medida:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="txt_nombreproducto">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Times New Roman" size="18" style="0"/>
-            </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_cantidadadquirida">
@@ -571,7 +514,7 @@
             <Property name="text" type="java.lang.String" value="Unidad de medida est&#xe1;ndar:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="cmb_unidadmedida">
+        <Component class="javax.swing.JComboBox" name="cmb_medidaEquivalencia">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Times New Roman" size="18" style="0"/>
@@ -654,18 +597,23 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JLabel" name="lbl_de">
+        <Component class="javax.swing.JComboBox" name="cmb_nombreProducto">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Times New Roman" size="18" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="de"/>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="4">
+                <StringItem index="0" value="Item 1"/>
+                <StringItem index="1" value="Item 2"/>
+                <StringItem index="2" value="Item 3"/>
+                <StringItem index="3" value="Item 4"/>
+              </StringArray>
+            </Property>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="lbl_cantidad">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel1"/>
-          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
