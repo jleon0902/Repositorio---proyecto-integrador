@@ -281,6 +281,7 @@ public void habilitarBotonesTipoGasto() {
         lbl_dias.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lbl_dias.setText("de 14");
 
+        lblDia.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblDia.setText("jLabel1");
 
         lbl_nombrerepresentante.setText("jLabel1");
@@ -419,6 +420,7 @@ public void habilitarBotonesTipoGasto() {
         cmb_formaadquisicion.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         cmb_formaadquisicion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        lblProducto.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblProducto.setText("jLabel1");
 
         lbl_tipomedida.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
@@ -434,6 +436,7 @@ public void habilitarBotonesTipoGasto() {
         btn_anterior.setText("Anterior");
         btn_anterior.addActionListener(this::btn_anteriorActionPerformed);
 
+        lbl_numero1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lbl_numero1.setText("jLabel1");
 
         lbl_de.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N

@@ -126,6 +126,8 @@ public class P1_SincronizarPortatil extends javax.swing.JFrame {
 
     private void btn_sincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sincronizarActionPerformed
         // TODO add your handling code here:
+        
+        
     }//GEN-LAST:event_btn_sincronizarActionPerformed
 
     /**

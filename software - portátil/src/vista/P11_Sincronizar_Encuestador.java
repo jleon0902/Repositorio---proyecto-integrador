@@ -209,8 +209,10 @@ public javax.swing.JPanel getPanelMenu() {
         btn_sincronizarr.setText("Sincronizar");
 
         txt_representantehogar.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txt_representantehogar.addActionListener(this::txt_representantehogarActionPerformed);
 
         txt_cedula.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txt_cedula.addActionListener(this::txt_cedulaActionPerformed);
 
         lblDia.setText("jLabel2");
 
@@ -301,6 +303,14 @@ public javax.swing.JPanel getPanelMenu() {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txt_cedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_cedulaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_cedulaActionPerformed
+
+    private void txt_representantehogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_representantehogarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_representantehogarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

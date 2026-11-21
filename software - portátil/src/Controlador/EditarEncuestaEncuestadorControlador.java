@@ -19,6 +19,9 @@ public class EditarEncuestaEncuestadorControlador {
 
     private GastosDiariosDAO dao;
 
+    private List<OpcionCombo> unidadesMedida;
+    private List<OpcionCombo> tiposMedida;
+    
 public EditarEncuestaEncuestadorControlador(
         P10_EditarEncuesta_Encuestador vistaP10,
         P9_RevisarEncuesta_Encuestador vistaP9,
@@ -55,22 +58,38 @@ public EditarEncuestaEncuestadorControlador(
 
     // Registrar el evento de cambio de la forma de adquisición.
     vistaP10.agregarAccionCambioFormaAdquisicion(
-            e -> actualizarLugarCompra()
-    );
+        e -> actualizarLugarCompra(true)
+);
 
     // Registrar el evento de cambio de la unidad de medida.
     vistaP10.agregarAccionCambioUnidadMedida(
-            e -> actualizarEquivalencia()
-    );
+        e -> actualizarEquivalencia(true)
+);
 
+    vistaP10.agregarAccionCambioTipoMedida(
+        e -> actualizarUnidadesEquivalencia()
+);
     // Cargar los datos originales del gasto.
     // Esto selecciona el producto, unidad, forma de adquisición,
     // equivalencia, lugar, frecuencia y tipo de gasto.
     cargarDatos();
     
+    // Registrar el evento para ingresar otra forma de adquisición.
+// Se registra después de cargar los datos originales.
+vistaP10.agregarAccionCambioFormaPersonalizada(
+        e -> vistaP10.establecerDisponibilidadOtraForma()
+);
+    
+    // Registrar el evento para ingresar una unidad personalizada.
+// Se registra después de cargar los datos para evitar
+// que aparezca la ventana emergente durante la carga.
+vistaP10.agregarAccionCambioUnidadPersonalizada(
+        e -> vistaP10.establecerDisponibilidadOtraUnidad()
+);
+    
     // Después de cargar la unidad de medida original,
 // comprobar si esa unidad tiene tipo de medida.
-    actualizarEquivalencia();
+    actualizarEquivalencia(false);
 
     // Registrar el evento de cambio del producto.
     // Se registra después de cargar los datos originales para
@@ -80,28 +99,76 @@ public EditarEncuestaEncuestadorControlador(
     );
 
     // Determinar el estado inicial del lugar de compra.
-    actualizarLugarCompra();
+    actualizarLugarCompra(false);
+    
+    // Registrar el evento para ingresar otro lugar de compra.
+vistaP10.agregarAccionCambioLugarPersonalizado(
+        e -> vistaP10.establecerDisponibilidadOtroLugarCompra()
+);
 
+vistaP10.agregarAccionHogar(
+        e -> vistaP10.seleccionarHogar()
+);
+
+vistaP10.agregarAccionPersonal(
+        e -> vistaP10.seleccionarPersonal()
+);
 }
     
     // Actualizar la disponibilidad de los campos de equivalencia.
-private void actualizarEquivalencia() {
+    private void actualizarEquivalencia(boolean limpiar) {
 
     String nombreUnidad = vistaP10.getUnidadMedida();
 
-    // Buscar la unidad seleccionada en las opciones de Oracle.
     OpcionCombo unidadSeleccionada = buscarOpcion(
-            dao.listarUnidadesMedida(),
+            unidadesMedida,
             nombreUnidad,
             false
     );
 
-    // Comprobar si la unidad tiene un tipo de medida asociado.
     boolean tieneTipoMedida = unidadSeleccionada != null
             && unidadSeleccionada.getIdTipoMedida() != null;
 
-    // Activar o desactivar los campos de equivalencia.
-    vistaP10.establecerDisponibilidadEquivalencia(tieneTipoMedida);
+    // Si tiene tipo de medida, se bloquean las equivalencias.
+    // Si no tiene tipo de medida, se habilitan.
+    vistaP10.establecerDisponibilidadEquivalencia(
+            !tieneTipoMedida,
+            limpiar
+    );
+}
+    
+    private void actualizarUnidadesEquivalencia() {
+
+    String nombreTipo = vistaP10.getTipoMedida();
+
+    OpcionCombo tipoSeleccionado = buscarOpcion(
+            tiposMedida,
+            nombreTipo,
+            false
+    );
+
+    // Si no hay tipo seleccionado, dejar el combo vacío.
+    if (tipoSeleccionado == null) {
+
+        vistaP10.cargarUnidadesEquivalencia(
+                new ArrayList<>()
+        );
+
+        return;
+    }
+
+    // Obtener el ID del tipo de medida.
+    int idTipoMedida = tipoSeleccionado.getId();
+
+    // Consultar únicamente las unidades que corresponden
+    // al ID del tipo seleccionado.
+    List<OpcionCombo> unidadesFiltradas =
+            dao.listarUnidadesPorTipo(idTipoMedida);
+
+    // Mostrar las unidades encontradas.
+    vistaP10.cargarUnidadesEquivalencia(
+            obtenerNombres(unidadesFiltradas)
+    );
 }
 
     // Convertir las opciones del DAO en nombres para los combos.
@@ -124,21 +191,25 @@ private void actualizarEquivalencia() {
                 obtenerNombres(dao.listarProductos())
         );
         
+        unidadesMedida = dao.listarUnidadesMedida();
+
         vistaP10.cargarUnidadesMedida(
-                obtenerNombres(dao.listarUnidadesMedida())
+                obtenerNombres(unidadesMedida)
         );
 
         vistaP10.cargarFormasAdquisicion(
                 obtenerNombres(dao.listarFormasAdquisicion())
         );
 
-        vistaP10.cargarTiposMedida(
-                obtenerNombres(dao.listarTiposMedida())
-        );
+        tiposMedida = dao.listarTiposMedida();
+
+vistaP10.cargarTiposMedida(
+        obtenerNombres(tiposMedida)
+);
 
         vistaP10.cargarUnidadesEquivalencia(
-                obtenerNombres(dao.listarUnidadesEquivalencia())
-        );
+        new ArrayList<>()
+);
 
         vistaP10.cargarLugaresCompra(
                 obtenerNombres(dao.listarLugaresCompra())
@@ -159,6 +230,11 @@ private void actualizarEquivalencia() {
             );
             return;
         }
+        
+        vistaP10.mostrarInformacion(
+        gastoSeleccionado.getNumeroOrden(),
+        0
+);
 
         vistaP10.cargarDatosGasto(
                 gastoSeleccionado.getProducto(),
@@ -177,16 +253,11 @@ private void actualizarEquivalencia() {
 
     
 // Actualizar el lugar de compra según la forma seleccionada.
-private void actualizarLugarCompra() {
+ private void actualizarLugarCompra(boolean limpiar) {
 
-    String forma = vistaP10.getFormaAdquisicion();
-
-    boolean esCompra = forma != null
-            && forma.trim().equalsIgnoreCase("Compra");
-
-    vistaP10.establecerDisponibilidadLugarCompra(esCompra);
+    vistaP10.actualizarFormaAdquisicion(limpiar);
 }
-
+    
     // Buscar una opción por su nombre.
     private OpcionCombo buscarOpcion(
             List<OpcionCombo> opciones,
@@ -225,6 +296,7 @@ private void actualizarLugarCompra() {
             String nombreUnidadEqui = vistaP10.getUnidadEquivalencia();
             String cantidadEquiTexto =
                     vistaP10.getCantidadEquivalencia();
+            String nombreTipoMedida = vistaP10.getTipoMedida();
             String nombreLugar = vistaP10.getLugarCompra();
             
             // Determinar si la adquisición corresponde a una compra.
@@ -262,6 +334,36 @@ if (!esCompra) {
                 );
                 return;
             }
+            
+            // Comprobar si la unidad seleccionada tiene tipo de medida.
+OpcionCombo unidadSeleccionada = buscarOpcion(
+        unidadesMedida,
+        nombreUnidad,
+        false
+);
+
+boolean tieneTipoMedida = unidadSeleccionada != null
+        && unidadSeleccionada.getIdTipoMedida() != null;
+
+// Si la unidad NO tiene tipo de medida,
+// los tres campos de equivalencia son obligatorios.
+if (!tieneTipoMedida) {
+
+    if (nombreTipoMedida == null
+            || nombreTipoMedida.trim().isEmpty()
+            || nombreUnidadEqui == null
+            || nombreUnidadEqui.trim().isEmpty()
+            || cantidadEquiTexto == null
+            || cantidadEquiTexto.trim().isEmpty()) {
+
+        vistaP10.mostrarError(
+                "Debe completar el tipo de medida, "
+                + "la unidad de equivalencia y "
+                + "la cantidad de equivalencia."
+        );
+        return;
+    }
+}
 
             // Convertir los valores numéricos.
             double cantidad = Double.parseDouble(cantidadTexto);

@@ -192,7 +192,6 @@ public Long getIdGastoSeleccionado() {
         lbl_14 = new javax.swing.JLabel();
         scrlpn_tabla = new javax.swing.JScrollPane();
         tbl_revisarencuesta = new javax.swing.JTable();
-        btn_salir = new javax.swing.JButton();
         btn_eliminar = new javax.swing.JButton();
         btn_editar = new javax.swing.JButton();
         btn_anterior = new javax.swing.JButton();
@@ -333,9 +332,6 @@ public Long getIdGastoSeleccionado() {
         tbl_revisarencuesta.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         scrlpn_tabla.setViewportView(tbl_revisarencuesta);
 
-        btn_salir.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btn_salir.setText("Salir");
-
         btn_eliminar.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btn_eliminar.setText("Eliminar");
 
@@ -376,27 +372,25 @@ public Long getIdGastoSeleccionado() {
                                     .addComponent(lbl_fechadia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addComponent(lbl_gastosdiarios)))
                         .addContainerGap())
-                    .addGroup(pnl_menuprincipalencuestadorLayout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(btn_salir)
-                        .addGap(26, 26, 26)
-                        .addComponent(btn_eliminar)
-                        .addGap(27, 27, 27)
-                        .addComponent(btn_editar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_anterior)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_continuar)
-                        .addGap(17, 17, 17))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_menuprincipalencuestadorLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                        .addGroup(pnl_menuprincipalencuestadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_menuprincipalencuestadorLayout.createSequentialGroup()
-                                .addComponent(scrlpn_tabla, javax.swing.GroupLayout.PREFERRED_SIZE, 647, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(19, 19, 19))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_menuprincipalencuestadorLayout.createSequentialGroup()
-                                .addComponent(lbl_revisarencuesta)
-                                .addGap(238, 238, 238))))))
+                        .addGroup(pnl_menuprincipalencuestadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(pnl_menuprincipalencuestadorLayout.createSequentialGroup()
+                                .addComponent(btn_eliminar)
+                                .addGap(18, 18, 18)
+                                .addComponent(btn_editar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btn_anterior)
+                                .addGap(18, 18, 18)
+                                .addComponent(btn_continuar)
+                                .addGap(17, 17, 17))
+                            .addGroup(pnl_menuprincipalencuestadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_menuprincipalencuestadorLayout.createSequentialGroup()
+                                    .addComponent(scrlpn_tabla, javax.swing.GroupLayout.PREFERRED_SIZE, 647, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(19, 19, 19))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_menuprincipalencuestadorLayout.createSequentialGroup()
+                                    .addComponent(lbl_revisarencuesta)
+                                    .addGap(238, 238, 238)))))))
         );
         pnl_menuprincipalencuestadorLayout.setVerticalGroup(
             pnl_menuprincipalencuestadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -419,7 +413,6 @@ public Long getIdGastoSeleccionado() {
                 .addComponent(scrlpn_tabla, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(pnl_menuprincipalencuestadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_salir)
                     .addComponent(btn_eliminar)
                     .addComponent(btn_editar)
                     .addComponent(btn_anterior)
@@ -460,7 +453,6 @@ public Long getIdGastoSeleccionado() {
     private javax.swing.JButton btn_eliminar;
     private javax.swing.JButton btn_representanteencargado;
     private javax.swing.JButton btn_revisarencuesta;
-    private javax.swing.JButton btn_salir;
     private javax.swing.JButton btn_sincronizar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblDia;

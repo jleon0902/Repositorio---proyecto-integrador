@@ -164,6 +164,9 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lblDia">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Times New Roman" size="18" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="jLabel1"/>
           </Properties>
         </Component>
@@ -635,6 +638,9 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lblProducto">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Times New Roman" size="18" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="jLabel1"/>
           </Properties>
         </Component>
@@ -695,6 +701,9 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lbl_numero1">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Times New Roman" size="18" style="0"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="jLabel1"/>
           </Properties>
         </Component>

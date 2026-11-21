@@ -9,22 +9,61 @@ public class P10_EditarEncuesta_Encuestador extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(P10_EditarEncuesta_Encuestador.class.getName());
 
     private String productoOtro = "";
-    /**
-     * Creates new form P4_GastosDiarios
-     */
+    private String unidadMedidaOtra = "";
+    private String formaAdquisicionOtra = "";
+    private String lugarCompraOtro = "";
+    
+    private javax.swing.ButtonGroup grupoTipoGasto;
     
     public P10_EditarEncuesta_Encuestador() {
     initComponents();
     
+    validarValor();
+    
+    grupoTipoGasto = new javax.swing.ButtonGroup();
+
+grupoTipoGasto.add(btn_hogar);
+grupoTipoGasto.add(btn_personal);
+    
+    validarCantidadEquivalencia();
+    
+    // Permitir únicamente números y un punto decimal
+txt_cantidadadquirida.addKeyListener(new java.awt.event.KeyAdapter() {
+    @Override
+    public void keyTyped(java.awt.event.KeyEvent evt) {
+
+        char caracter = evt.getKeyChar();
+
+        // Permitir teclas de control, como borrar
+        if (Character.isISOControl(caracter)) {
+            return;
+        }
+
+        // Permitir números
+        if (Character.isDigit(caracter)) {
+            return;
+        }
+
+        // Permitir un único punto decimal
+        if (caracter == '.'
+                && !txt_cantidadadquirida.getText().contains(".")) {
+            return;
+        }
+
+        // Bloquear cualquier otro carácter
+        evt.consume();
+    }
+});
+    
     // Permitir desplazamiento con el scroll cuando las listas tengan
 // muchas opciones.
-cmb_nombreProducto.setMaximumRowCount(8);
-cmbox_unidadmedida.setMaximumRowCount(8);
-cmb_formaadquisicion.setMaximumRowCount(8);
-cmb_tipomedida.setMaximumRowCount(8);
-cmb_medidaEquivalencia.setMaximumRowCount(8);
-cmb_lugarcompraarticulo.setMaximumRowCount(8);
-cmb_frecuenciacompra.setMaximumRowCount(8);
+cmb_nombreProducto.setMaximumRowCount(5);
+cmbox_unidadmedida.setMaximumRowCount(5);
+cmb_formaadquisicion.setMaximumRowCount(5);
+cmb_tipomedida.setMaximumRowCount(3);
+cmb_medidaEquivalencia.setMaximumRowCount(5);
+cmb_lugarcompraarticulo.setMaximumRowCount(5);
+cmb_frecuenciacompra.setMaximumRowCount(5);
 
     // Permitir cerrar esta ventana sin cerrar toda la aplicación.
     setDefaultCloseOperation(
@@ -80,14 +119,11 @@ seleccionarProducto(producto);
                 String.valueOf(cantidad)
         );
 
-        seleccionarOpcion(cmbox_unidadmedida, unidad);
+        seleccionarUnidadMedida(unidad);
 
-        seleccionarOpcion(
-                cmb_formaadquisicion,
-                formaAdquisicion
-        );
+        seleccionarFormaAdquisicion(formaAdquisicion);
         
-        actualizarFormaAdquisicion();
+        actualizarFormaAdquisicion(false);
 
         seleccionarOpcion(cmb_tipomedida, tipoMedida);
 
@@ -132,34 +168,352 @@ seleccionarProducto(producto);
 
     // Cargar las opciones de los combos desde el controlador.
     public void cargarUnidadesMedida(
-            java.util.List<String> opciones) {
-        cargarCombo(cmbox_unidadmedida, opciones);
+        java.util.List<String> opciones) {
+
+    cargarCombo(cmbox_unidadmedida, opciones);
+
+    cmbox_unidadmedida.addItem("Otros, ¿Cuál?");
+}
+    
+    // Seleccionar una unidad de medida, incluso si es personalizada.
+public void seleccionarUnidadMedida(String unidad) {
+
+    if (unidad == null || unidad.trim().isEmpty()) {
+        cmbox_unidadmedida.setSelectedIndex(-1);
+        unidadMedidaOtra = "";
+        return;
     }
+
+    for (int i = 0; i < cmbox_unidadmedida.getItemCount(); i++) {
+
+        String opcion = cmbox_unidadmedida.getItemAt(i);
+
+        if (unidad.equalsIgnoreCase(opcion)) {
+            cmbox_unidadmedida.setSelectedIndex(i);
+            unidadMedidaOtra = "";
+            return;
+        }
+    }
+
+    // Si no está registrada, agregarla como unidad personalizada.
+    unidadMedidaOtra = unidad.trim();
+    cmbox_unidadmedida.addItem(unidadMedidaOtra);
+    cmbox_unidadmedida.setSelectedItem(unidadMedidaOtra);
+}
+
+
+// Solicitar una unidad de medida personalizada.
+public void establecerDisponibilidadOtraUnidad() {
+
+    boolean otra = "Otros, ¿Cuál?".equals(
+            cmbox_unidadmedida.getSelectedItem()
+    );
+
+    if (!otra) {
+        unidadMedidaOtra = "";
+        return;
+    }
+
+    String unidad;
+
+    while (true) {
+
+        unidad = javax.swing.JOptionPane.showInputDialog(
+                this,
+                "Ingrese el nombre de la unidad de medida:\n"
+                + "Solo se permiten letras y espacios.",
+                "Otra unidad de medida",
+                javax.swing.JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (unidad == null) {
+            unidadMedidaOtra = "";
+            cmbox_unidadmedida.setSelectedIndex(-1);
+            return;
+        }
+
+        unidad = unidad.trim();
+
+        if (unidad.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(
+                    this,
+                    "Debe ingresar el nombre de la unidad.",
+                    "Unidad inválida",
+                    javax.swing.JOptionPane.WARNING_MESSAGE
+            );
+            continue;
+        }
+
+        if (!unidad.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
+            javax.swing.JOptionPane.showMessageDialog(
+                    this,
+                    "La unidad solo puede contener letras y espacios.",
+                    "Unidad inválida",
+                    javax.swing.JOptionPane.WARNING_MESSAGE
+            );
+            continue;
+        }
+
+        break;
+    }
+
+    unidadMedidaOtra = unidad;
+
+    cmbox_unidadmedida.addItem(unidad);
+    cmbox_unidadmedida.setSelectedItem(unidad);
+}
+
+
+// Obtener la unidad seleccionada.
+public String getUnidadMedida() {
+
+    Object seleccionada = cmbox_unidadmedida.getSelectedItem();
+
+    if (seleccionada == null
+            || "Otros, ¿Cuál?".equals(seleccionada)) {
+        return "";
+    }
+
+    return seleccionada.toString();
+}
+
+
+// Registrar el evento para escribir otra unidad.
+public void agregarAccionCambioUnidadPersonalizada(
+        java.awt.event.ActionListener accion) {
+
+    cmbox_unidadmedida.addActionListener(accion);
+}
 
     public void cargarFormasAdquisicion(
-            java.util.List<String> opciones) {
-        cargarCombo(cmb_formaadquisicion, opciones);
+        java.util.List<String> opciones) {
+
+    cargarCombo(cmb_formaadquisicion, opciones);
+
+    cmb_formaadquisicion.addItem("Otros, ¿Cuál?");
+}
+    
+    // Seleccionar una forma de adquisición, incluso si es personalizada.
+public void seleccionarFormaAdquisicion(String forma) {
+
+    if (forma == null || forma.trim().isEmpty()) {
+        cmb_formaadquisicion.setSelectedIndex(-1);
+        formaAdquisicionOtra = "";
+        return;
     }
 
-    public void cargarTiposMedida(
-            java.util.List<String> opciones) {
-        cargarCombo(cmb_tipomedida, opciones);
+    for (int i = 0; i < cmb_formaadquisicion.getItemCount(); i++) {
+
+        String opcion = cmb_formaadquisicion.getItemAt(i);
+
+        if (forma.equalsIgnoreCase(opcion)) {
+            cmb_formaadquisicion.setSelectedIndex(i);
+            formaAdquisicionOtra = "";
+            return;
+        }
     }
 
-    public void cargarUnidadesEquivalencia(
-            java.util.List<String> opciones) {
-        cargarCombo(cmb_medidaEquivalencia, opciones);
+    formaAdquisicionOtra = forma.trim();
+
+    cmb_formaadquisicion.addItem(formaAdquisicionOtra);
+    cmb_formaadquisicion.setSelectedItem(formaAdquisicionOtra);
+}
+
+
+// Solicitar una forma de adquisición personalizada.
+public void establecerDisponibilidadOtraForma() {
+
+    boolean otra = "Otros, ¿Cuál?".equals(
+            cmb_formaadquisicion.getSelectedItem()
+    );
+
+    if (!otra) {
+        formaAdquisicionOtra = "";
+        return;
     }
 
-    public void cargarLugaresCompra(
-            java.util.List<String> opciones) {
-        cargarCombo(cmb_lugarcompraarticulo, opciones);
+    String forma;
+
+    while (true) {
+
+        forma = javax.swing.JOptionPane.showInputDialog(
+                this,
+                "Ingrese la forma de adquisición:\n"
+                + "Solo se permiten letras y espacios.",
+                "Otra forma de adquisición",
+                javax.swing.JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (forma == null) {
+            formaAdquisicionOtra = "";
+            cmb_formaadquisicion.setSelectedIndex(-1);
+            return;
+        }
+
+        forma = forma.trim();
+
+        if (forma.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(
+                    this,
+                    "Debe ingresar la forma de adquisición.",
+                    "Opción inválida",
+                    javax.swing.JOptionPane.WARNING_MESSAGE
+            );
+            continue;
+        }
+
+        if (!forma.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
+            javax.swing.JOptionPane.showMessageDialog(
+                    this,
+                    "Solo se permiten letras y espacios.",
+                    "Opción inválida",
+                    javax.swing.JOptionPane.WARNING_MESSAGE
+            );
+            continue;
+        }
+
+        break;
     }
 
-    public void cargarFrecuenciasCompra(
-            java.util.List<String> opciones) {
-        cargarCombo(cmb_frecuenciacompra, opciones);
+    formaAdquisicionOtra = forma;
+
+    cmb_formaadquisicion.addItem(forma);
+    cmb_formaadquisicion.setSelectedItem(forma);
+}
+
+
+// Registrar el evento para ingresar otra forma de adquisición.
+public void agregarAccionCambioFormaPersonalizada(
+        java.awt.event.ActionListener accion) {
+
+    cmb_formaadquisicion.addActionListener(accion);
+}
+
+    public void cargarTiposMedida(java.util.List<String> opciones) {
+    cmb_tipomedida.removeAllItems();
+    cmb_tipomedida.addItem("Seleccione");
+
+    for (String opcion : opciones) {
+        cmb_tipomedida.addItem(opcion);
     }
+}
+
+public void cargarUnidadesEquivalencia(
+        java.util.List<String> opciones) {
+
+    cmb_medidaEquivalencia.removeAllItems();
+
+    cmb_medidaEquivalencia.addItem("Seleccione");
+
+    for (String opcion : opciones) {
+        cmb_medidaEquivalencia.addItem(opcion);
+    }
+}
+
+public void cargarLugaresCompra(
+        java.util.List<String> opciones) {
+
+    cmb_lugarcompraarticulo.removeAllItems();
+
+    cmb_lugarcompraarticulo.addItem("Seleccione");
+
+    for (String opcion : opciones) {
+        cmb_lugarcompraarticulo.addItem(opcion);
+    }
+
+    cmb_lugarcompraarticulo.addItem("Otros, ¿Cuál?");
+}
+    
+    // Obtener el lugar de compra seleccionado.
+public String getLugarCompra() {
+
+    Object seleccionado = cmb_lugarcompraarticulo.getSelectedItem();
+
+    if (seleccionado == null
+            || "Otros, ¿Cuál?".equals(seleccionado)) {
+        return "";
+    }
+
+    return seleccionado.toString();
+}
+
+
+// Solicitar un lugar de compra personalizado.
+public void establecerDisponibilidadOtroLugarCompra() {
+
+    boolean otro = "Otros, ¿Cuál?".equals(
+            cmb_lugarcompraarticulo.getSelectedItem()
+    );
+
+    if (!otro) {
+        lugarCompraOtro = "";
+        return;
+    }
+
+    String lugar;
+
+    while (true) {
+
+        lugar = javax.swing.JOptionPane.showInputDialog(
+                this,
+                "Ingrese el lugar de compra:\n"
+                + "Solo se permiten letras y espacios.",
+                "Otro lugar de compra",
+                javax.swing.JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (lugar == null) {
+            lugarCompraOtro = "";
+            cmb_lugarcompraarticulo.setSelectedIndex(-1);
+            return;
+        }
+
+        lugar = lugar.trim();
+
+        if (lugar.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(
+                    this,
+                    "Debe ingresar el lugar de compra."
+            );
+            continue;
+        }
+
+        if (!lugar.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
+            javax.swing.JOptionPane.showMessageDialog(
+                    this,
+                    "Solo se permiten letras y espacios."
+            );
+            continue;
+        }
+
+        break;
+    }
+
+    lugarCompraOtro = lugar;
+
+    cmb_lugarcompraarticulo.addItem(lugar);
+    cmb_lugarcompraarticulo.setSelectedItem(lugar);
+}
+
+
+// Registrar el evento del lugar personalizado.
+public void agregarAccionCambioLugarPersonalizado(
+        java.awt.event.ActionListener accion) {
+
+    cmb_lugarcompraarticulo.addActionListener(accion);
+}
+
+public void cargarFrecuenciasCompra(
+        java.util.List<String> opciones) {
+
+    cmb_frecuenciacompra.removeAllItems();
+
+    cmb_frecuenciacompra.addItem("Seleccione");
+
+    for (String opcion : opciones) {
+        cmb_frecuenciacompra.addItem(opcion);
+    }
+}
 
     // Limpiar y llenar un combo con las opciones recibidas.
     private void cargarCombo(
@@ -174,16 +528,35 @@ seleccionarProducto(producto);
     }
 
     // Establecer el tipo de gasto seleccionado.
-    public void establecerTipoGasto(String tipo) {
+public void establecerTipoGasto(String tipo) {
 
-        tipoGastoSeleccionado = tipo;
+    tipoGastoSeleccionado = tipo;
 
-        btn_hogar.setEnabled(!"Hogar".equalsIgnoreCase(tipo));
+    // Ambos botones deben permanecer habilitados.
+    btn_hogar.setEnabled(true);
+    btn_personal.setEnabled(true);
 
-        btn_personal.setEnabled(
-                !"Personal".equalsIgnoreCase(tipo)
-        );
+    // Marcar visualmente la selección.
+    if ("Hogar".equalsIgnoreCase(tipo)) {
+
+        btn_hogar.setBackground(new java.awt.Color(173, 216, 230));
+        btn_personal.setBackground(null);
+
+    } else if ("Personal".equalsIgnoreCase(tipo)) {
+
+        btn_personal.setBackground(new java.awt.Color(173, 216, 230));
+        btn_hogar.setBackground(null);
+
     }
+}
+
+public void seleccionarHogar() {
+    establecerTipoGasto("Hogar");
+}
+
+public void seleccionarPersonal() {
+    establecerTipoGasto("Personal");
+}
 
     // Mostrar el número de producto y el día de seguimiento.
     public void mostrarInformacion(
@@ -198,17 +571,27 @@ seleccionarProducto(producto);
         return txt_cantidadadquirida.getText().trim();
     }
 
-    public String getUnidadMedida() {
-        return (String) cmbox_unidadmedida.getSelectedItem();
+    public String getFormaAdquisicion() {
+
+    Object seleccionada = cmb_formaadquisicion.getSelectedItem();
+
+    if (seleccionada == null
+            || "Otros, ¿Cuál?".equals(seleccionada)) {
+        return "";
     }
 
-    public String getFormaAdquisicion() {
-        return (String) cmb_formaadquisicion.getSelectedItem();
-    }
+    return seleccionada.toString();
+}
 
     public String getTipoMedida() {
-        return (String) cmb_tipomedida.getSelectedItem();
-    }
+
+    Object seleccionado = cmb_tipomedida.getSelectedItem();
+
+    return seleccionado == null
+            || "Seleccione".equals(seleccionado)
+            ? ""
+            : seleccionado.toString();
+}
 
     public String getUnidadEquivalencia() {
         return (String) cmb_medidaEquivalencia.getSelectedItem();
@@ -216,10 +599,6 @@ seleccionarProducto(producto);
 
     public String getCantidadEquivalencia() {
         return txt_cantidadequivalencia.getText().trim();
-    }
-
-    public String getLugarCompra() {
-        return (String) cmb_lugarcompraarticulo.getSelectedItem();
     }
 
     public String getValor() {
@@ -256,9 +635,10 @@ seleccionarProducto(producto);
     }
 
     public void agregarAccionCambioTipoMedida(
-            java.awt.event.ActionListener accion) {
-        cmb_tipomedida.addActionListener(accion);
-    }
+        java.awt.event.ActionListener accion) {
+
+    cmb_tipomedida.addActionListener(accion);
+}
 
     public void agregarAccionCambioFormaAdquisicion(
             java.awt.event.ActionListener accion) {
@@ -284,13 +664,24 @@ seleccionarProducto(producto);
         );
     }
 
+    
+    
+    
     // Habilitar o deshabilitar el lugar de compra según la forma de adquisición.
 public void establecerDisponibilidadLugarCompra(
-        boolean disponible) {
+        boolean disponible,
+        boolean limpiar) {
 
     cmb_lugarcompraarticulo.setEnabled(disponible);
 
     cmb_frecuenciacompra.setEnabled(disponible);
+
+    if (limpiar && disponible) {
+
+        cmb_lugarcompraarticulo.setSelectedIndex(0);
+
+        cmb_frecuenciacompra.setSelectedIndex(0);
+    }
 
     if (!disponible) {
 
@@ -355,30 +746,66 @@ public void establecerDisponibilidadOtroProducto() {
             cmb_nombreProducto.getSelectedItem()
     );
 
-    if (otro) {
+    if (!otro) {
+        productoOtro = "";
+        return;
+    }
 
-        String producto = javax.swing.JOptionPane.showInputDialog(
+    String producto;
+
+    while (true) {
+
+        producto = javax.swing.JOptionPane.showInputDialog(
                 this,
-                "Ingrese el nombre del producto:",
+                "Ingrese el nombre del producto:\n"
+                + "Solo se permiten letras, números y espacios.",
                 "Otro producto",
                 javax.swing.JOptionPane.QUESTION_MESSAGE
         );
 
-        if (producto != null && !producto.trim().isEmpty()) {
-
-            // Conservar el nombre escrito para obtenerlo posteriormente.
-            productoOtro = producto.trim();
-
-        } else {
-
+        // Si presiona Cancelar
+        if (producto == null) {
             productoOtro = "";
             cmb_nombreProducto.setSelectedIndex(-1);
+            return;
         }
 
-    } else {
+        producto = producto.trim();
 
-        productoOtro = "";
+        // No permitir que quede vacío
+        if (producto.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(
+                    this,
+                    "Debe ingresar el nombre del producto.",
+                    "Producto inválido",
+                    javax.swing.JOptionPane.WARNING_MESSAGE
+            );
+            continue;
+        }
+
+        // Solo letras, números, espacios y letras con tilde/ñ
+        if (!producto.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 ]+")) {
+            javax.swing.JOptionPane.showMessageDialog(
+                    this,
+                    "El nombre del producto solo puede contener "
+                    + "letras, números y espacios.",
+                    "Producto inválido",
+                    javax.swing.JOptionPane.WARNING_MESSAGE
+            );
+            continue;
+        }
+
+        break;
     }
+
+    // Guardar el producto escrito
+    productoOtro = producto;
+
+    // Agregar temporalmente el producto al combo
+    cmb_nombreProducto.addItem(producto);
+
+    // Mostrar en el combo el nombre que acaba de escribir
+    cmb_nombreProducto.setSelectedItem(producto);
 }
 
 
@@ -406,20 +833,16 @@ public String getProducto() {
 
 
 public void establecerDisponibilidadEquivalencia(
-        boolean disponible) {
+        boolean disponible,
+        boolean limpiar) {
 
     cmb_tipomedida.setEnabled(disponible);
-
     cmb_medidaEquivalencia.setEnabled(disponible);
-
     txt_cantidadequivalencia.setEnabled(disponible);
 
-    if (!disponible) {
-
-        cmb_tipomedida.setSelectedIndex(-1);
-
-        cmb_medidaEquivalencia.setSelectedIndex(-1);
-
+    if (limpiar) {
+        cmb_tipomedida.setSelectedIndex(0);
+        cmb_medidaEquivalencia.setSelectedIndex(0);
         txt_cantidadequivalencia.setText("");
     }
 }
@@ -430,17 +853,106 @@ public void agregarAccionCambioUnidadMedida(
     cmbox_unidadmedida.addActionListener(accion);
 }
 
-public void actualizarFormaAdquisicion() {
+public void actualizarFormaAdquisicion(boolean limpiar) {
 
     Object seleccion = cmb_formaadquisicion.getSelectedItem();
 
     boolean esCompra = seleccion != null
             && "Compra".equalsIgnoreCase(seleccion.toString());
 
-    establecerDisponibilidadLugarCompra(esCompra);
+    establecerDisponibilidadLugarCompra(esCompra, limpiar);
 }
 
+// Permitir únicamente números y un separador decimal.
+private void validarCantidadEquivalencia() {
 
+    ((javax.swing.text.AbstractDocument)
+            txt_cantidadequivalencia.getDocument())
+            .setDocumentFilter(new javax.swing.text.DocumentFilter() {
+
+        @Override
+        public void insertString(
+                FilterBypass fb,
+                int offset,
+                String string,
+                javax.swing.text.AttributeSet attr)
+                throws javax.swing.text.BadLocationException {
+
+            if (string != null) {
+                replace(fb, offset, 0, string, attr);
+            }
+        }
+
+        @Override
+        public void replace(
+                FilterBypass fb,
+                int offset,
+                int length,
+                String texto,
+                javax.swing.text.AttributeSet attrs)
+                throws javax.swing.text.BadLocationException {
+
+            String actual = fb.getDocument().getText(
+                    0,
+                    fb.getDocument().getLength()
+            );
+
+            String nuevo = actual.substring(0, offset)
+                    + (texto == null ? "" : texto)
+                    + actual.substring(offset + length);
+
+            // Permitir números y un único punto decimal.
+            if (nuevo.matches("[0-9]*([.][0-9]*)?")) {
+                fb.replace(offset, length, texto, attrs);
+            }
+        }
+    });
+}
+
+// Permitir únicamente números y un solo punto decimal en el valor.
+private void validarValor() {
+
+    ((javax.swing.text.AbstractDocument)
+            txt_valor.getDocument())
+            .setDocumentFilter(new javax.swing.text.DocumentFilter() {
+
+        @Override
+        public void insertString(
+                FilterBypass fb,
+                int offset,
+                String texto,
+                javax.swing.text.AttributeSet attrs)
+                throws javax.swing.text.BadLocationException {
+
+            if (texto != null) {
+                replace(fb, offset, 0, texto, attrs);
+            }
+        }
+
+        @Override
+        public void replace(
+                FilterBypass fb,
+                int offset,
+                int length,
+                String texto,
+                javax.swing.text.AttributeSet attrs)
+                throws javax.swing.text.BadLocationException {
+
+            String actual = fb.getDocument().getText(
+                    0,
+                    fb.getDocument().getLength()
+            );
+
+            String nuevo = actual.substring(0, offset)
+                    + (texto == null ? "" : texto)
+                    + actual.substring(offset + length);
+
+            if (nuevo.matches("[0-9]*([.][0-9]*)?")) {
+                fb.replace(offset, length, texto, attrs);
+            }
+        }
+    });
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
