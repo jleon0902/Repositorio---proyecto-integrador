@@ -8,18 +8,26 @@ package vista;
  *
  * @author usuario
  */
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PiePlot;
+import org.jfree.data.general.DefaultPieDataset;
+import java.awt.Font;
+import controlador.P30CriticoAdquisicionControlador;
 import javax.swing.JFrame;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.List;
 public class P30_CriticoAdquisicion1 extends javax.swing.JFrame {
-    
+        private P30CriticoAdquisicionControlador controlador;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(P30_CriticoAdquisicion1.class.getName());
 
     /**
      * Creates new form iniciarSesion
      */
-    public P30_CriticoAdquisicion1() {
-        initComponents();
+public P30_CriticoAdquisicion1() {
+    initComponents();
 
         // 1. Configuración de tamaño inicial y permitir redimensionar
         this.setResizable(true);
@@ -36,11 +44,12 @@ public class P30_CriticoAdquisicion1 extends javax.swing.JFrame {
 
         // Remover pnlAdquisicion del frame y moverlo dentro del contenedor recortador
         getContentPane().remove(pnlAdquisicion);
+        pnlAdquisicion.remove(jScrollBar1);
         pnlAdquisicion.setBorder(null);
         pnlContenedor.add(pnlAdquisicion);
 
         // 4. Establecer el tamaño vertical real del contenido deslizable
-        int altoContenido = 1025;
+       int altoContenido = 1530;
 
         // 5. Configurar el comportamiento del scrollbar manual
         jScrollBar1.setMinimum(0);
@@ -115,6 +124,133 @@ public class P30_CriticoAdquisicion1 extends javax.swing.JFrame {
 
     if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
         this.dispose();
+    }
+}
+    
+    public void setControlador(
+        P30CriticoAdquisicionControlador controlador) {
+
+    this.controlador = controlador;
+}
+public void comprobarConexion() {
+
+    if (controlador != null) {
+        controlador.comprobarConexion();
+    }
+}
+public void mostrarMensaje(String mensaje) {
+
+    javax.swing.JOptionPane.showMessageDialog(
+            this,
+            mensaje,
+            "Estado de conexión",
+            javax.swing.JOptionPane.INFORMATION_MESSAGE
+    );
+}
+
+
+
+// MOSTRAR PORCENTAJES DE FORMAS DE ADQUISICION
+// MOSTRAR GRAFICA DE FORMAS DE ADQUISICION
+public void mostrarPorcentajesAdquisicion(List<String[]> resultados) {
+
+    DefaultPieDataset<String> datos = new DefaultPieDataset<>();
+
+    for (String[] fila : resultados) {
+
+        double porcentaje = Double.parseDouble(fila[3]);
+
+        if (porcentaje > 0) {
+            datos.setValue(fila[1], porcentaje);
+        }
+    }
+
+    JFreeChart grafica = ChartFactory.createPieChart(
+            "Formas de adquisición",
+            datos,
+            true,
+            true,
+            false
+    );
+
+    grafica.getTitle().setFont(
+            new Font("Times New Roman", Font.BOLD, 18)
+    );
+
+    PiePlot<String> plot = (PiePlot<String>) grafica.getPlot();
+
+    plot.setLabelFont(new Font("Times New Roman", Font.PLAIN, 12));
+    plot.setCircular(true);
+    plot.setSimpleLabels(false);
+
+    ChartPanel panelGrafica = new ChartPanel(grafica);
+
+    panelGrafica.setPreferredSize(new java.awt.Dimension(450, 280));
+
+    pnlMuestreo.removeAll();
+    pnlMuestreo.setLayout(new java.awt.BorderLayout());
+    pnlMuestreo.add(panelGrafica, java.awt.BorderLayout.CENTER);
+
+    pnlMuestreo.revalidate();
+    pnlMuestreo.repaint();
+}
+
+// MOSTRAR LUGARES MAS CONCURRIDOS
+public void mostrarLugaresMas(
+        List<String[]> resultados,
+        int estratoMin,
+        int estratoMax) {
+
+    String texto = "Sin registros";
+
+    if (!resultados.isEmpty()) {
+
+        String[] fila = resultados.get(0);
+
+        texto = fila[1] + " (" + fila[2] + " compras)";
+    }
+
+    if (estratoMin == 1 && estratoMax == 2) {
+        lblInfo1A3.setText(texto);
+
+    } else if (estratoMin == 3 && estratoMax == 4) {
+        lblInfor3A4.setText(texto);
+
+    } else if (estratoMin == 5 && estratoMax == 6) {
+        lblInfo5A6.setText(texto);
+    }
+}
+
+// MOSTRAR LUGARES MENOS CONCURRIDOS
+public void mostrarLugarMenos(
+        List<String[]> resultados,
+        int estratoMin,
+        int estratoMax) {
+
+    String texto = "Sin registros";
+
+    if (!resultados.isEmpty()) {
+
+        String[] fila = resultados.get(0);
+
+        texto = fila[1] + " (" + fila[2] + " compras)";
+    }
+
+    if (estratoMin == 1 && estratoMax == 2) {
+        lbl2Info1A3.setText(texto);
+
+    } else if (estratoMin == 3 && estratoMax == 4) {
+        lbl2Infor3A4.setText(texto);
+
+    } else if (estratoMin == 5 && estratoMax == 6) {
+        lbl2Info5A6.setText(texto);
+    }
+}
+
+public void cargarDatos() {
+
+    if (controlador != null) {
+        controlador.cargarInformacion();
     }
 }
 
@@ -232,7 +368,7 @@ public class P30_CriticoAdquisicion1 extends javax.swing.JFrame {
         lblAdministrador.setText("Critico digitador");
 
         lblUsuario.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        lblUsuario.setText("lblUsuario");
+        lblUsuario.setText("Felipe Gomez");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/logoDane.png"))); // NOI18N
 
@@ -247,10 +383,12 @@ public class P30_CriticoAdquisicion1 extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 235, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 285, Short.MAX_VALUE)
                 .addGroup(pnlLogosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblAdministrador, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblUsuario, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(lblAdministrador)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlLogosLayout.createSequentialGroup()
+                        .addComponent(lblUsuario)
+                        .addGap(24, 24, 24)))
                 .addGap(103, 103, 103))
         );
         pnlLogosLayout.setVerticalGroup(
@@ -268,7 +406,7 @@ public class P30_CriticoAdquisicion1 extends javax.swing.JFrame {
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
-        getContentPane().add(pnlLogos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 940, 110));
+        getContentPane().add(pnlLogos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 990, 110));
 
         pnlAdquisicion.setBackground(new java.awt.Color(255, 255, 255));
         pnlAdquisicion.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 1, 1, new java.awt.Color(0, 0, 0)));
@@ -288,11 +426,11 @@ public class P30_CriticoAdquisicion1 extends javax.swing.JFrame {
         pnlMuestreo.setLayout(pnlMuestreoLayout);
         pnlMuestreoLayout.setHorizontalGroup(
             pnlMuestreoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 230, Short.MAX_VALUE)
+            .addGap(0, 366, Short.MAX_VALUE)
         );
         pnlMuestreoLayout.setVerticalGroup(
             pnlMuestreoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 202, Short.MAX_VALUE)
+            .addGap(0, 259, Short.MAX_VALUE)
         );
 
         lblLugaresCompraConcurridos.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
@@ -372,16 +510,14 @@ public class P30_CriticoAdquisicion1 extends javax.swing.JFrame {
             pnlEstrato5A6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlEstrato5A6Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addGroup(pnlEstrato5A6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblMasConcurridos5A6)
-                    .addComponent(lblMenosConcurrido5A6)
-                    .addComponent(lblInfo5A6)
-                    .addComponent(lbl2Info5A6))
+                .addGroup(pnlEstrato5A6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblEstrato5A6)
+                    .addGroup(pnlEstrato5A6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lblMasConcurridos5A6)
+                        .addComponent(lblMenosConcurrido5A6)
+                        .addComponent(lblInfo5A6)
+                        .addComponent(lbl2Info5A6)))
                 .addContainerGap(73, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlEstrato5A6Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblEstrato5A6)
-                .addGap(54, 54, 54))
         );
         pnlEstrato5A6Layout.setVerticalGroup(
             pnlEstrato5A6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -403,7 +539,7 @@ public class P30_CriticoAdquisicion1 extends javax.swing.JFrame {
         pnlEstrato1A3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
         lblEstrato1A3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        lblEstrato1A3.setText("Estrato 1-3");
+        lblEstrato1A3.setText("Estrato 1-2");
 
         lblMasConcurridos1A3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblMasConcurridos1A3.setText("Más concurridos");
@@ -458,57 +594,63 @@ public class P30_CriticoAdquisicion1 extends javax.swing.JFrame {
             .addGroup(pnlAdquisicionLayout.createSequentialGroup()
                 .addGroup(pnlAdquisicionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlAdquisicionLayout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addGroup(pnlAdquisicionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(pnlMuestreo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblPorcentajeFormasAdquisicion, javax.swing.GroupLayout.Alignment.LEADING)))
-                    .addGroup(pnlAdquisicionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(pnlAdquisicionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblLugaresCompraConcurridos)
                             .addGroup(pnlAdquisicionLayout.createSequentialGroup()
-                                .addGap(9, 9, 9)
-                                .addComponent(pnlEstrato1A3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(74, 74, 74)
-                                .addComponent(pnlEstrato3A4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(81, 81, 81)
-                                .addComponent(pnlEstrato5A6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(pnlAdquisicionLayout.createSequentialGroup()
-                            .addGap(360, 360, 360)
-                            .addGroup(pnlAdquisicionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(btnVolver)
-                                .addGroup(pnlAdquisicionLayout.createSequentialGroup()
-                                    .addComponent(lblAdquisicion)
-                                    .addGap(346, 346, 346))))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                                .addGap(21, 21, 21)
+                                .addGroup(pnlAdquisicionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lblPorcentajeFormasAdquisicion, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblLugaresCompraConcurridos, javax.swing.GroupLayout.Alignment.LEADING)))
+                            .addGroup(pnlAdquisicionLayout.createSequentialGroup()
+                                .addGap(113, 113, 113)
+                                .addGroup(pnlAdquisicionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(pnlEstrato3A4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(pnlEstrato1A3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(pnlAdquisicionLayout.createSequentialGroup()
+                                        .addComponent(pnlEstrato5A6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 451, Short.MAX_VALUE)
+                                        .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(35, 35, 35))
+                    .addGroup(pnlAdquisicionLayout.createSequentialGroup()
+                        .addGroup(pnlAdquisicionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlAdquisicionLayout.createSequentialGroup()
+                                .addGap(294, 294, 294)
+                                .addComponent(pnlMuestreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlAdquisicionLayout.createSequentialGroup()
+                                .addGap(393, 393, 393)
+                                .addComponent(lblAdquisicion)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jScrollBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         pnlAdquisicionLayout.setVerticalGroup(
             pnlAdquisicionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlAdquisicionLayout.createSequentialGroup()
-                .addGap(53, 53, 53)
+                .addGap(28, 28, 28)
                 .addComponent(lblAdquisicion)
-                .addGap(78, 78, 78)
+                .addGap(50, 50, 50)
                 .addComponent(lblPorcentajeFormasAdquisicion)
-                .addGap(49, 49, 49)
+                .addGap(39, 39, 39)
                 .addComponent(pnlMuestreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(77, 77, 77)
                 .addComponent(lblLugaresCompraConcurridos)
-                .addGap(64, 64, 64)
-                .addGroup(pnlAdquisicionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlEstrato3A4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pnlEstrato1A3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pnlEstrato5A6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(65, 65, 65)
-                .addComponent(btnVolver)
-                .addGap(53, 53, 53))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pnlEstrato1A3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(pnlEstrato3A4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
+                .addComponent(pnlEstrato5A6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(56, Short.MAX_VALUE))
             .addGroup(pnlAdquisicionLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(jScrollBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 912, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 1436, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAdquisicionLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38))
         );
 
-        getContentPane().add(pnlAdquisicion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 940, 910));
+        getContentPane().add(pnlAdquisicion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 990, 1510));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

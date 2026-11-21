@@ -11,161 +11,60 @@ package vista;
 import javax.swing.JFrame;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import controlador.P16_EncuestadorMenuControlador;
+
 import javax.swing.JOptionPane;
-import java.sql.Connection;
+
 public class P16_EncuestadorMenu1 extends javax.swing.JFrame {
-    private Connection conexionUsuario;
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(P16_EncuestadorMenu1.class.getName());
 
     /**
      * Creates new form iniciarSesion
      */
+
+private P16_EncuestadorMenuControlador controlador;
+
 public P16_EncuestadorMenu1() {
-    this(null);
-}
-
-public P16_EncuestadorMenu1(Connection conexionUsuario) {
-
     initComponents();
-
-    this.conexionUsuario = conexionUsuario;
-
     setLocationRelativeTo(null);
 
-    // Eventos de los botones
-    btnRegistrarUsuarios.addActionListener(e -> mostrarHogaresAsignados());
-
-    btnUsuarios.addActionListener(e -> mostrarVincularPortatil());
-
-    btnRegistrarPortatiles.addActionListener(e -> mostrarPortatilesAsignados());
-
-    btnPortatiles.addActionListener(e -> mostrarSincronizar());
-
-    btnCerrarSesion.addActionListener(e -> confirmarCerrarSesion());
-}
-public Connection getConexionUsuario() {
-    return conexionUsuario;
+    controlador = new P16_EncuestadorMenuControlador(this);
+    controlador.iniciar();
 }
 
 public void abrirInicioSesion() {
-
-    iniciarSesion inicio = new iniciarSesion();
-
+    vista.iniciarSesion inicio = new vista.iniciarSesion();
     inicio.setLocationRelativeTo(null);
     inicio.setVisible(true);
 }
-private void confirmarCerrarSesion() {
 
-    int respuesta = JOptionPane.showConfirmDialog(
-            this,
-            "¿Está seguro de que desea cerrar sesión?",
-            "Cerrar sesión",
-            JOptionPane.YES_NO_OPTION,
-            JOptionPane.QUESTION_MESSAGE
-    );
 
-    if (respuesta == JOptionPane.YES_OPTION) {
-
-        modelo.SesionUsuario.cerrar();
-
-        iniciarSesion inicio = new iniciarSesion();
-
-        inicio.setLocationRelativeTo(null);
-        inicio.setVisible(true);
-
-        this.dispose();
-    }
+public javax.swing.JButton getBtnRegistrarUsuarios() {
+    return btnRegistrarUsuarios;
 }
 
-private void mostrarHogaresAsignados() {
-
-    P17_EncuestadorHogaresAsignados1 pantalla =
-            new P17_EncuestadorHogaresAsignados1();
-
-    javax.swing.JPanel panel =
-            pantalla.obtenerPanelHogaresAsignados();
-
-    pnlMenuInterfaz.removeAll();
-
-    pnlMenuInterfaz.setLayout(new java.awt.BorderLayout());
-
-    panel.setPreferredSize(null);
-    panel.setMinimumSize(null);
-
-    pnlMenuInterfaz.add(panel, java.awt.BorderLayout.CENTER);
-
-    pantalla.dispose();
-
-    pnlMenuInterfaz.revalidate();
-    pnlMenuInterfaz.repaint();
+public javax.swing.JButton getBtnUsuarios() {
+    return btnUsuarios;
 }
 
-private void mostrarVincularPortatil() {
-
-    P19_EncuestadorVincularPortatil1 pantalla =
-            new P19_EncuestadorVincularPortatil1();
-
-    javax.swing.JPanel panel =
-            pantalla.obtenerPanelVincularPortatil();
-
-    pnlMenuInterfaz.removeAll();
-
-    pnlMenuInterfaz.setLayout(new java.awt.BorderLayout());
-
-    panel.setPreferredSize(null);
-    panel.setMinimumSize(null);
-
-    pnlMenuInterfaz.add(panel, java.awt.BorderLayout.CENTER);
-
-    pantalla.dispose();
-
-    pnlMenuInterfaz.revalidate();
-    pnlMenuInterfaz.repaint();
+public javax.swing.JButton getBtnRegistrarPortatiles() {
+    return btnRegistrarPortatiles;
 }
-private void mostrarSincronizar() {
 
-    P22_EncuestadorSincronizarCapitulos1 pantalla =
-            new P22_EncuestadorSincronizarCapitulos1();
-
-    javax.swing.JPanel panel =
-            pantalla.obtenerPanelSincronizar();
-
-    pnlMenuInterfaz.removeAll();
-
-    pnlMenuInterfaz.setLayout(new java.awt.BorderLayout());
-
-    panel.setPreferredSize(null);
-    panel.setMinimumSize(null);
-
-    pnlMenuInterfaz.add(panel, java.awt.BorderLayout.CENTER);
-
-    pantalla.dispose();
-
-    pnlMenuInterfaz.revalidate();
-    pnlMenuInterfaz.repaint();
+public javax.swing.JButton getBtnPortatiles() {
+    return btnPortatiles;
 }
-private void mostrarPortatilesAsignados() {
 
-    P20_EncuestadorPortatilesAsignados1 pantalla =
-            new P20_EncuestadorPortatilesAsignados1();
-
-    javax.swing.JPanel panel =
-            pantalla.obtenerPanelPortatilesAsignados();
-
-    pnlMenuInterfaz.removeAll();
-
-    pnlMenuInterfaz.setLayout(new java.awt.BorderLayout());
-
-    panel.setPreferredSize(null);
-    panel.setMinimumSize(null);
-
-    pnlMenuInterfaz.add(panel, java.awt.BorderLayout.CENTER);
-
-    pantalla.dispose();
-
-    pnlMenuInterfaz.revalidate();
-    pnlMenuInterfaz.repaint();
+public javax.swing.JButton getBtnCerrarSesion() {
+    return btnCerrarSesion;
 }
+
+public javax.swing.JPanel getPnlMenuInterfaz() {
+    return pnlMenuInterfaz;
+}
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -391,22 +290,22 @@ private void mostrarPortatilesAsignados() {
 
     private void btnRegistrarUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarUsuariosActionPerformed
         // TODO add your handling code here:
-        mostrarHogaresAsignados();
+     controlador.mostrarHogaresAsignados();
     }//GEN-LAST:event_btnRegistrarUsuariosActionPerformed
 
     private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
         // TODO add your handling code here:
-         mostrarVincularPortatil();
+     controlador.mostrarVincularPortatil();
     }//GEN-LAST:event_btnUsuariosActionPerformed
 
     private void btnRegistrarPortatilesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarPortatilesActionPerformed
         // TODO add your handling code here:
-         mostrarPortatilesAsignados();
+        controlador.mostrarPortatilesAsignados();
     }//GEN-LAST:event_btnRegistrarPortatilesActionPerformed
 
     private void btnPortatilesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPortatilesActionPerformed
         // TODO add your handling code here:
-        mostrarSincronizar();
+        controlador.mostrarSincronizar();
     }//GEN-LAST:event_btnPortatilesActionPerformed
 
     /**

@@ -11,8 +11,18 @@ package vista;
 import javax.swing.JFrame;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
+import org.jfree.chart.plot.PiePlot;
+import org.jfree.data.general.DefaultPieDataset;
+import java.awt.BorderLayout;
+import java.text.DecimalFormat;
+
+import controlador.P29CriticoResumenGastoControlador;
 public class P29_CriticoResumenGasto extends javax.swing.JFrame {
-    
+    private P29CriticoResumenGastoControlador controlador;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(P29_CriticoResumenGasto.class.getName());
 
     /**
@@ -20,6 +30,14 @@ public class P29_CriticoResumenGasto extends javax.swing.JFrame {
      */
 public P29_CriticoResumenGasto() {
         initComponents();
+        // Bloquear cajas de texto del informe.
+txtGastoTotal.setEditable(false);
+txtGastoPromedioDia.setEditable(false);
+txtCantidadPromedioProductos.setEditable(false);
+txtDiaMayorGasto.setEditable(false);
+txtDiaMenorGasto.setEditable(false);
+jtfValorProHogar.setEditable(false);
+jtfValorProPersonal.setEditable(false);
 
         // 1. Configuración de tamaño inicial y capacidad de redimensionar
          setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -106,22 +124,104 @@ public P29_CriticoResumenGasto() {
         reajustarDimensiones.run();
     }
 
+public void iniciarInforme() {
+    if (controlador != null) {
+        controlador.cargarResumenGasto();
+    }
+}
+
+public void setControlador(
+        P29CriticoResumenGastoControlador controlador) {
+
+    this.controlador = controlador;
+}
+
+public void cerrarVentana() {
+    this.dispose();
+}
+
 public javax.swing.JPanel getPanelResumenGasto() {
     return pnlResumenGasto;
 }
 
-private void volver() {
-    int respuesta = javax.swing.JOptionPane.showConfirmDialog(
-            this,
-            "¿Está seguro de que desea volver?",
-            "Confirmar regreso",
-            javax.swing.JOptionPane.YES_NO_OPTION
+public void mostrarGrafica(
+        double porcentajeHogar,
+        double porcentajePersonal) {
+
+    // Crear los datos de la gráfica
+    DefaultPieDataset<String> datos = new DefaultPieDataset<>();
+
+    datos.setValue("Hogar", porcentajeHogar);
+    datos.setValue("Personal", porcentajePersonal);
+
+    // Crear gráfica de torta
+    JFreeChart grafica = ChartFactory.createPieChart(
+            "Distribución porcentual del gasto",
+            datos,
+            true,
+            true,
+            false
     );
 
-    if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
-        this.dispose();
-    }
+    // Configurar etiquetas
+    PiePlot<String> plot =
+            (PiePlot<String>) grafica.getPlot();
+
+    plot.setLabelGenerator(
+            new StandardPieSectionLabelGenerator(
+                    "{0}: {2}",
+                    new DecimalFormat("0.00"),
+                    new DecimalFormat("0.00%")
+            )
+    );
+
+    // Crear panel de la gráfica
+    ChartPanel panelGrafica = new ChartPanel(grafica);
+
+    panelGrafica.setMouseWheelEnabled(true);
+    panelGrafica.setPreferredSize(
+            new Dimension(247, 216)
+    );
+
+    // Insertar gráfica en pnlGrafica
+    pnlGrafica.removeAll();
+    pnlGrafica.setLayout(new BorderLayout());
+    pnlGrafica.add(panelGrafica, BorderLayout.CENTER);
+
+    pnlGrafica.revalidate();
+    pnlGrafica.repaint();
 }
+
+
+public javax.swing.JTextField getTxtGastoTotal() {
+    return txtGastoTotal;
+}
+
+public javax.swing.JTextField getTxtGastoPromedioDia() {
+    return txtGastoPromedioDia;
+}
+
+public javax.swing.JTextField getTxtCantidadPromedioProductos() {
+    return txtCantidadPromedioProductos;
+}
+
+public javax.swing.JTextField getTxtDiaMayorGasto() {
+    return txtDiaMayorGasto;
+}
+
+public javax.swing.JTextField getTxtDiaMenorGasto() {
+    return txtDiaMenorGasto;
+}
+
+public javax.swing.JTextField getJtfValorProHogar() {
+    return jtfValorProHogar;
+}
+
+public javax.swing.JTextField getJtfValorProPersonal() {
+    return jtfValorProPersonal;
+}
+
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -232,7 +332,7 @@ private void volver() {
         lblAdministrador.setText("Critico digitador");
 
         lblUsuario.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        lblUsuario.setText("lblUsuario");
+        lblUsuario.setText("Felipe Gomez");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/logoDane.png"))); // NOI18N
 
@@ -419,7 +519,9 @@ private void volver() {
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         // TODO add your handling code here:
-volver();
+  if (controlador != null) {
+        controlador.volver();
+    }
     }//GEN-LAST:event_btnVolverActionPerformed
 
     /**

@@ -14,23 +14,23 @@ public class EncuestadorMenuControlador {
         this.vista = vista;
     }
 
-    public void cerrarSesion() {
+public void cerrarSesion() {
 
-        int respuesta = JOptionPane.showConfirmDialog(
-                vista,
-                "¿Está seguro de que desea cerrar sesión?",
-                "Cerrar sesión",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE
-        );
+    int respuesta = JOptionPane.showConfirmDialog(
+            vista,
+            "¿Está seguro de que desea cerrar sesión?",
+            "Cerrar sesión",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE
+    );
 
-        if (respuesta == JOptionPane.YES_OPTION) {
+    if (respuesta == JOptionPane.YES_OPTION) {
 
-            SesionUsuario.cerrar();
+        SesionUsuario.cerrar();
 
-            vista.dispose();
+        vista.dispose();
 
-            vista.abrirInicioSesion();
-        }
+        vista.abrirInicioSesion();
     }
+}
 }

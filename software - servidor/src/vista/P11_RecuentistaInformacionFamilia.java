@@ -288,7 +288,7 @@ public void mostrarError(String mensaje) {
         lblAdministrador.setText("Recuentista");
 
         lblUsuario.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        lblUsuario.setText("lblUsuario");
+        lblUsuario.setText("Juan Camilo Perez");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/logoDane.png"))); // NOI18N
 
@@ -303,7 +303,7 @@ public void mostrarError(String mensaje) {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 279, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 257, Short.MAX_VALUE)
                 .addGroup(pnlLogosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblAdministrador, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblUsuario, javax.swing.GroupLayout.Alignment.TRAILING))

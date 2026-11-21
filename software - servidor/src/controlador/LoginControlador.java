@@ -145,12 +145,10 @@ case "RECUENTISTA":
     ventana = menuRecuentista;
     break;
 
-                case "ENCUESTADOR":
+case "ENCUESTADOR":
 
-                    ventana = new P16_EncuestadorMenu1(
-                            conexion
-                    );
-                    break;
+    ventana = new P16_EncuestadorMenu1();
+    break;
 
                 case "CRITICO DIGITADOR":
 

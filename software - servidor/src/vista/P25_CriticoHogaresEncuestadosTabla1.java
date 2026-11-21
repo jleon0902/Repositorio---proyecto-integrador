@@ -344,7 +344,7 @@ private void ajustarAnchoColumnas(
         lblAdministrador.setText("Critico digitador");
 
         lblUsuario.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        lblUsuario.setText("lblUsuario");
+        lblUsuario.setText("Felipe Gomez");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/logoDane.png"))); // NOI18N
 

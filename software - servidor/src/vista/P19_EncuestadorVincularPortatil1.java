@@ -18,6 +18,38 @@ public class P19_EncuestadorVincularPortatil1 extends javax.swing.JFrame {
     /**
      * Creates new form iniciarSesion
      */
+    
+    // COMPONENTES PARA EL CONTROLADOR
+
+public javax.swing.JComboBox<String> getCmbRepresentantes() {
+    return cmbRepresentantes;
+}
+
+public javax.swing.JComboBox<String> getBtnSeriePortatil() {
+    return btnSeriePortatil;
+}
+
+public javax.swing.JTextField getTxtFechaEntrega() {
+    return txtFechaEntrega;
+}
+
+public javax.swing.JButton getBtnSincronizar() {
+    return btnSincronizar;
+}
+
+public javax.swing.JButton getBtnCancelar() {
+    return btnCancelar;
+}
+
+public void mostrarMensaje(String mensaje) {
+    javax.swing.JOptionPane.showMessageDialog(this, mensaje);
+}
+
+public void limpiarCampos() {
+    cmbRepresentantes.setSelectedIndex(-1);
+    btnSeriePortatil.setSelectedIndex(-1);
+    txtFechaEntrega.setText("");
+}
     public P19_EncuestadorVincularPortatil1() {
         initComponents();
     }

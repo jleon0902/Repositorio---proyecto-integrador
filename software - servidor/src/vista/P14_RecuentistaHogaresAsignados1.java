@@ -8,11 +8,13 @@ package vista;
  *
  * @author usuario
  */
+
+import controlador.P14_RecuentistaHogaresAsignadosControlador;
 import javax.swing.JFrame;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 public class P14_RecuentistaHogaresAsignados1 extends javax.swing.JFrame {
-    
+    private P14_RecuentistaHogaresAsignadosControlador controlador;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(P14_RecuentistaHogaresAsignados1.class.getName());
 
     /**
@@ -26,10 +28,53 @@ public P14_RecuentistaHogaresAsignados1() {
 
     asignarEventos();
 }
+public void setControlador(
+        P14_RecuentistaHogaresAsignadosControlador controlador) {
 
+    this.controlador = controlador;
+}
 public javax.swing.JPanel getPanelHogaresAsignados() {
     return pnlMenuInterfaz1;
 }
+
+
+public void mostrarHogaresAsignados(
+        java.util.List<Object[]> hogares
+) {
+
+    javax.swing.table.DefaultTableModel modelo =
+            (javax.swing.table.DefaultTableModel) tblTabla1.getModel();
+
+    // Limpiar los registros anteriores
+    modelo.setRowCount(0);
+
+    // Agregar los hogares recibidos del DAO
+    for (Object[] hogar : hogares) {
+        modelo.addRow(hogar);
+    }
+}
+
+
+
+
+public void quitarHogarDeTabla(String numeroVivienda) {
+
+    javax.swing.table.DefaultTableModel modelo =
+            (javax.swing.table.DefaultTableModel) tblTabla1.getModel();
+
+    for (int i = 0; i < modelo.getRowCount(); i++) {
+
+        String numeroTabla = modelo.getValueAt(i, 1).toString();
+
+        if (numeroTabla.equals(numeroVivienda)) {
+
+            modelo.removeRow(i);
+            break;
+        }
+    }
+}
+
+
 private void asignarEventos() {
 
     // Eliminar los eventos anteriores de NetBeans
@@ -48,48 +93,60 @@ private void asignarEventos() {
 }
 private void accionEliminar() {
 
-    int respuesta = javax.swing.JOptionPane.showConfirmDialog(
-            this,
-            "¿Está seguro de que desea eliminar este hogar asignado?",
-            "Confirmar eliminación",
-            javax.swing.JOptionPane.YES_NO_OPTION,
-            javax.swing.JOptionPane.QUESTION_MESSAGE
-    );
+    if (controlador == null) {
+        javax.swing.JOptionPane.showMessageDialog(
+                this,
+                "No se ha conectado el controlador.",
+                "Error",
+                javax.swing.JOptionPane.ERROR_MESSAGE
+        );
+        return;
+    }
 
-    if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
+    String numeroVivienda = obtenerNumeroViviendaSeleccionada();
 
-        System.out.println("Eliminación de hogar asignado confirmada.");
+    if (numeroVivienda == null) {
 
         javax.swing.JOptionPane.showMessageDialog(
                 this,
-                "Se ha confirmado la eliminación del hogar asignado.",
-                "Eliminación confirmada",
-                javax.swing.JOptionPane.INFORMATION_MESSAGE
+                "Seleccione un hogar de la tabla para eliminar su asignación.",
+                "Hogar no seleccionado",
+                javax.swing.JOptionPane.WARNING_MESSAGE
         );
+
+        return;
     }
+
+    controlador.eliminarAsignacion(numeroVivienda);
 }
+
 private void accionEditar() {
 
-    int respuesta = javax.swing.JOptionPane.showConfirmDialog(
-            this,
-            "¿Está seguro de que desea editar este hogar asignado?",
-            "Confirmar edición",
-            javax.swing.JOptionPane.YES_NO_OPTION,
-            javax.swing.JOptionPane.QUESTION_MESSAGE
-    );
-
-    if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
-
-        System.out.println("Edición de hogar asignado confirmada.");
-
+    if (controlador == null) {
         javax.swing.JOptionPane.showMessageDialog(
                 this,
-                "Se ha confirmado la edición del hogar asignado.",
-                "Edición confirmada",
-                javax.swing.JOptionPane.INFORMATION_MESSAGE
+                "No se ha conectado el controlador.",
+                "Error",
+                javax.swing.JOptionPane.ERROR_MESSAGE
         );
+        return;
     }
+
+    String numeroVivienda = obtenerNumeroViviendaSeleccionada();
+
+    if (numeroVivienda == null) {
+        javax.swing.JOptionPane.showMessageDialog(
+                this,
+                "Seleccione un hogar de la tabla para editar su asignación.",
+                "Hogar no seleccionado",
+                javax.swing.JOptionPane.WARNING_MESSAGE
+        );
+        return;
+    }
+
+    controlador.abrirEdicion(numeroVivienda);
 }
+
 
 private void configurarTabla(
         javax.swing.JTable tabla,
@@ -229,6 +286,34 @@ private void ajustarAnchoColumnas(javax.swing.JTable tabla) {
     tabla.revalidate();
     tabla.repaint();
 }
+
+
+public String obtenerNumeroViviendaSeleccionada() {
+
+    int fila = tblTabla1.getSelectedRow();
+
+    if (fila == -1) {
+        return null;
+    }
+
+    fila = tblTabla1.convertRowIndexToModel(fila);
+
+    return tblTabla1.getValueAt(fila, 1).toString();
+}
+public String obtenerCedulaEncuestadorSeleccionado() {
+
+    int fila = tblTabla1.getSelectedRow();
+
+    if (fila == -1) {
+        return null;
+    }
+
+    fila = tblTabla1.convertRowIndexToModel(fila);
+
+    Object valor = tblTabla1.getModel().getValueAt(fila, 4);
+
+    return valor == null ? null : valor.toString();
+}
 private void ajustarUltimaColumna(
         javax.swing.JTable tabla,
         javax.swing.JScrollPane scroll
@@ -367,7 +452,7 @@ private void ajustarUltimaColumna(
         lblAdministrador.setText("Recuentista");
 
         lblUsuario.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        lblUsuario.setText("lblUsuario");
+        lblUsuario.setText("Juan Camilo Perez");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/logoDane.png"))); // NOI18N
 
@@ -382,7 +467,7 @@ private void ajustarUltimaColumna(
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 279, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 257, Short.MAX_VALUE)
                 .addGroup(pnlLogosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblAdministrador, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblUsuario, javax.swing.GroupLayout.Alignment.TRAILING))
