@@ -151,6 +151,8 @@ public class MenuEncuestadorControlador {
     // Crear la pantalla P11.
     P11_Sincronizar_Encuestador pantalla =
             new P11_Sincronizar_Encuestador();
+    
+    new SincronizarEncuestaControlador(pantalla);
 
     // Obtener el panel principal de P11.
     JPanel panel = pantalla.getPanelSincronizar();

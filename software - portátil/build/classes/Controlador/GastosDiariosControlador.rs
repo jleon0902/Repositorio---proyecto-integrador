@@ -1,0 +1,5 @@
+controlador.GastosDiariosControlador
+controlador.GastosDiariosControlador$4
+controlador.GastosDiariosControlador$3
+controlador.GastosDiariosControlador$2
+controlador.GastosDiariosControlador$1

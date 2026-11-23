@@ -151,17 +151,17 @@ public P2_InicioSesion(LoginControlador controlador, Main main) {
         pnl_iniciosesion.setLayout(pnl_iniciosesionLayout);
         pnl_iniciosesionLayout.setHorizontalGroup(
             pnl_iniciosesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_iniciosesionLayout.createSequentialGroup()
-                .addContainerGap(116, Short.MAX_VALUE)
+            .addGroup(pnl_iniciosesionLayout.createSequentialGroup()
+                .addGap(143, 143, 143)
                 .addComponent(pnl_iniciosesion2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(88, 88, 88))
+                .addContainerGap(156, Short.MAX_VALUE))
         );
         pnl_iniciosesionLayout.setVerticalGroup(
             pnl_iniciosesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_iniciosesionLayout.createSequentialGroup()
-                .addGap(39, 39, 39)
+                .addGap(88, 88, 88)
                 .addComponent(pnl_iniciosesion2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

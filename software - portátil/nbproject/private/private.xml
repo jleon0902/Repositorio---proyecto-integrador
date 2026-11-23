@@ -3,8 +3,24 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/CAROL%20L/OneDrive/Documentos/Apache%20proyecto/Proyecto_Computador/Proyecto_Computador/Proyecto_Computador_01/src/modelo/GastosDiariosDAO.java</file>
-            <file>file:/C:/Users/CAROL%20L/OneDrive/Documentos/Apache%20proyecto/Proyecto_Computador/Proyecto_Computador/Proyecto_Computador_01/src/Controlador/GastosDiariosControlador.java</file>
+            <file>file:/C:/Users/CAROL%20L/OneDrive/Documentos/NetBeansProjects/Proyecto_Computador_01/src/vista/P11_Sincronizar_Encuestador.java</file>
+            <file>file:/C:/Users/CAROL%20L/OneDrive/Documentos/NetBeansProjects/Proyecto_Computador_01/src/modelo/OpcionCombo.java</file>
+            <file>file:/C:/Users/CAROL%20L/OneDrive/Documentos/NetBeansProjects/Proyecto_Computador_01/src/vista/P7_MenuPrincipal_Encuestador.java</file>
+            <file>file:/C:/Users/CAROL%20L/OneDrive/Documentos/NetBeansProjects/Proyecto_Computador_01/src/Controlador/NavegacionRepresentante.java</file>
+            <file>file:/C:/Users/CAROL%20L/OneDrive/Documentos/NetBeansProjects/Proyecto_Computador_01/src/Controlador/MenuEncuestadorControlador.java</file>
+            <file>file:/C:/Users/CAROL%20L/OneDrive/Documentos/NetBeansProjects/Proyecto_Computador_01/src/Controlador/EditarEncuestaEncuestadorControlador.java</file>
+            <file>file:/C:/Users/CAROL%20L/OneDrive/Documentos/NetBeansProjects/Proyecto_Computador_01/src/Controlador/RevisarEncuestaEncuestadorControlador.java</file>
+            <file>file:/C:/Users/CAROL%20L/OneDrive/Documentos/NetBeansProjects/Proyecto_Computador_01/src/modelo/RevisarEncuestaDAO.java</file>
+            <file>file:/C:/Users/CAROL%20L/OneDrive/Documentos/NetBeansProjects/Proyecto_Computador_01/src/modelo/DatosSincronizacion.java</file>
+            <file>file:/C:/Users/CAROL%20L/OneDrive/Documentos/NetBeansProjects/Proyecto_Computador_01/src/modelo/SincronizarEncuestaDAO.java</file>
+            <file>file:/C:/Users/CAROL%20L/OneDrive/Documentos/NetBeansProjects/Proyecto_Computador_01/src/Controlador/SincronizarEncuestaControlador.java</file>
+            <file>file:/C:/Users/CAROL%20L/OneDrive/Documentos/NetBeansProjects/Proyecto_Computador_01/src/modelo/ExportarDatosDAO.java</file>
+            <file>file:/C:/Users/CAROL%20L/OneDrive/Documentos/NetBeansProjects/Proyecto_Computador_01/src/Controlador/ExportarDatosControlador.java</file>
+            <file>file:/C:/Users/CAROL%20L/OneDrive/Documentos/NetBeansProjects/Proyecto_Computador_01/src/vista/P3_MenuPrincipal_Representante.java</file>
+            <file>file:/C:/Users/CAROL%20L/OneDrive/Documentos/NetBeansProjects/Proyecto_Computador_01/src/vista/P2_InicioSesion.java</file>
+            <file>file:/C:/Users/CAROL%20L/OneDrive/Documentos/NetBeansProjects/Proyecto_Computador_01/src/vista/P4_GastosDiarios_Representante.java</file>
+            <file>file:/C:/Users/CAROL%20L/OneDrive/Documentos/NetBeansProjects/Proyecto_Computador_01/src/vista/P5_RevisarEncuesta_Representante.java</file>
+            <file>file:/C:/Users/CAROL%20L/OneDrive/Documentos/NetBeansProjects/Proyecto_Computador_01/src/vista/P8_RepresentanteEncargado_Encuestador.java</file>
         </group>
     </open-files>
 </project-private>

@@ -12,8 +12,17 @@ public class P11_Sincronizar_Encuestador extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(P11_Sincronizar_Encuestador.class.getName());
 
+    
+    private final controlador.ExportarDatosControlador controladorExportacion =
+        new controlador.ExportarDatosControlador();
+    
     public P11_Sincronizar_Encuestador() {
         initComponents();
+        
+            lbl_encuestafinalizada.setVisible(false);
+
+    txt_representantehogar.setEditable(false);
+    txt_cedula.setEditable(false);
         
      // VENTANA EMERGENTE SINCRONIZAR
     btn_sincronizarr.addActionListener(e -> {
@@ -29,7 +38,7 @@ public class P11_Sincronizar_Encuestador extends javax.swing.JFrame {
         );
 
         if (respuesta == 1) {
-            // Aquí irá el código para sincronizar la encuesta.
+            controladorExportacion.iniciarExportacion(this);
         }
     });
     }
@@ -41,6 +50,56 @@ public class P11_Sincronizar_Encuestador extends javax.swing.JFrame {
 public javax.swing.JPanel getPanelMenu() {
     return pnl_menu;
 }
+
+public void mostrarDatosSincronizacion(
+        String nombre,
+        String cedula,
+        int dia,
+        boolean finalizada) {
+
+    txt_representantehogar.setText(nombre);
+    txt_cedula.setText(cedula);
+
+    lblDia.setText(String.valueOf(dia));
+
+    lbl_encuestafinalizada.setVisible(finalizada);
+}
+
+public void mostrarError(String mensaje) {
+
+    javax.swing.JOptionPane.showMessageDialog(
+        this,
+        mensaje,
+        "Error",
+        javax.swing.JOptionPane.ERROR_MESSAGE
+    );
+}
+
+public java.io.File seleccionarCarpetaDestino() {
+
+    javax.swing.JFileChooser selector =
+            new javax.swing.JFileChooser();
+
+    selector.setDialogTitle("Seleccionar carpeta de destino");
+    selector.setFileSelectionMode(
+            javax.swing.JFileChooser.DIRECTORIES_ONLY
+    );
+
+    selector.setAcceptAllFileFilterUsed(false);
+
+    int resultado = selector.showSaveDialog(this);
+
+    if (resultado == javax.swing.JFileChooser.APPROVE_OPTION) {
+        return selector.getSelectedFile();
+    }
+
+    return null;
+}
+
+public void mostrarMensaje(String mensaje) {
+    javax.swing.JOptionPane.showMessageDialog(this, mensaje);
+}
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -159,10 +218,10 @@ public javax.swing.JPanel getPanelMenu() {
                         .addComponent(jLabel1))
                     .addGroup(pnl_menuLayout.createSequentialGroup()
                         .addGap(15, 15, 15)
-                        .addGroup(pnl_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btn_revisarencuesta)
-                            .addComponent(btn_representanteencargado)
-                            .addComponent(btn_sincronizar)))
+                        .addGroup(pnl_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btn_representanteencargado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_revisarencuesta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_sincronizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(pnl_menuLayout.createSequentialGroup()
                         .addGap(52, 52, 52)
                         .addComponent(btn_cerrarsesion)))
@@ -207,6 +266,7 @@ public javax.swing.JPanel getPanelMenu() {
 
         btn_sincronizarr.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btn_sincronizarr.setText("Sincronizar");
+        btn_sincronizarr.addActionListener(this::btn_sincronizarrActionPerformed);
 
         txt_representantehogar.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_representantehogar.addActionListener(this::txt_representantehogarActionPerformed);
@@ -311,6 +371,10 @@ public javax.swing.JPanel getPanelMenu() {
     private void txt_representantehogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_representantehogarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_representantehogarActionPerformed
+
+    private void btn_sincronizarrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sincronizarrActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_sincronizarrActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
