@@ -155,7 +155,7 @@
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="279" max="32767" attributes="0"/>
+                  <EmptySpace pref="257" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="lblAdministrador" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Component id="lblUsuario" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -197,7 +197,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Times New Roman" size="18" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="lblUsuario"/>
+            <Property name="text" type="java.lang.String" value="Juan Camilo Perez"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
@@ -262,10 +262,8 @@
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                               <Component id="txtNumeroVivienda1" alignment="0" pref="334" max="32767" attributes="0"/>
                                               <Component id="txtDireccion1" alignment="0" max="32767" attributes="0"/>
-                                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                                  <Component id="cmbEstrato" alignment="0" pref="218" max="32767" attributes="0"/>
-                                                  <Component id="cmbBarrio" alignment="0" max="32767" attributes="0"/>
-                                              </Group>
+                                              <Component id="cmbEstrato" alignment="0" pref="334" max="32767" attributes="0"/>
+                                              <Component id="cmbBarrio" alignment="0" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <Component id="btnGuardar1" alignment="1" min="-2" max="-2" attributes="0"/>

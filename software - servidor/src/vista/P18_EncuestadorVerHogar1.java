@@ -36,6 +36,87 @@ private void confirmarVolver() {
         this.dispose();
     }
 }
+
+// OBTENER EL BOTÓN VOLVER
+public javax.swing.JButton getBtnVolver() {
+    return btnVolver;
+}
+
+// MOSTRAR DATOS DEL HOGAR
+
+public void mostrarNumeroVivienda(String dato) {
+    lblMostrarNumeroVivienda.setText(dato);
+}
+
+public void mostrarUbicacion(String dato) {
+    lblMostrarUbicacion.setText(dato);
+}
+
+public void mostrarDireccion(String dato) {
+    lblMostrarDireccion.setText(dato);
+}
+
+public void mostrarBarrio(String dato) {
+    lblMostrarbarrio.setText(dato);
+}
+
+public void mostrarEstrato(String dato) {
+    lblMostrarEstrato.setText(dato);
+}
+
+public void mostrarEstado(String dato) {
+    lblMostrarEstado.setText(dato);
+}
+
+// MOSTRAR REPRESENTANTE
+
+public void mostrarRepresentante(String dato) {
+    lblMostrarRepresentante.setText(dato);
+}
+
+public void mostrarCedula(String dato) {
+    lblMostrarCedula.setText(dato);
+}
+
+public void mostrarTelefono(String dato) {
+    lblMostrarTelefono.setText(dato);
+}
+
+public void mostrarCorreo(String dato) {
+    lblMostrarCorreo.setText(dato);
+}
+
+// MOSTRAR PORTÁTIL
+
+public void mostrarNumeroSerie(String dato) {
+    lblMostrarNumeroSerie.setText(dato);
+}
+
+public void mostrarMarca(String dato) {
+    lblMostrarMarca.setText(dato);
+}
+
+public void mostrarModelo(String dato) {
+    lblMostrarModelo.setText(dato);
+}
+
+// MOSTRAR FECHAS
+
+public void mostrarFechaInicio(String dato) {
+    lblMostrarFechaInicio.setText(dato);
+}
+
+public void mostrarFechaFinal(String dato) {
+    lblMostrarFechaFinal.setText(dato);
+}
+
+public void mostrarFechaEntrega(String dato) {
+    lblMostrarFechaEntrega.setText(dato);
+}
+
+public void mostrarFechaRecogida(String dato) {
+    lblMostrarFechaRecogida.setText(dato);
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

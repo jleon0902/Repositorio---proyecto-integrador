@@ -15,61 +15,45 @@ import javax.swing.JOptionPane;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import java.awt.Window;
+
+import controlador.P28CriticoInformesControlador;
 public class P28_CriticoGenerarInformes1 extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(P28_CriticoGenerarInformes1.class.getName());
+private P28CriticoInformesControlador controlador;
 
-    /**
-     * Creates new form iniciarSesion
-     */
-    public P28_CriticoGenerarInformes1() {
-        initComponents();
-    }
-    
-    
-    public javax.swing.JPanel getPanelInformes() {
+public P28_CriticoGenerarInformes1() {
+
+    initComponents();
+
+    setLocationRelativeTo(null);
+}
+
+public void setControlador(P28CriticoInformesControlador controlador) {
+    this.controlador = controlador;
+}
+
+public javax.swing.JPanel getPanelInformes() {
     return pnlInformes;
 }
-private void abrirResumenGasto() {
-    P29_CriticoResumenGasto pantalla = new P29_CriticoResumenGasto();
-    pantalla.setVisible(true);
-}
-private void abrirAdquisicion() {
-    P30_CriticoAdquisicion1 pantalla = new P30_CriticoAdquisicion1();
-    pantalla.setVisible(true);
-}
-private void abrirProductosConsumidos() {
+
+
+
+public void mostrarProductosConsumidos() {
     P31_CriticoProductosConsumidos1 pantalla = new P31_CriticoProductosConsumidos1();
+    pantalla.setLocationRelativeTo(this);
     pantalla.setVisible(true);
 }
-private void cerrarSesion() {
 
-    int respuesta = JOptionPane.showConfirmDialog(
-            pnlInformes,
-            "¿Está seguro de que desea cerrar sesión?",
-            "Confirmar cierre de sesión",
-            JOptionPane.YES_NO_OPTION,
-            JOptionPane.QUESTION_MESSAGE
-    );
-
-    if (respuesta == JOptionPane.YES_OPTION) {
-
-        iniciarSesion pantallaLogin = new iniciarSesion();
-
-        pantallaLogin.setLocationRelativeTo(null);
-        pantallaLogin.setVisible(true);
-
-        Window ventanaPrincipal =
-                SwingUtilities.getWindowAncestor(pnlInformes);
-
-        if (ventanaPrincipal != null) {
-            ventanaPrincipal.dispose();
-        } else {
-            this.dispose();
-        }
-    }
+public void mostrarLogin() {
+    iniciarSesion pantalla = new iniciarSesion();
+    pantalla.setLocationRelativeTo(null);
+    pantalla.setVisible(true);
 }
 
+public void cerrarVentana() {
+    this.dispose();
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -170,7 +154,7 @@ private void cerrarSesion() {
         lblAdministrador.setText("Critico digitador");
 
         lblUsuario.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        lblUsuario.setText("lblUsuario");
+        lblUsuario.setText("Martha León");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/logoDane.png"))); // NOI18N
 
@@ -187,8 +171,10 @@ private void cerrarSesion() {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 235, Short.MAX_VALUE)
                 .addGroup(pnlLogosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblAdministrador, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblUsuario, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(lblAdministrador)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlLogosLayout.createSequentialGroup()
+                        .addComponent(lblUsuario)
+                        .addGap(32, 32, 32)))
                 .addGap(103, 103, 103))
         );
         pnlLogosLayout.setVerticalGroup(
@@ -200,9 +186,9 @@ private void cerrarSesion() {
                     .addComponent(jLabel2)
                     .addGroup(pnlLogosLayout.createSequentialGroup()
                         .addComponent(lblAdministrador)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lblUsuario)
-                        .addGap(8, 8, 8)))
+                        .addGap(2, 2, 2)))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
@@ -335,21 +321,29 @@ private void cerrarSesion() {
     }//GEN-LAST:event_btnRegistrarPortatilesActionPerformed
 
     private void btnResumenGastoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResumenGastoActionPerformed
- abrirResumenGasto();
+ if (controlador != null) {
+        controlador.abrirResumenGasto();
+    }
     }//GEN-LAST:event_btnResumenGastoActionPerformed
 
     private void btnAdquisicionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdquisicionActionPerformed
         // TODO add your handling code here:
-         abrirAdquisicion();
+      if (controlador != null) {
+        controlador.abrirAdquisicion();
+    }
     }//GEN-LAST:event_btnAdquisicionActionPerformed
 
     private void btnProductosConsumidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosConsumidosActionPerformed
         // TODO add your handling code here:
-      abrirProductosConsumidos();   
+      if (controlador != null) {
+        controlador.abrirProductosConsumidos();
+    }  
     }//GEN-LAST:event_btnProductosConsumidosActionPerformed
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
-cerrarSesion();
+ if (controlador != null) {
+        controlador.cerrarSesion();
+    }
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
     /**

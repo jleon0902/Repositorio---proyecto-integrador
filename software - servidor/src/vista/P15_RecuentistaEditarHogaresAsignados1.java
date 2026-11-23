@@ -11,12 +11,17 @@ package vista;
 import javax.swing.JFrame;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-
+import java.util.List;
+import controlador.P15_RecuentistaEditarHogaresAsignadosControlador;
     /**
      * Creates new form iniciarSesion
      */
 public class P15_RecuentistaEditarHogaresAsignados1 extends javax.swing.JFrame {
-    
+   private P15_RecuentistaEditarHogaresAsignadosControlador controlador; 
+private String cedulaRecuentista;
+private String cedulaEncuestador;
+private String numeroVivienda;
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(P15_RecuentistaEditarHogaresAsignados1.class.getName());
 
     /**
@@ -24,6 +29,17 @@ public class P15_RecuentistaEditarHogaresAsignados1 extends javax.swing.JFrame {
      */
     public P15_RecuentistaEditarHogaresAsignados1() {
         initComponents();
+        tblTabla2.setSelectionMode(
+    javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION
+);
+
+tblTabla1.setSelectionMode(
+    javax.swing.ListSelectionModel.SINGLE_SELECTION
+);
+        P15_RecuentistaEditarHogaresAsignadosControlador controlador =
+        new P15_RecuentistaEditarHogaresAsignadosControlador(this);
+
+controlador.iniciar();
 
         // 1. Fijar dimensiones de la ventana principal
         this.setSize(956, 670);
@@ -83,6 +99,99 @@ public class P15_RecuentistaEditarHogaresAsignados1 extends javax.swing.JFrame {
         getContentPane().revalidate();
         getContentPane().repaint();
     }
+    
+    public void recibirDatos(
+        String cedulaEncuestador,
+        String numeroVivienda) {
+
+    this.cedulaEncuestador = cedulaEncuestador;
+    this.numeroVivienda = numeroVivienda;
+
+}
+    
+    
+public void mostrarEncuestadores(List<Object[]> encuestadores) {
+
+    javax.swing.table.DefaultTableModel modelo =
+            (javax.swing.table.DefaultTableModel)
+            tblTabla1.getModel();
+
+    modelo.setRowCount(0);
+
+    for (Object[] fila : encuestadores) {
+        modelo.addRow(fila);
+    }
+}
+
+public void mostrarHogaresDisponibles(List<Object[]> hogares) {
+
+    javax.swing.table.DefaultTableModel modelo =
+            (javax.swing.table.DefaultTableModel)
+            tblTabla2.getModel();
+
+    modelo.setRowCount(0);
+
+    for (Object[] fila : hogares) {
+        modelo.addRow(fila);
+    }
+}
+
+
+public java.util.List<String> obtenerHogaresSeleccionados() {
+
+    java.util.List<String> hogares = new java.util.ArrayList<>();
+
+    int[] filas = tblTabla2.getSelectedRows();
+
+    for (int fila : filas) {
+
+        fila = tblTabla2.convertRowIndexToModel(fila);
+
+        String numeroVivienda =
+                tblTabla2.getValueAt(fila, 1).toString();
+
+        hogares.add(numeroVivienda);
+    }
+
+    return hogares;
+}
+
+
+public String obtenerCedulaEncuestadorSeleccionado() {
+
+    int fila = tblTabla1.getSelectedRow();
+
+    if (fila == -1) {
+        return null;
+    }
+
+    fila = tblTabla1.convertRowIndexToModel(fila);
+
+    return tblTabla1.getValueAt(fila, 1).toString();
+}
+
+
+    
+    public String obtenerCedulaEncuestador() {
+    return cedulaEncuestador;
+}
+
+public String obtenerNumeroVivienda() {
+    return numeroVivienda;
+}
+    
+public P15_RecuentistaEditarHogaresAsignados1(
+        String cedulaRecuentista,
+        String cedulaEncuestador,
+        String numeroVivienda) {
+
+    this();
+
+    this.cedulaRecuentista = cedulaRecuentista;
+    this.cedulaEncuestador = cedulaEncuestador;
+    this.numeroVivienda = numeroVivienda;
+}
+
 
     private void configurarTabla(
             javax.swing.JTable tabla,
@@ -327,7 +436,7 @@ public class P15_RecuentistaEditarHogaresAsignados1 extends javax.swing.JFrame {
         lblAdministrador.setText("Recuentista");
 
         lblUsuario.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        lblUsuario.setText("lblUsuario");
+        lblUsuario.setText("Juan Camilo Perez");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/logoDane.png"))); // NOI18N
 
@@ -342,7 +451,7 @@ public class P15_RecuentistaEditarHogaresAsignados1 extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 279, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 257, Short.MAX_VALUE)
                 .addGroup(pnlLogosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblAdministrador, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblUsuario, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -468,10 +577,14 @@ public class P15_RecuentistaEditarHogaresAsignados1 extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
+        if (controlador != null) {
+    controlador.guardarAsignacion();
+}
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**

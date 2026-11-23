@@ -8,11 +8,18 @@ package vista;
  *
  * @author usuario
  */
+import modelo.P13_EncuestadorDTO;
+import java.util.List;
+import modelo.HogarAsignarDTO;
 import javax.swing.JFrame;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import modelo.P13_EncuestadorDTO;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import controlador.P13_RecuentistaAsignarHogarControlador;
 public class P13_RecuentistaAsignarHogar1 extends javax.swing.JFrame {
-    
+    private P13_RecuentistaAsignarHogarControlador controlador;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(P13_RecuentistaAsignarHogar1.class.getName());
 
     /**
@@ -20,7 +27,18 @@ public class P13_RecuentistaAsignarHogar1 extends javax.swing.JFrame {
      */
 public P13_RecuentistaAsignarHogar1() {
     initComponents();
+// BLOQUEAR LA TABLA DE HOGARES AL INICIAR.
+tblTabla2.setEnabled(false);
 
+// EVITAR SELECCIONES MÚLTIPLES DE ENCUESTADORES.
+tblTabla1.setSelectionMode(
+        javax.swing.ListSelectionModel.SINGLE_SELECTION
+);
+
+// PERMITIR SELECCIONAR VARIOS HOGARES.
+tblTabla2.setSelectionMode(
+        javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION
+);
     configurarTabla(tblTabla1, sptabla1);
     configurarTabla(tblTabla2, spTabla2);
 
@@ -39,7 +57,47 @@ public P13_RecuentistaAsignarHogar1() {
         pnlInterfaz2.setLocation(0, -e.getValue());
     });
 }
+public void configurarSeleccionEncuestador(
+        javax.swing.event.ListSelectionListener listener) {
 
+    tblTabla1.getSelectionModel().addListSelectionListener(listener);
+}
+public void setControlador(
+        P13_RecuentistaAsignarHogarControlador controlador) {
+
+    this.controlador = controlador;
+}
+
+public List<Long> obtenerHogaresSeleccionados() {
+
+    List<Long> hogares = new java.util.ArrayList<>();
+
+    int[] filas = tblTabla2.getSelectedRows();
+
+    for (int fila : filas) {
+
+        int filaModelo = tblTabla2.convertRowIndexToModel(fila);
+
+        Long numeroVivienda = Long.valueOf(
+                tblTabla2.getModel()
+                        .getValueAt(filaModelo, 1).toString()
+        );
+
+        hogares.add(numeroVivienda);
+    }
+
+    return hogares;
+}
+public void mostrarCantidadDisponible(int cantidad) {
+
+    lblSeleccioneHogares.setText(
+            "Seleccione los hogares a asignar. Disponibles: " + cantidad
+    );
+}
+public void limpiarSeleccionHogares() {
+
+    tblTabla2.clearSelection();
+}
     private void configurarTabla(
             javax.swing.JTable tabla,
             javax.swing.JScrollPane scroll
@@ -64,6 +122,29 @@ public P13_RecuentistaAsignarHogar1() {
             });
         });
     }
+    
+    // HABILITAR O BLOQUEAR LA TABLA DE HOGARES.
+public void habilitarTablaHogares(boolean habilitar) {
+
+    tblTabla2.setEnabled(habilitar);
+    spTabla2.setEnabled(habilitar);
+
+    if (!habilitar) {
+        tblTabla2.clearSelection();
+    }
+}
+
+// OBTENER LA TABLA DE ENCUESTADORES.
+public javax.swing.JTable getTablaEncuestadores() {
+    return tblTabla1;
+}
+
+// OBTENER LA TABLA DE HOGARES.
+public javax.swing.JTable getTablaHogares() {
+    return tblTabla2;
+}
+
+
 
     private void ajustarAnchoColumnas(javax.swing.JTable tabla) {
         javax.swing.table.TableColumnModel modeloColumnas = tabla.getColumnModel();
@@ -122,6 +203,66 @@ public javax.swing.JScrollBar getScrollBarAsignarHogar() {
     return jScrollBar1;
 }
     
+
+
+public void cargarHogares(List<HogarAsignarDTO> hogares) {
+
+    javax.swing.table.DefaultTableModel modelo =
+            (javax.swing.table.DefaultTableModel) tblTabla2.getModel();
+
+    modelo.setRowCount(0);
+
+    int numero = 1;
+
+    for (HogarAsignarDTO hogar : hogares) {
+
+        modelo.addRow(new Object[]{
+            numero++,
+            hogar.getNumeroVivienda(),
+            hogar.getDireccion(),
+            hogar.getResponsable(),
+            hogar.getTelefono()
+        });
+    }
+}
+
+
+
+public void cargarEncuestadores(
+        List<modelo.P13_EncuestadorDTO> encuestadores) {
+
+    javax.swing.table.DefaultTableModel modelo =
+            (javax.swing.table.DefaultTableModel) tblTabla1.getModel();
+
+    modelo.setRowCount(0);
+
+    int numero = 1;
+
+    for (modelo.P13_EncuestadorDTO encuestador : encuestadores) {
+
+        modelo.addRow(new Object[]{
+            numero++,
+            encuestador.getCedula(),
+            encuestador.getNombre(),
+            encuestador.getApellido(),
+            encuestador.getHogaresAsignados()
+        });
+    }
+}
+
+public void mostrarError(String mensaje) {
+    javax.swing.JOptionPane.showMessageDialog(
+            this,
+            mensaje,
+            "Error",
+            javax.swing.JOptionPane.ERROR_MESSAGE
+    );
+}
+
+public void mostrarMensaje(String mensaje) {
+    javax.swing.JOptionPane.showMessageDialog(this, mensaje);
+}
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -230,7 +371,7 @@ public javax.swing.JScrollBar getScrollBarAsignarHogar() {
         lblAdministrador.setText("Recuentista");
 
         lblUsuario.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        lblUsuario.setText("lblUsuario");
+        lblUsuario.setText("Juan Camilo Perez");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/logoDane.png"))); // NOI18N
 
@@ -245,7 +386,7 @@ public javax.swing.JScrollBar getScrollBarAsignarHogar() {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 279, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 257, Short.MAX_VALUE)
                 .addGroup(pnlLogosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblAdministrador, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblUsuario, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -433,7 +574,7 @@ public javax.swing.JScrollBar getScrollBarAsignarHogar() {
                     .addGroup(pnlInterfaz2Layout.createSequentialGroup()
                         .addGap(16, 16, 16)
                         .addComponent(jScrollBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 958, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         getContentPane().add(pnlInterfaz2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 110, 700, -1));
@@ -463,6 +604,9 @@ public javax.swing.JScrollBar getScrollBarAsignarHogar() {
 
     private void btnAsignarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarActionPerformed
         // TODO add your handling code here:
+         if (controlador != null) {
+        controlador.asignarHogares();
+    }
     }//GEN-LAST:event_btnAsignarActionPerformed
 
     /**

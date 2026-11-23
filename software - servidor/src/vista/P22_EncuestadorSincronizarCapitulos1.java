@@ -20,39 +20,19 @@ public class P22_EncuestadorSincronizarCapitulos1 extends javax.swing.JFrame {
      */
 public P22_EncuestadorSincronizarCapitulos1() {
     initComponents();
-    asignarEventos();
+    
 }
 
+
+public javax.swing.JButton getBtnSincronizar() {
+    return btnSincronizar;
+}
 public javax.swing.JPanel obtenerPanelSincronizar() {
     return pnlMenuInterfaz1;
 }
-private void asignarEventos() {
-    for (java.awt.event.ActionListener al : btnSincronizar.getActionListeners()) {
-        btnSincronizar.removeActionListener(al);
-    }
 
-    btnSincronizar.addActionListener(e -> confirmarSincronizacion());
-}
 
-private void confirmarSincronizacion() {
 
-    String[] opciones = {"Cancelar", "Sincronizar"};
-
-    int respuesta = javax.swing.JOptionPane.showOptionDialog(
-        this,
-        "¿Está seguro?\n\nAl hacerlo se transferirá la información que realizó la familia en el capítulo D: Gastos Diarios.",
-        "",
-        javax.swing.JOptionPane.DEFAULT_OPTION,
-        javax.swing.JOptionPane.QUESTION_MESSAGE,
-        null,
-        opciones,
-        opciones[1]
-    );
-
-    if (respuesta == 1) {
-        // Aquí se agregará posteriormente la sincronización.
-    }
-}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

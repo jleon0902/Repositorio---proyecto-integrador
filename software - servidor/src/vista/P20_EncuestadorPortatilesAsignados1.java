@@ -8,11 +8,14 @@ package vista;
  *
  * @author usuario
  */
+
+import vista.P21_EncuestadorEditarVinculacion1;
 import javax.swing.JFrame;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import controlador.P20_EncuestadorPortatilesAsignadosControlador;
 public class P20_EncuestadorPortatilesAsignados1 extends javax.swing.JFrame {
-    
+    private P20_EncuestadorPortatilesAsignadosControlador controlador;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(P20_EncuestadorPortatilesAsignados1.class.getName());
 
     /**
@@ -21,7 +24,7 @@ public class P20_EncuestadorPortatilesAsignados1 extends javax.swing.JFrame {
 public P20_EncuestadorPortatilesAsignados1() {
     initComponents();
     configurarTabla(tblTabla, sp1);
-    asignarEventos();
+
 }
 public javax.swing.JPanel obtenerPanelPortatilesAsignados() {
     return pnlMenuInterfaz1;
@@ -53,11 +56,7 @@ private void accionEditar() {
     );
 
     if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
-        P21_EncuestadorEditarVinculacion1 pantalla21 =
-                new P21_EncuestadorEditarVinculacion1();
-
-        pantalla21.setLocationRelativeTo(this);
-        pantalla21.setVisible(true);
+        controlador.editarPortatil();
     }
 }
 private void accionEliminar() {
@@ -82,6 +81,11 @@ private void accionEliminar() {
         );
 
     }
+}
+
+public void setControlador(
+        P20_EncuestadorPortatilesAsignadosControlador controlador) {
+    this.controlador = controlador;
 }
 private void configurarTabla(
         javax.swing.JTable tabla,
@@ -264,6 +268,23 @@ private void ajustarAnchoColumnas(
     tabla.revalidate();
     tabla.repaint();
 }
+
+
+
+public javax.swing.JButton getBtnEditar() {
+    return btnEditar;
+}
+
+public javax.swing.JButton getBtnEliminar() {
+    return btnEliminar;
+}
+
+public javax.swing.JTable getTblTabla() {
+    return tblTabla;
+}
+
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.

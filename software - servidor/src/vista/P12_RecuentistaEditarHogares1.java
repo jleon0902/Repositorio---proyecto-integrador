@@ -816,7 +816,7 @@ public void mostrarMensaje(String mensaje) {
         lblAdministrador.setText("Recuentista");
 
         lblUsuario.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        lblUsuario.setText("lblUsuario");
+        lblUsuario.setText("Juan Camilo Perez");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/logoDane.png"))); // NOI18N
 
@@ -831,7 +831,7 @@ public void mostrarMensaje(String mensaje) {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 279, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 257, Short.MAX_VALUE)
                 .addGroup(pnlLogosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblAdministrador, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblUsuario, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -950,9 +950,8 @@ public void mostrarMensaje(String mensaje) {
                                         .addGroup(pnlEditarUsuarios1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(txtNumeroVivienda1, javax.swing.GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE)
                                             .addComponent(txtDireccion1)
-                                            .addGroup(pnlEditarUsuarios1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                .addComponent(cmbEstrato, javax.swing.GroupLayout.Alignment.LEADING, 0, 218, Short.MAX_VALUE)
-                                                .addComponent(cmbBarrio, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                            .addComponent(cmbEstrato, 0, 334, Short.MAX_VALUE)
+                                            .addComponent(cmbBarrio, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                     .addComponent(btnGuardar1, javax.swing.GroupLayout.Alignment.TRAILING))
                                 .addComponent(lblSeleccionRolYUsuario1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(pnlEditarUsuarios1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)

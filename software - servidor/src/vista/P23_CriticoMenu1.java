@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package vista;
-import java.sql.Connection;
 /**
  *
  * @author usuario
@@ -11,65 +10,84 @@ import java.sql.Connection;
 import javax.swing.JFrame;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import controlador.P23CriticoMenuControlador;
+import javax.swing.JPanel;
+
 public class P23_CriticoMenu1 extends javax.swing.JFrame {
-    private Connection conexionUsuario;
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(P23_CriticoMenu1.class.getName());
 
-    /**
-     * Creates new form iniciarSesion
-     */
-public P23_CriticoMenu1() {
-    this(null);
-}
+    private P23CriticoMenuControlador controlador;
 
-public P23_CriticoMenu1(Connection conexionUsuario) {
+    private static final java.util.logging.Logger logger =
+            java.util.logging.Logger.getLogger(
+                    P23_CriticoMenu1.class.getName()
+            );
+
+    public P23_CriticoMenu1() {
+        this(null);
+    }
+
+public P23_CriticoMenu1(java.sql.Connection conexionUsuario) {
 
     initComponents();
-
-    this.conexionUsuario = conexionUsuario;
-
+btnCerrarSesion.addActionListener(e -> cerrarSesion());
     setLocationRelativeTo(null);
+
+    try {
+        controlador = new P23CriticoMenuControlador(
+                this,
+                conexionUsuario
+        );
+
+    } catch (java.sql.SQLException e) {
+
+        javax.swing.JOptionPane.showMessageDialog(
+                this,
+                "Error al inicializar el controlador: " + e.getMessage()
+        );
+    }
 }
-private void mostrarHogaresEncuestados() {
-
-    P24_CriticoHogaresEncuestados1 pantalla = new P24_CriticoHogaresEncuestados1();
-
-    javax.swing.JPanel panel = pantalla.getPanelHogaresEncuestados();
+ public void mostrarPanel(JPanel panel) {
 
     pnlMenuInterfaz.removeAll();
 
-    pnlMenuInterfaz.setLayout(new java.awt.BorderLayout());
+    pnlMenuInterfaz.setLayout(
+            new java.awt.BorderLayout()
+    );
 
     panel.setPreferredSize(pnlMenuInterfaz.getSize());
 
-    pnlMenuInterfaz.add(panel, java.awt.BorderLayout.CENTER);
+    pnlMenuInterfaz.add(
+            panel,
+            java.awt.BorderLayout.CENTER
+    );
 
     pnlMenuInterfaz.revalidate();
     pnlMenuInterfaz.repaint();
+}
+ 
+private void cerrarSesion() {
 
+    int respuesta = javax.swing.JOptionPane.showConfirmDialog(
+            this,
+            "¿Está seguro de que desea cerrar sesión?",
+            "Confirmar cierre de sesión",
+            javax.swing.JOptionPane.YES_NO_OPTION,
+            javax.swing.JOptionPane.QUESTION_MESSAGE
+    );
+
+    if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
+
+        iniciarSesion pantallaLogin = new iniciarSesion();
+
+        pantallaLogin.setLocationRelativeTo(null);
+        pantallaLogin.setVisible(true);
+
+        this.dispose();
+    }
 }
 
-private void mostrarInformes() {
 
-    P28_CriticoGenerarInformes1 pantalla = new P28_CriticoGenerarInformes1();
 
-    javax.swing.JPanel panel = pantalla.getPanelInformes();
-
-    pnlMenuInterfaz.removeAll();
-
-    pnlMenuInterfaz.setLayout(new java.awt.BorderLayout());
-
-    panel.setPreferredSize(pnlMenuInterfaz.getSize());
-
-    pnlMenuInterfaz.add(panel, java.awt.BorderLayout.CENTER);
-
-    pnlMenuInterfaz.revalidate();
-    pnlMenuInterfaz.repaint();
-
-}
-public Connection getConexionUsuario() {
-    return conexionUsuario;
-}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -166,7 +184,7 @@ public Connection getConexionUsuario() {
         lblAdministrador.setText("Critico digitador");
 
         lblUsuario.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        lblUsuario.setText("lblUsuario");
+        lblUsuario.setText("Felipe Gomez");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/logoDane.png"))); // NOI18N
 
@@ -279,12 +297,12 @@ public Connection getConexionUsuario() {
 
     private void btnRegistrarUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarUsuariosActionPerformed
         // TODO add your handling code here:
-        mostrarHogaresEncuestados();
+controlador.mostrarHogaresEncuestados();
     }//GEN-LAST:event_btnRegistrarUsuariosActionPerformed
 
     private void btnRegistrarPortatilesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarPortatilesActionPerformed
         // TODO add your handling code here:
-         mostrarInformes();
+ controlador.mostrarInformes();
     }//GEN-LAST:event_btnRegistrarPortatilesActionPerformed
 
     /**

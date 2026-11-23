@@ -14,7 +14,13 @@ import java.awt.Toolkit;
 public class P31_CriticoProductosConsumidos1 extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(P31_CriticoProductosConsumidos1.class.getName());
+private controlador.P31CriticoProductosConsumidosControlador controlador;
 
+public void setControlador(
+        controlador.P31CriticoProductosConsumidosControlador controlador) {
+
+    this.controlador = controlador;
+}
     /**
      * Creates new form iniciarSesion
      */
@@ -107,6 +113,30 @@ public P31_CriticoProductosConsumidos1() {
 
         reajustarDimensiones.run();
     }
+
+
+public void mostrarProductosMas(
+        javax.swing.table.DefaultTableModel modelo) {
+
+    tblProductosMasConsumidos.setModel(modelo);
+
+    ajustarAnchoColumnas(
+        tblProductosMasConsumidos,
+        spProductosMasConsumidos
+    );
+}
+
+public void mostrarProductosMenos(
+        javax.swing.table.DefaultTableModel modelo) {
+
+    tblProductosMenosConsumidos.setModel(modelo);
+
+    ajustarAnchoColumnas(
+        tblProductosMenosConsumidos,
+        spProductosMenosConsumidos
+    );
+}
+
 
     private void ajustarAnchoColumnas(
             javax.swing.JTable tabla,
@@ -403,7 +433,7 @@ private void volver() {
         lblAdministrador.setText("Critico digitador");
 
         lblUsuario.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        lblUsuario.setText("lblUsuario");
+        lblUsuario.setText("Felipe Gomez");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/logoDane.png"))); // NOI18N
 
@@ -420,8 +450,10 @@ private void volver() {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 235, Short.MAX_VALUE)
                 .addGroup(pnlLogosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblAdministrador, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblUsuario, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(lblAdministrador)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlLogosLayout.createSequentialGroup()
+                        .addComponent(lblUsuario)
+                        .addGap(36, 36, 36)))
                 .addGap(103, 103, 103))
         );
         pnlLogosLayout.setVerticalGroup(

@@ -11,15 +11,47 @@ package vista;
 import javax.swing.JFrame;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-public class P24_CriticoHogaresEncuestados1 extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(P24_CriticoHogaresEncuestados1.class.getName());
+import controlador.P24CriticoHogaresControlador;
+import javax.swing.JFrame;
 
-    /**
-     * Creates new form iniciarSesion
-     */
+public class P24_CriticoHogaresEncuestados1 extends javax.swing.JFrame {
+
+    private P24CriticoHogaresControlador controlador;
+
+    private static final java.util.logging.Logger logger =
+            java.util.logging.Logger.getLogger(
+                    P24_CriticoHogaresEncuestados1.class.getName()
+            );
+
     public P24_CriticoHogaresEncuestados1() {
+        this(null);
+    }
+public javax.swing.JPanel getPanelHogares() {
+    return pnlMenuInterfaz1;
+}
+
+    public P24_CriticoHogaresEncuestados1(
+            java.sql.Connection conexionUsuario) {
+
         initComponents();
+
+        setLocationRelativeTo(null);
+
+        if (conexionUsuario != null) {
+            try {
+                controlador = new P24CriticoHogaresControlador(
+                        this,
+                        conexionUsuario
+                );
+
+            } catch (java.sql.SQLException e) {
+
+                javax.swing.JOptionPane.showMessageDialog(
+                        this,
+                        "Error al inicializar P24: " + e.getMessage()
+                );
+            }
+        }
     }
 private void abrirPantalla25() {
 
@@ -151,7 +183,7 @@ public javax.swing.JPanel getPanelHogaresEncuestados() {
         lblAdministrador.setText("Critico digitador");
 
         lblUsuario.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        lblUsuario.setText("lblUsuario");
+        lblUsuario.setText("Felipe Gomez");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/logoDane.png"))); // NOI18N
 

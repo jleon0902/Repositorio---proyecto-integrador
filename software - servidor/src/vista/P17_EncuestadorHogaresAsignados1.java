@@ -180,13 +180,7 @@ private void ajustarAnchoColumnas(
     tabla.repaint();
 }
 
-private void abrirPantalla18() {
-    P18_EncuestadorVerHogar1 pantalla18 =
-            new P18_EncuestadorVerHogar1();
 
-    pantalla18.setLocationRelativeTo(this);
-    pantalla18.setVisible(true);
-}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -477,8 +471,21 @@ private void abrirPantalla18() {
 
     private void btnVerHogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerHogarActionPerformed
         // TODO add your handling code here:
-         abrirPantalla18();
+    
     }//GEN-LAST:event_btnVerHogarActionPerformed
+
+    
+public javax.swing.JTable getTblTabla() {
+    return tblTabla;
+}
+
+public javax.swing.JLabel getLblHogaresasignadoss() {
+    return lblHogaresasignadoss;
+}
+
+public javax.swing.JButton getBtnVerHogar() {
+    return btnVerHogar;
+}
 
     /**
      * @param args the command line arguments

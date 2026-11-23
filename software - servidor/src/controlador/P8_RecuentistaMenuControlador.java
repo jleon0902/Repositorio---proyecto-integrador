@@ -3,6 +3,9 @@
 package controlador;
 import controlador.P9_RecuentistaRegistrarHogaresControlador;
 import vista.P8_RecuentistaMenu1;
+import controlador.P13_RecuentistaAsignarHogarControlador;
+import controlador.HogaresAsignadosRecuentistaControlador;
+import controlador.P14_RecuentistaHogaresAsignadosControlador;
 import vista.P9_RecuentistaRegistrarHogares1;
 import vista.P10_RecuentistaVerHogares1;
 import vista.P13_RecuentistaAsignarHogar1;
@@ -88,44 +91,66 @@ public void mostrarVerHogares() {
 
 
     
-    public void mostrarAsignarHogar() {
-        
-        if (!verificarConexion()) {
-            return;
-        }
-        
-        P13_RecuentistaAsignarHogar1 pantalla =
-                new P13_RecuentistaAsignarHogar1();
-        
-        javax.swing.JPanel formulario =
-                pantalla.getPanelAsignarHogar();
-        
-        javax.swing.JScrollBar barra =
-                pantalla.getScrollBarAsignarHogar();
-        
-        vista.mostrarFormularioConScroll(
-                formulario, barra, 670, 1000
-        );
-        
-        pantalla.dispose();
+
+public void mostrarAsignarHogar() {
+
+    if (!verificarConexion()) {
+        return;
     }
+
+    // Crear la pantalla 13.
+    P13_RecuentistaAsignarHogar1 pantalla =
+            new P13_RecuentistaAsignarHogar1();
+
+    // Crear el controlador de la pantalla 13.
+    // Aquí se ejecuta cargarHogares().
+    P13_RecuentistaAsignarHogarControlador controladorP13 =
+            new P13_RecuentistaAsignarHogarControlador(pantalla);
+
+    // Obtener el panel de la pantalla 13.
+    javax.swing.JPanel formulario =
+            pantalla.getPanelAsignarHogar();
+
+    // Obtener la barra de desplazamiento.
+    javax.swing.JScrollBar barra =
+            pantalla.getScrollBarAsignarHogar();
+
+    // Mostrar la pantalla 13 dentro de la pantalla 8.
+    vista.mostrarFormularioConScroll(
+            formulario,
+            barra,
+            670,
+            1000
+    );
+
+    // Cerrar el JFrame original.
+    pantalla.dispose();
+}
+
     
-    public void mostrarHogaresAsignados() {
-        
-        if (!verificarConexion()) {
-            return;
-        }
-        
-        P14_RecuentistaHogaresAsignados1 pantalla =
-                new P14_RecuentistaHogaresAsignados1();
-        
-        javax.swing.JPanel formulario =
-                pantalla.getPanelHogaresAsignados();
-        
-        vista.mostrarFormulario(formulario);
-        
-        pantalla.dispose();
+public void mostrarHogaresAsignados() {
+
+    if (!verificarConexion()) {
+        return;
     }
+
+P14_RecuentistaHogaresAsignados1 pantalla =
+        new P14_RecuentistaHogaresAsignados1();
+
+P14_RecuentistaHogaresAsignadosControlador controladorP14 =
+        new P14_RecuentistaHogaresAsignadosControlador(
+                pantalla,
+                cedulaRecuentista
+        );
+
+javax.swing.JPanel formulario =
+        pantalla.getPanelHogaresAsignados();
+
+vista.mostrarFormulario(formulario);
+
+pantalla.dispose();
+}
+
     
     public void cerrarSesion() {
         
