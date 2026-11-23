@@ -3,7 +3,7 @@ package principal;
 
 import vista.P2_InicioSesion;
 import controlador.LoginControlador;
-import modelo.ValidacionDAO;
+    import modelo.ValidacionDAO;
 import javax.swing.UIManager;
 import controlador.NavegacionRepresentante;
 import controlador.MenuEncuestadorControlador;
