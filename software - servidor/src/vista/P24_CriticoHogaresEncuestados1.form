@@ -368,29 +368,23 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="95" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="lblMostrarFamiliasPor" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="txtMostrarFamilas" max="32767" attributes="0"/>
+                      <Component id="lblMostrarFamiliasPor" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblDepartamento" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="lblTotalHogaresEncuestados" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="txtTotalHogares" min="-2" pref="113" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="lblRegion" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblMunicipio" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="lblDepartamento" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="lblTotalHogaresEncuestados" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="txtTotalHogares" min="-2" pref="113" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblRegion" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblMunicipio" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="cmbMunicipio" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="cmbDepartamento" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="cmbRegion" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                          <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="cmbMunicipio" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="cmbDepartamento" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="cmbRegion" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -417,12 +411,9 @@
                       <Component id="lblTotalHogaresEncuestados" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="txtTotalHogares" alignment="0" min="-2" pref="22" max="-2" attributes="0"/>
                   </Group>
+                  <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                  <Component id="lblMostrarFamiliasPor" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblMostrarFamiliasPor" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtMostrarFamilas" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lblRegion" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="cmbRegion" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -562,8 +553,6 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtTotalHogaresActionPerformed"/>
           </Events>
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtMostrarFamilas">
         </Component>
       </SubComponents>
     </Container>

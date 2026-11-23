@@ -84,7 +84,8 @@ public class P11_RecuentistaInformacionFamiliaDAO {
         return false;
     }
     
-    public void eliminarHogar(
+
+public void eliminarHogar(
         String numeroVivienda,
         String cedulaRecuentista
 ) throws SQLException {
@@ -99,6 +100,19 @@ public class P11_RecuentistaInformacionFamiliaDAO {
         cs.setString(2, cedulaRecuentista);
 
         cs.execute();
+
+    } catch (SQLException e) {
+
+        if (e.getMessage() != null &&
+                e.getMessage().contains("ORA-20020")) {
+
+            throw new SQLException(
+                    "No se puede eliminar este hogar porque tiene una encuesta en curso."
+            );
+        }
+
+        throw e;
     }
 }
+
 }

@@ -441,9 +441,9 @@ private void ajustarAnchoColumnas(
                 .addComponent(lblHogaresAsignadosInterfaz)
                 .addGap(42, 42, 42)
                 .addComponent(lblHogaresasignadoss)
-                .addGap(59, 59, 59)
+                .addGap(60, 60, 60)
                 .addComponent(spHogares, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
                 .addComponent(btnVerHogar)
                 .addGap(33, 33, 33))
         );
@@ -486,6 +486,7 @@ public javax.swing.JLabel getLblHogaresasignadoss() {
 public javax.swing.JButton getBtnVerHogar() {
     return btnVerHogar;
 }
+
 
     /**
      * @param args the command line arguments

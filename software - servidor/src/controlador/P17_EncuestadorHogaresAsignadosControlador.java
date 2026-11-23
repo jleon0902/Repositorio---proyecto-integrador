@@ -77,10 +77,11 @@ public P17_EncuestadorHogaresAsignadosControlador(
                 modelo.addRow(hogar);
             }
 
-            vista.getLblHogaresasignadoss().setText(
-                    "Cantidad de hogares asignados: "
-                    + hogares.size()
-            );
+int cantidad = dao.contarHogaresAsignados(cedulaEncuestador);
+
+vista.getLblHogaresasignadoss().setText(
+        "Cantidad de hogares asignados: " + cantidad
+);
 
         } catch (SQLException e) {
 
@@ -109,18 +110,33 @@ private void verHogar() {
         return;
     }
 
+    int filaModelo =
+            vista.getTblTabla().convertRowIndexToModel(fila);
+
+    int numeroVivienda = Integer.parseInt(
+            vista.getTblTabla()
+                    .getModel()
+                    .getValueAt(filaModelo, 1)
+                    .toString()
+    );
+
     P18_EncuestadorVerHogar1 pantalla18 =
             new P18_EncuestadorVerHogar1();
 
     P18_EncuestadorVerHogarControlador controlador18 =
             new P18_EncuestadorVerHogarControlador(
                     pantalla18,
-                    conexionUsuario
+                    vista,
+                    conexionUsuario,
+                    numeroVivienda
             );
 
     controlador18.iniciar();
 
     pantalla18.setLocationRelativeTo(vista);
+
+    vista.setVisible(false);
+
     pantalla18.setVisible(true);
 }
 }

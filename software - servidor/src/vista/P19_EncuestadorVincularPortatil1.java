@@ -11,15 +11,43 @@ package vista;
 import javax.swing.JFrame;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.List;
+import javax.swing.JFileChooser;
+import java.io.File;
+
 public class P19_EncuestadorVincularPortatil1 extends javax.swing.JFrame {
-    
+    private File carpetaDestinoSeleccionada;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(P19_EncuestadorVincularPortatil1.class.getName());
 
     /**
      * Creates new form iniciarSesion
      */
     
+
+public P19_EncuestadorVincularPortatil1() {
+    initComponents();
+   configurarCampoFecha();
+}
+
+    
     // COMPONENTES PARA EL CONTROLADOR
+
+     
+public String obtenerRepresentanteSeleccionado() {
+    return (String) cmbRepresentantes.getSelectedItem();
+}
+
+public String obtenerPortatilSeleccionado() {
+    return (String) btnSeriePortatil.getSelectedItem();
+}
+
+public void agregarAccionGuardar(Runnable accion) {
+    btnSincronizar.addActionListener(e -> accion.run());
+}
+
+public void agregarAccionCancelar(Runnable accion) {
+    btnCancelar.addActionListener(e -> accion.run());
+}
 
 public javax.swing.JComboBox<String> getCmbRepresentantes() {
     return cmbRepresentantes;
@@ -50,14 +78,144 @@ public void limpiarCampos() {
     btnSeriePortatil.setSelectedIndex(-1);
     txtFechaEntrega.setText("");
 }
-    public P19_EncuestadorVincularPortatil1() {
-        initComponents();
+
+
+public void cargarRepresentantes(List<String> representantes) {
+
+    cmbRepresentantes.removeAllItems();
+
+    for (String representante : representantes) {
+        cmbRepresentantes.addItem(representante);
     }
-    
+
+    cmbRepresentantes.setSelectedIndex(-1);
+}
+
     public javax.swing.JPanel obtenerPanelVincularPortatil() {
     return pnlMenuInterfaz1;
 }
+    
+    
+public void cargarPortatilesDisponibles(List<String> portatiles) {
 
+    btnSeriePortatil.removeAllItems();
+
+    for (String numeroSerie : portatiles) {
+        btnSeriePortatil.addItem(numeroSerie);
+    }
+
+    btnSeriePortatil.setSelectedIndex(-1);
+}
+
+public String obtenerFechaEntrega() {
+    return txtFechaEntrega.getText().trim();
+}
+
+public void configurarCampoFecha() {
+
+    ((javax.swing.text.AbstractDocument)
+            txtFechaEntrega.getDocument()).setDocumentFilter(
+            new javax.swing.text.DocumentFilter() {
+
+        @Override
+        public void insertString(
+                FilterBypass fb,
+                int offset,
+                String string,
+                javax.swing.text.AttributeSet attr)
+                throws javax.swing.text.BadLocationException {
+
+            if (string != null && string.matches("[0-9/-]+")) {
+                super.insertString(fb, offset, string, attr);
+            }
+        }
+
+        @Override
+        public void replace(
+                FilterBypass fb,
+                int offset,
+                int length,
+                String text,
+                javax.swing.text.AttributeSet attrs)
+                throws javax.swing.text.BadLocationException {
+
+            if (text != null && text.matches("[0-9/-]*")) {
+                super.replace(fb, offset, length, text, attrs);
+            }
+        }
+    });
+}
+
+public void agregarAccionSincronizar(Runnable accion) {
+    btnPortatiles.addActionListener(e -> {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            accion.run();
+        });
+    });
+}
+
+public File seleccionarCarpetaDestino() {
+
+    JFileChooser selector = new JFileChooser();
+
+    selector.setDialogTitle(
+        "Seleccione la carpeta para guardar la exportación"
+    );
+
+    selector.setFileSelectionMode(
+        JFileChooser.DIRECTORIES_ONLY
+    );
+
+    selector.setAcceptAllFileFilterUsed(false);
+
+    int resultado = selector.showOpenDialog(this);
+
+    if (resultado == JFileChooser.APPROVE_OPTION) {
+
+        return selector.getSelectedFile();
+    }
+
+    return null;
+}
+
+
+public void ejecutarExportacion(int idSincronizacion) {
+
+    try {
+
+        if (carpetaDestinoSeleccionada == null) {
+
+            mostrarMensaje(
+                "Primero debe seleccionar la carpeta de destino."
+            );
+
+            return;
+        }
+
+        modelo.ExportacionDAO dao =
+            new modelo.ExportacionDAO();
+
+        File archivo = dao.exportar(
+            idSincronizacion,
+            carpetaDestinoSeleccionada
+        );
+
+        mostrarMensaje(
+            "EXPORTACIÓN REALIZADA CORRECTAMENTE.\n\n"
+            + "Archivo guardado en:\n"
+            + archivo.getAbsolutePath()
+        );
+
+    } catch (Exception e) {
+
+        mostrarMensaje(
+            "Error durante la exportación:\n"
+            + e.getMessage()
+        );
+
+        e.printStackTrace();
+    }
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -368,11 +526,13 @@ public void limpiarCampos() {
     }//GEN-LAST:event_btnRegistrarPortatilesActionPerformed
 
     private void btnPortatilesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPortatilesActionPerformed
-        // TODO add your handling code here:
+ 
     }//GEN-LAST:event_btnPortatilesActionPerformed
 
     private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSincronizarActionPerformed
         // TODO add your handling code here:
+
+    
     }//GEN-LAST:event_btnSincronizarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

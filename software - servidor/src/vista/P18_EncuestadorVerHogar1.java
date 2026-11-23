@@ -21,6 +21,10 @@ public class P18_EncuestadorVerHogar1 extends javax.swing.JFrame {
      */
 public P18_EncuestadorVerHogar1() {
     initComponents();
+
+    setDefaultCloseOperation(
+        javax.swing.WindowConstants.DISPOSE_ON_CLOSE
+    );
 }
 
 private void confirmarVolver() {
@@ -37,6 +41,9 @@ private void confirmarVolver() {
     }
 }
 
+public void mostrarDiaEncuesta(String dato) {
+    lblDia.setText(dato);
+}
 // OBTENER EL BOTÓN VOLVER
 public javax.swing.JButton getBtnVolver() {
     return btnVolver;
@@ -110,10 +117,6 @@ public void mostrarFechaFinal(String dato) {
     lblMostrarFechaFinal.setText(dato);
 }
 
-public void mostrarFechaEntrega(String dato) {
-    lblMostrarFechaEntrega.setText(dato);
-}
-
 public void mostrarFechaRecogida(String dato) {
     lblMostrarFechaRecogida.setText(dato);
 }
@@ -142,9 +145,7 @@ public void mostrarFechaRecogida(String dato) {
         lblMostrarFechaFinal = new javax.swing.JLabel();
         lblModelo = new javax.swing.JLabel();
         lblMostrarFechaRecogida = new javax.swing.JLabel();
-        lblFechaEntrega = new javax.swing.JLabel();
         lblDe14 = new javax.swing.JLabel();
-        lblMostrarFechaEntrega = new javax.swing.JLabel();
         btnVolver = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         lblMostrarModelo = new javax.swing.JLabel();
@@ -299,14 +300,8 @@ public void mostrarFechaRecogida(String dato) {
         lblMostrarFechaRecogida.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblMostrarFechaRecogida.setText("jLabel4");
 
-        lblFechaEntrega.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        lblFechaEntrega.setText("Fecha de entrega:");
-
         lblDe14.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblDe14.setText("De 14");
-
-        lblMostrarFechaEntrega.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        lblMostrarFechaEntrega.setText("jLabel4");
 
         btnVolver.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnVolver.setText("Volver");
@@ -325,13 +320,13 @@ public void mostrarFechaRecogida(String dato) {
         lblMostrarMarca.setText("jLabel4");
 
         lblPortatil.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        lblPortatil.setText("Portátil:");
+        lblPortatil.setText("Portátil");
 
         lblMostrarNumeroSerie.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblMostrarNumeroSerie.setText("jLabel4");
 
         lblFechaRecogida.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        lblFechaRecogida.setText("Fecha de recogida:");
+        lblFechaRecogida.setText("Fecha de recogida del portatil");
 
         lblMostrarCorreo.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblMostrarCorreo.setText("jLabel4");
@@ -419,100 +414,96 @@ public void mostrarFechaRecogida(String dato) {
         pnlInterfaz2Layout.setHorizontalGroup(
             pnlInterfaz2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInterfaz2Layout.createSequentialGroup()
-                .addGap(127, 366, Short.MAX_VALUE)
-                .addComponent(lblVerHogar)
-                .addGap(417, 417, 417))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInterfaz2Layout.createSequentialGroup()
-                .addGroup(pnlInterfaz2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pnlInterfaz2Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnVolver))
-                    .addGroup(pnlInterfaz2Layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
+                .addGap(23, 23, 23)
+                .addGroup(pnlInterfaz2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlInterfaz2Layout.createSequentialGroup()
+                        .addComponent(lblNumeroVivienda)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblMostrarNumeroVivienda, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlInterfaz2Layout.createSequentialGroup()
                         .addGroup(pnlInterfaz2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlInterfaz2Layout.createSequentialGroup()
-                                .addComponent(lblNumeroVivienda)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblMostrarNumeroVivienda))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlInterfaz2Layout.createSequentialGroup()
-                                .addGroup(pnlInterfaz2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(pnlInterfaz2Layout.createSequentialGroup()
-                                        .addComponent(lblDia)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel3))
-                                    .addComponent(lblFechaInicio))
-                                .addGroup(pnlInterfaz2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(pnlInterfaz2Layout.createSequentialGroup()
-                                        .addGap(26, 26, 26)
-                                        .addComponent(lblDe14))
-                                    .addGroup(pnlInterfaz2Layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addComponent(lblMostrarFechaInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlInterfaz2Layout.createSequentialGroup()
-                                .addGroup(pnlInterfaz2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblUbicacion)
-                                    .addComponent(lblDireccion))
-                                .addGap(18, 18, 18)
-                                .addGroup(pnlInterfaz2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(lblMostrarUbicacion, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
-                                    .addComponent(lblMostrarDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlInterfaz2Layout.createSequentialGroup()
-                                .addGroup(pnlInterfaz2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblEstrato)
-                                    .addComponent(lblBarrio)
-                                    .addComponent(lblEstado))
-                                .addGap(36, 36, 36)
-                                .addGroup(pnlInterfaz2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblMostrarbarrio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lblMostrarEstrato, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lblMostrarEstado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlInterfaz2Layout.createSequentialGroup()
-                                .addGroup(pnlInterfaz2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel15)
-                                    .addComponent(lblFechaFinalizacion))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblMostrarFechaFinal, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(pnlInterfaz2Layout.createSequentialGroup()
+                                .addComponent(lblDia)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel3))
+                            .addComponent(lblFechaInicio))
                         .addGroup(pnlInterfaz2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlInterfaz2Layout.createSequentialGroup()
-                                .addComponent(lblRepresentanteDelHogar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblMostrarRepresentante, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlInterfaz2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlInterfaz2Layout.createSequentialGroup()
-                                    .addComponent(lblFechaEntrega)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(lblMostrarFechaEntrega, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE))
-                                .addComponent(lblPortatil, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlInterfaz2Layout.createSequentialGroup()
-                                    .addComponent(lblMarca)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(lblMostrarMarca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlInterfaz2Layout.createSequentialGroup()
-                                    .addComponent(lblModelo)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(lblMostrarModelo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlInterfaz2Layout.createSequentialGroup()
-                                    .addComponent(lblTelefono)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(lblMostrarTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlInterfaz2Layout.createSequentialGroup()
-                                    .addComponent(lblCedula)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(lblMostrarCedula, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlInterfaz2Layout.createSequentialGroup()
-                                    .addComponent(lblCorreo)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(lblMostrarCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlInterfaz2Layout.createSequentialGroup()
-                                    .addComponent(lblNumeroSerie)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(lblMostrarNumeroSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlInterfaz2Layout.createSequentialGroup()
-                                    .addComponent(lblFechaRecogida)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(lblMostrarFechaRecogida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
-                .addGap(68, 68, 68))
+                                .addGap(26, 26, 26)
+                                .addComponent(lblDe14))
+                            .addGroup(pnlInterfaz2Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(lblMostrarFechaInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlInterfaz2Layout.createSequentialGroup()
+                        .addGroup(pnlInterfaz2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblUbicacion)
+                            .addComponent(lblDireccion))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlInterfaz2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblMostrarUbicacion, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
+                            .addComponent(lblMostrarDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlInterfaz2Layout.createSequentialGroup()
+                        .addGroup(pnlInterfaz2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblEstrato)
+                            .addComponent(lblBarrio)
+                            .addComponent(lblEstado))
+                        .addGap(36, 36, 36)
+                        .addGroup(pnlInterfaz2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblMostrarbarrio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblMostrarEstrato, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblMostrarEstado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlInterfaz2Layout.createSequentialGroup()
+                        .addGroup(pnlInterfaz2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel15)
+                            .addComponent(lblFechaFinalizacion))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblMostrarFechaFinal, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                .addGroup(pnlInterfaz2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlInterfaz2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(lblPortatil, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlInterfaz2Layout.createSequentialGroup()
+                            .addComponent(lblMarca)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(lblMostrarMarca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlInterfaz2Layout.createSequentialGroup()
+                            .addComponent(lblModelo)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(lblMostrarModelo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlInterfaz2Layout.createSequentialGroup()
+                            .addComponent(lblTelefono)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(lblMostrarTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlInterfaz2Layout.createSequentialGroup()
+                            .addComponent(lblCedula)
+                            .addGap(18, 18, 18)
+                            .addComponent(lblMostrarCedula, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlInterfaz2Layout.createSequentialGroup()
+                            .addComponent(lblCorreo)
+                            .addGap(18, 18, 18)
+                            .addComponent(lblMostrarCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlInterfaz2Layout.createSequentialGroup()
+                            .addComponent(lblNumeroSerie)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(lblMostrarNumeroSerie, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(pnlInterfaz2Layout.createSequentialGroup()
+                        .addComponent(lblFechaRecogida)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblMostrarFechaRecogida, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlInterfaz2Layout.createSequentialGroup()
+                        .addComponent(lblRepresentanteDelHogar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblMostrarRepresentante, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(32, 32, 32))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInterfaz2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlInterfaz2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInterfaz2Layout.createSequentialGroup()
+                        .addComponent(lblVerHogar)
+                        .addGap(417, 417, 417))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInterfaz2Layout.createSequentialGroup()
+                        .addComponent(btnVolver)
+                        .addGap(68, 68, 68))))
         );
         pnlInterfaz2Layout.setVerticalGroup(
             pnlInterfaz2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -553,12 +544,9 @@ public void mostrarFechaRecogida(String dato) {
                             .addComponent(lblMostrarModelo))
                         .addGap(18, 18, 18)
                         .addGroup(pnlInterfaz2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblFechaEntrega)
-                            .addComponent(lblMostrarFechaEntrega))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(pnlInterfaz2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblFechaRecogida)
-                            .addComponent(lblMostrarFechaRecogida)))
+                            .addComponent(lblMostrarFechaRecogida))
+                        .addGap(61, 61, 61))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInterfaz2Layout.createSequentialGroup()
                         .addGroup(pnlInterfaz2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblNumeroVivienda)
@@ -599,12 +587,11 @@ public void mostrarFechaRecogida(String dato) {
                         .addGroup(pnlInterfaz2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblFechaFinalizacion)
                             .addComponent(lblMostrarFechaFinal))
-                        .addGap(42, 42, 42))
+                        .addGap(70, 70, 70))
                     .addGroup(pnlInterfaz2Layout.createSequentialGroup()
                         .addGap(111, 111, 111)
                         .addComponent(lblEstrato)
-                        .addGap(192, 192, 192)))
-                .addGap(28, 28, 28)
+                        .addGap(220, 220, 220)))
                 .addComponent(btnVolver)
                 .addGap(145, 145, 145))
         );
@@ -665,7 +652,6 @@ public void mostrarFechaRecogida(String dato) {
     private javax.swing.JLabel lblDireccion;
     private javax.swing.JLabel lblEstado;
     private javax.swing.JLabel lblEstrato;
-    private javax.swing.JLabel lblFechaEntrega;
     private javax.swing.JLabel lblFechaFinalizacion;
     private javax.swing.JLabel lblFechaInicio;
     private javax.swing.JLabel lblFechaRecogida;
@@ -676,7 +662,6 @@ public void mostrarFechaRecogida(String dato) {
     private javax.swing.JLabel lblMostrarDireccion;
     private javax.swing.JLabel lblMostrarEstado;
     private javax.swing.JLabel lblMostrarEstrato;
-    private javax.swing.JLabel lblMostrarFechaEntrega;
     private javax.swing.JLabel lblMostrarFechaFinal;
     private javax.swing.JLabel lblMostrarFechaInicio;
     private javax.swing.JLabel lblMostrarFechaRecogida;

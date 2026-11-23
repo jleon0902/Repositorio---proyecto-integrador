@@ -12,6 +12,7 @@ import vista.P19_EncuestadorVincularPortatil1;
 import vista.P20_EncuestadorPortatilesAsignados1;
 import vista.P22_EncuestadorSincronizarCapitulos1;
 import vista.iniciarSesion;
+import modelo.P20_EncuestadorPortatilesAsignadosDAO;
 import modelo.P19_EncuestadorVincularPortatilDAO;
 import controlador.P22_EncuestadorSincronizarCapitulosControlador;
 
@@ -126,38 +127,34 @@ public void mostrarHogaresAsignados() {
 
     // VINCULAR PORTÁTIL
 
-
 public void mostrarVincularPortatil() {
-
     if (!verificarConexion()) {
         return;
     }
 
     try {
-
         P19_EncuestadorVincularPortatil1 pantalla =
                 new P19_EncuestadorVincularPortatil1();
+
+        String cedulaEncuestador =
+                SesionUsuario.obtenerUsuario().getCedula();
 
         P19_EncuestadorVincularPortatilControlador controlador =
                 new P19_EncuestadorVincularPortatilControlador(
                         pantalla,
-                        SesionUsuario.obtenerConexion()
+                        SesionUsuario.obtenerConexion(),
+                        cedulaEncuestador
                 );
 
         controlador.iniciar();
 
-        mostrarPanel(
-                pantalla.obtenerPanelVincularPortatil()
-        );
-
+        mostrarPanel(pantalla.obtenerPanelVincularPortatil());
         pantalla.dispose();
 
     } catch (SQLException e) {
-
         JOptionPane.showMessageDialog(
                 vista,
-                "Error al obtener la conexión con Oracle: "
-                + e.getMessage(),
+                "Error al obtener la conexión con Oracle: " + e.getMessage(),
                 "Error de conexión",
                 JOptionPane.ERROR_MESSAGE
         );
@@ -168,7 +165,7 @@ public void mostrarVincularPortatil() {
 
     // PORTÁTILES ASIGNADOS
 
- // PORTÁTILES ASIGNADOS
+// PORTÁTILES ASIGNADOS
 public void mostrarPortatilesAsignados() {
 
     if (!verificarConexion()) {
@@ -180,12 +177,27 @@ public void mostrarPortatilesAsignados() {
         P20_EncuestadorPortatilesAsignados1 pantalla =
                 new P20_EncuestadorPortatilesAsignados1();
 
-        P20_EncuestadorPortatilesAsignadosControlador controlador20 =
-                new P20_EncuestadorPortatilesAsignadosControlador(
-                        pantalla,
+        // Obtener la cédula del encuestador
+        String cedulaEncuestador =
+                SesionUsuario.obtenerUsuario().getCedula();
+
+        // Crear el DAO con la conexión
+        P20_EncuestadorPortatilesAsignadosDAO dao =
+                new P20_EncuestadorPortatilesAsignadosDAO(
                         SesionUsuario.obtenerConexion()
                 );
 
+        // Crear el controlador sin pasarle la conexión
+        P20_EncuestadorPortatilesAsignadosControlador controlador20 =
+                new P20_EncuestadorPortatilesAsignadosControlador(
+                        pantalla,
+                        dao
+                );
+
+        // Enviar la cédula al controlador
+        controlador20.setCedulaEncuestador(cedulaEncuestador);
+
+        // Cargar la información
         controlador20.iniciar();
 
         mostrarPanel(

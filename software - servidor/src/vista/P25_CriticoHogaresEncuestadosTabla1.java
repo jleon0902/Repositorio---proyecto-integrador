@@ -32,11 +32,7 @@ public P25_CriticoHogaresEncuestadosTabla1(
 
     configurarTabla(tblTablaFamiliasEncuesta, spTablaFamiliasEncuesta);
 }
-private void abrirInformacionHogar() {
-    P26_CriticoVerHogar1 pantalla = new P26_CriticoVerHogar1();
-    pantalla.setLocationRelativeTo(this);
-    pantalla.setVisible(true);
-}
+
 private void confirmarVolver() {
 
     int respuesta = JOptionPane.showConfirmDialog(
@@ -48,6 +44,7 @@ private void confirmarVolver() {
     );
 
     if (respuesta == JOptionPane.YES_OPTION) {
+
         this.dispose();
     }
 }
@@ -242,6 +239,20 @@ private void ajustarAnchoColumnas(
     tabla.repaint();
 }
 
+public javax.swing.JTable getTblTablaFamiliasEncuesta() {
+    return tblTablaFamiliasEncuesta;
+}
+
+// MOSTRAR LOS NOMBRES DE LA UBICACIÓN
+public void mostrarUbicacion(
+        String region,
+        String departamento,
+        String municipio) {
+
+    lblMostrarRegion.setText(region);
+    lblMostrarDepartamento.setText(departamento);
+    lblMostrarMunicipio.setText(municipio);
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -265,7 +276,6 @@ private void ajustarAnchoColumnas(
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         pnlFamiliasEncuestadas = new javax.swing.JPanel();
-        btnVerFamilia = new javax.swing.JButton();
         lblFamiliasEncuestadas = new javax.swing.JLabel();
         spTablaFamiliasEncuesta = new javax.swing.JScrollPane();
         tblTablaFamiliasEncuesta = new javax.swing.JTable();
@@ -387,12 +397,8 @@ private void ajustarAnchoColumnas(
         pnlFamiliasEncuestadas.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         pnlFamiliasEncuestadas.setPreferredSize(new java.awt.Dimension(938, 522));
 
-        btnVerFamilia.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btnVerFamilia.setText("Ver hogar");
-        btnVerFamilia.addActionListener(this::btnVerFamiliaActionPerformed);
-
         lblFamiliasEncuestadas.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
-        lblFamiliasEncuestadas.setText("Familias encuestadas");
+        lblFamiliasEncuestadas.setText("Hogares encuestados");
 
         spTablaFamiliasEncuesta.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         spTablaFamiliasEncuesta.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -466,8 +472,7 @@ private void ajustarAnchoColumnas(
                             .addComponent(spTablaFamiliasEncuesta, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 866, Short.MAX_VALUE)
                             .addGroup(pnlFamiliasEncuestadasLayout.createSequentialGroup()
                                 .addComponent(btnVolver)
-                                .addGap(685, 685, 685)
-                                .addComponent(btnVerFamilia)))
+                                .addGap(786, 786, 786)))
                         .addGap(37, 37, 37))))
         );
         pnlFamiliasEncuestadasLayout.setVerticalGroup(
@@ -490,9 +495,7 @@ private void ajustarAnchoColumnas(
                 .addGap(29, 29, 29)
                 .addComponent(spTablaFamiliasEncuesta, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37)
-                .addGroup(pnlFamiliasEncuestadasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnVerFamilia)
-                    .addComponent(btnVolver))
+                .addComponent(btnVolver)
                 .addGap(3, 3, 3))
         );
 
@@ -500,10 +503,6 @@ private void ajustarAnchoColumnas(
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnVerFamiliaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerFamiliaActionPerformed
- abrirInformacionHogar();
-    }//GEN-LAST:event_btnVerFamiliaActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
 confirmarVolver();
@@ -535,7 +534,6 @@ confirmarVolver();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnVerFamilia;
     private javax.swing.JButton btnVolver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

@@ -3,17 +3,25 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/VALENTINA/Documents/ANTESDELACONEXION%20VALENTINA/Proyecto_Servidor_02VALENTINA1111/src/vista/P30_CriticoAdquisicion1.java</file>
-            <file>file:/C:/Users/VALENTINA/Documents/ANTESDELACONEXION%20VALENTINA/Proyecto_Servidor_02VALENTINA1111/src/modelo/conexion.java</file>
-            <file>file:/C:/Users/VALENTINA/Documents/ANTESDELACONEXION%20VALENTINA/Proyecto_Servidor_02VALENTINA1111/src/controlador/P28CriticoInformesControlador.java</file>
-            <file>file:/C:/Users/VALENTINA/Documents/ANTESDELACONEXION%20VALENTINA/Proyecto_Servidor_02VALENTINA1111/src/modelo/P28CriticoInformesDAO.java</file>
-            <file>file:/C:/Users/VALENTINA/Documents/ANTESDELACONEXION%20VALENTINA/Proyecto_Servidor_02VALENTINA1111/src/controlador/P30CriticoAdquisicionControlador.java</file>
-            <file>file:/C:/Users/VALENTINA/Documents/ANTESDELACONEXION%20VALENTINA/Proyecto_Servidor_02VALENTINA1111/src/modelo/P30CriticoAdquisicionDAO.java</file>
+            <file>file:/C:/Users/VALENTINA/Documents/ANTESDELACONEXION%20VALENTINA/Proyecto_Servidor_02VALENTINA1111/src/vista/iniciarSesion.java</file>
+            <file>file:/C:/Users/VALENTINA/Documents/ANTESDELACONEXION%20VALENTINA/Proyecto_Servidor_02VALENTINA1111/src/vista/P17_EncuestadorHogaresAsignados1.java</file>
+            <file>file:/C:/Users/VALENTINA/Documents/ANTESDELACONEXION%20VALENTINA/Proyecto_Servidor_02VALENTINA1111/src/vista/P18_EncuestadorVerHogar1.java</file>
+            <file>file:/C:/Users/VALENTINA/Documents/ANTESDELACONEXION%20VALENTINA/Proyecto_Servidor_02VALENTINA1111/src/vista/P19_EncuestadorVincularPortatil1.java</file>
+            <file>file:/C:/Users/VALENTINA/Documents/ANTESDELACONEXION%20VALENTINA/Proyecto_Servidor_02VALENTINA1111/src/vista/P20_EncuestadorPortatilesAsignados1.java</file>
+            <file>file:/C:/Users/VALENTINA/Documents/ANTESDELACONEXION%20VALENTINA/Proyecto_Servidor_02VALENTINA1111/src/vista/P21_EncuestadorEditarVinculacion1.java</file>
+            <file>file:/C:/Users/VALENTINA/Documents/ANTESDELACONEXION%20VALENTINA/Proyecto_Servidor_02VALENTINA1111/src/vista/P22_EncuestadorSincronizarCapitulos1.java</file>
+            <file>file:/C:/Users/VALENTINA/Documents/ANTESDELACONEXION%20VALENTINA/Proyecto_Servidor_02VALENTINA1111/src/controlador/P19_EncuestadorVincularPortatilControlador.java</file>
+            <file>file:/C:/Users/VALENTINA/Documents/ANTESDELACONEXION%20VALENTINA/Proyecto_Servidor_02VALENTINA1111/src/modelo/P19_EncuestadorVincularPortatilDAO.java</file>
+            <file>file:/C:/Users/VALENTINA/Documents/ANTESDELACONEXION%20VALENTINA/Proyecto_Servidor_02VALENTINA1111/src/controlador/P16_EncuestadorMenuControlador.java</file>
+            <file>file:/C:/Users/VALENTINA/Documents/ANTESDELACONEXION%20VALENTINA/Proyecto_Servidor_02VALENTINA1111/src/vista/P16_EncuestadorMenu1.java</file>
+            <file>file:/C:/Users/VALENTINA/Documents/ANTESDELACONEXION%20VALENTINA/Proyecto_Servidor_02VALENTINA1111/src/modelo/SesionUsuario.java</file>
+            <file>file:/C:/Users/VALENTINA/Documents/ANTESDELACONEXION%20VALENTINA/Proyecto_Servidor_02VALENTINA1111/src/modelo/ResultadoLogin.java</file>
+            <file>file:/C:/Users/VALENTINA/Documents/ANTESDELACONEXION%20VALENTINA/Proyecto_Servidor_02VALENTINA1111/src/controlador/P1_AdministradorMenuControlador.java</file>
+            <file>file:/C:/Users/VALENTINA/Documents/ANTESDELACONEXION%20VALENTINA/Proyecto_Servidor_02VALENTINA1111/src/controlador/P18_EncuestadorVerHogarControlador.java</file>
             <file>file:/C:/Users/VALENTINA/Documents/ANTESDELACONEXION%20VALENTINA/Proyecto_Servidor_02VALENTINA1111/src/vista/P28_CriticoGenerarInformes1.java</file>
             <file>file:/C:/Users/VALENTINA/Documents/ANTESDELACONEXION%20VALENTINA/Proyecto_Servidor_02VALENTINA1111/src/vista/P23_CriticoMenu1.java</file>
-            <file>file:/C:/Users/VALENTINA/Documents/ANTESDELACONEXION%20VALENTINA/Proyecto_Servidor_02VALENTINA1111/src/controlador/P29CriticoResumenGastoControlador.java</file>
-            <file>file:/C:/Users/VALENTINA/Documents/ANTESDELACONEXION%20VALENTINA/Proyecto_Servidor_02VALENTINA1111/src/modelo/PorcentajeAdquisicion.java</file>
-            <file>file:/C:/Users/VALENTINA/Documents/ANTESDELACONEXION%20VALENTINA/Proyecto_Servidor_02VALENTINA1111/src/modelo/LugarCompraP30.java</file>
+            <file>file:/C:/Users/VALENTINA/Documents/ANTESDELACONEXION%20VALENTINA/Proyecto_Servidor_02VALENTINA1111/src/vista/P24_CriticoHogaresEncuestados1.java</file>
+            <file>file:/C:/Users/VALENTINA/Documents/ANTESDELACONEXION%20VALENTINA/Proyecto_Servidor_02VALENTINA1111/src/vista/P25_CriticoHogaresEncuestadosTabla1.java</file>
         </group>
     </open-files>
 </project-private>

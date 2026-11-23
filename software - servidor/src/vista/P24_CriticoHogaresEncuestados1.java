@@ -30,14 +30,16 @@ public javax.swing.JPanel getPanelHogares() {
     return pnlMenuInterfaz1;
 }
 
-    public P24_CriticoHogaresEncuestados1(
+public P24_CriticoHogaresEncuestados1(
             java.sql.Connection conexionUsuario) {
 
-        initComponents();
+    initComponents();
 
-        setLocationRelativeTo(null);
+    configurarEstadoInicial();
 
-        if (conexionUsuario != null) {
+    setLocationRelativeTo(null);
+
+    if (conexionUsuario != null) {
             try {
                 controlador = new P24CriticoHogaresControlador(
                         this,
@@ -53,7 +55,42 @@ public javax.swing.JPanel getPanelHogares() {
             }
         }
     }
+
+
+// CONFIGURAR ESTADO INICIAL DE LOS COMPONENTES
+private void configurarEstadoInicial() {
+
+    // Solo se puede seleccionar una región inicialmente.
+    cmbRegion.setEnabled(true);
+
+    // Departamento y municipio comienzan bloqueados.
+    cmbDepartamento.setEnabled(false);
+    cmbMunicipio.setEnabled(false);
+
+    // El total de hogares solamente se puede consultar.
+    txtTotalHogares.setEditable(false);
+}
 private void abrirPantalla25() {
+
+    if (controlador == null) {
+        javax.swing.JOptionPane.showMessageDialog(
+                this,
+                "No existe una conexión activa."
+        );
+        return;
+    }
+
+    if (cmbRegion.getSelectedIndex() <= 0) {
+
+        javax.swing.JOptionPane.showMessageDialog(
+                this,
+                "Debe seleccionar una región antes de continuar.",
+                "Selección requerida",
+                javax.swing.JOptionPane.WARNING_MESSAGE
+        );
+
+        return;
+    }
 
     int respuesta = javax.swing.JOptionPane.showConfirmDialog(
             this,
@@ -64,17 +101,31 @@ private void abrirPantalla25() {
     );
 
     if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
-
-        P25_CriticoHogaresEncuestadosTabla1 pantalla =
-                new P25_CriticoHogaresEncuestadosTabla1();
-
-        pantalla.setLocationRelativeTo(null);
-        pantalla.setVisible(true);
+        controlador.abrirPantalla25();
     }
 }
 public javax.swing.JPanel getPanelHogaresEncuestados() {
     return pnlMenuInterfaz1;
 }
+// OBTENER COMBOS
+public javax.swing.JComboBox<String> getCmbRegion() {
+    return cmbRegion;
+}
+
+public javax.swing.JComboBox<String> getCmbDepartamento() {
+    return cmbDepartamento;
+}
+
+public javax.swing.JComboBox<String> getCmbMunicipio() {
+    return cmbMunicipio;
+}
+
+// MOSTRAR TOTAL DE HOGARES
+public void mostrarTotalHogares(int total) {
+    txtTotalHogares.setText(String.valueOf(total));
+}
+
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -114,7 +165,6 @@ public javax.swing.JPanel getPanelHogaresEncuestados() {
         cmbMunicipio = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         txtTotalHogares = new javax.swing.JTextField();
-        txtMostrarFamilas = new javax.swing.JTextField();
 
         jPanel4.setBorder(new javax.swing.border.MatteBorder(null));
 
@@ -334,11 +384,8 @@ public javax.swing.JPanel getPanelHogaresEncuestados() {
             .addGroup(pnlMenuInterfaz1Layout.createSequentialGroup()
                 .addGap(95, 95, 95)
                 .addGroup(pnlMenuInterfaz1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlMenuInterfaz1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(pnlMenuInterfaz1Layout.createSequentialGroup()
-                            .addComponent(lblMostrarFamiliasPor)
-                            .addGap(18, 18, 18)
-                            .addComponent(txtMostrarFamilas))
+                    .addGroup(pnlMenuInterfaz1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lblMostrarFamiliasPor)
                         .addComponent(lblDepartamento)
                         .addGroup(pnlMenuInterfaz1Layout.createSequentialGroup()
                             .addComponent(lblTotalHogaresEncuestados)
@@ -371,11 +418,9 @@ public javax.swing.JPanel getPanelHogaresEncuestados() {
                 .addGroup(pnlMenuInterfaz1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblTotalHogaresEncuestados)
                     .addComponent(txtTotalHogares, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(35, 35, 35)
+                .addComponent(lblMostrarFamiliasPor)
                 .addGap(18, 18, 18)
-                .addGroup(pnlMenuInterfaz1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblMostrarFamiliasPor)
-                    .addComponent(txtMostrarFamilas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
                 .addGroup(pnlMenuInterfaz1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblRegion)
                     .addComponent(cmbRegion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -469,7 +514,6 @@ public javax.swing.JPanel getPanelHogaresEncuestados() {
     private javax.swing.JPanel pnlLogos;
     private javax.swing.JPanel pnlMenu;
     private javax.swing.JPanel pnlMenuInterfaz1;
-    private javax.swing.JTextField txtMostrarFamilas;
     private javax.swing.JTextField txtTotalHogares;
     // End of variables declaration//GEN-END:variables
 }

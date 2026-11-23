@@ -1,72 +1,71 @@
 
 package controlador;
 
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.util.List;
 import javax.swing.JOptionPane;
-import vista.P21_EncuestadorEditarVinculacion1;
 
 import modelo.P20_EncuestadorPortatilesAsignadosDAO;
 import vista.P20_EncuestadorPortatilesAsignados1;
 
 public class P20_EncuestadorPortatilesAsignadosControlador {
 
-private final P20_EncuestadorPortatilesAsignados1 vista;
-private final P20_EncuestadorPortatilesAsignadosDAO dao;
-private final Connection conexionUsuario;
+    private final P20_EncuestadorPortatilesAsignados1 vista;
+    private final P20_EncuestadorPortatilesAsignadosDAO dao;
 
-public P20_EncuestadorPortatilesAsignadosControlador(
-        P20_EncuestadorPortatilesAsignados1 vista,
-        Connection conexionUsuario) {
+    private String cedulaEncuestador;
 
-    this.vista = vista;
-    this.conexionUsuario = conexionUsuario;
+    public P20_EncuestadorPortatilesAsignadosControlador(
+            P20_EncuestadorPortatilesAsignados1 vista,
+            P20_EncuestadorPortatilesAsignadosDAO dao) {
 
-    this.dao = new P20_EncuestadorPortatilesAsignadosDAO(
-            conexionUsuario
-    );
-}
+        this.vista = vista;
+        this.dao = dao;
+    }
+
+    // RECIBIR CÉDULA DEL ENCUESTADOR
+    public void setCedulaEncuestador(String cedulaEncuestador) {
+
+        this.cedulaEncuestador = cedulaEncuestador;
+    }
 
     // INICIAR CONTROLADOR
     public void iniciar() {
 
-        try {
+        cargarPortatilesAsignados();
+    }
 
-            dao.verificarConexion();
+    // CARGAR PORTÁTILES ASIGNADOS
+    public void cargarPortatilesAsignados() {
 
-            System.out.println(
-                    "Pantalla 20: conexión con Oracle recibida correctamente."
-            );
-
-        } catch (SQLException e) {
+        if (cedulaEncuestador == null
+                || cedulaEncuestador.trim().isEmpty()) {
 
             JOptionPane.showMessageDialog(
                     vista,
-                    "Error de conexión: " + e.getMessage(),
+                    "No se recibió la cédula del encuestador.",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE
+            );
+
+            return;
+        }
+
+        try {
+
+            List<Object[]> datos =
+                    dao.obtenerPortatilesAsignados(cedulaEncuestador);
+
+            vista.mostrarPortatilesAsignados(datos);
+
+        } catch (Exception e) {
+
+            JOptionPane.showMessageDialog(
+                    vista,
+                    "No fue posible cargar los portátiles asignados: "
+                    + e.getMessage(),
                     "Error",
                     JOptionPane.ERROR_MESSAGE
             );
         }
     }
-    public void abrirPantalla21() {
-
-    P21_EncuestadorEditarVinculacion1 pantalla21 =
-            new P21_EncuestadorEditarVinculacion1();
-
-    P21_EncuestadorEditarVinculacionControlador controlador21 =
-            new P21_EncuestadorEditarVinculacionControlador(
-                    pantalla21,
-                    conexionUsuario
-            );
-
-    controlador21.iniciar();
-
-    pantalla21.setLocationRelativeTo(vista);
-    pantalla21.setVisible(true);
-}
-    
-    public void editarPortatil() {
-    abrirPantalla21();
-}
-    
 }

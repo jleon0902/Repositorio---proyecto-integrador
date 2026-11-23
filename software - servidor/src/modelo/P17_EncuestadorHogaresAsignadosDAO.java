@@ -19,7 +19,33 @@ public class P17_EncuestadorHogaresAsignadosDAO {
         this.conexionUsuario = conexionUsuario;
     }
 
-    // CONSULTAR HOGARES ASIGNADOS
+    // =========================================
+    // CONSULTAR CANTIDAD DE HOGARES ASIGNADOS
+    // =========================================
+    public int contarHogaresAsignados(
+            String cedulaEncuestador) throws SQLException {
+
+        verificarConexion();
+
+        String procedimiento =
+                "{call P17_CONTAR_HOGARES(?, ?)}";
+
+        try (CallableStatement cs =
+                conexionUsuario.prepareCall(procedimiento)) {
+
+            cs.setString(1, cedulaEncuestador);
+
+            cs.registerOutParameter(2, Types.NUMERIC);
+
+            cs.execute();
+
+            return cs.getInt(2);
+        }
+    }
+
+    // =========================================
+    // CONSULTAR INFORMACIÓN DE LOS HOGARES
+    // =========================================
     public List<Object[]> obtenerHogaresAsignados(
             String cedulaEncuestador) throws SQLException {
 
@@ -28,7 +54,7 @@ public class P17_EncuestadorHogaresAsignadosDAO {
         List<Object[]> hogares = new ArrayList<>();
 
         String procedimiento =
-                "{call NOMBRE_PROCEDIMIENTO(?, ?)}";
+                "{call P17_CONSULTAR_HOGARES(?, ?)}";
 
         try (CallableStatement cs =
                 conexionUsuario.prepareCall(procedimiento)) {
@@ -42,15 +68,18 @@ public class P17_EncuestadorHogaresAsignadosDAO {
             try (ResultSet rs =
                     (ResultSet) cs.getObject(2)) {
 
-                int numero = 1;
-
                 while (rs.next()) {
 
                     Object[] fila = {
-                        numero++,
-                        rs.getObject(1),
-                        rs.getObject(2),
-                        rs.getObject(3)
+
+                        rs.getInt("NUMERO_ORDEN"),
+
+                        rs.getObject("NUMERO_VIVIENDA"),
+
+                        rs.getString("RESPONSABLE_HOGAR"),
+
+                        rs.getString("ESTADO_ENCUESTA")
+
                     };
 
                     hogares.add(fila);
@@ -61,7 +90,9 @@ public class P17_EncuestadorHogaresAsignadosDAO {
         return hogares;
     }
 
+    // =========================================
     // VERIFICAR CONEXIÓN
+    // =========================================
     public void verificarConexion() throws SQLException {
 
         if (conexionUsuario == null

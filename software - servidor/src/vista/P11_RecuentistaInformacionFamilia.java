@@ -457,13 +457,8 @@ public void mostrarError(String mensaje) {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInterfaz1Layout.createSequentialGroup()
                         .addGroup(pnlInterfaz1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlInterfaz1Layout.createSequentialGroup()
-                                .addGroup(pnlInterfaz1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblUsuario1)
-                                    .addGroup(pnlInterfaz1Layout.createSequentialGroup()
-                                        .addComponent(lblRepresentanteHogar)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(lblMostrarRepresentante, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(lblUsuario1)
+                                .addGap(219, 376, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInterfaz1Layout.createSequentialGroup()
                                 .addGroup(pnlInterfaz1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblContraseña)
@@ -483,10 +478,16 @@ public void mostrarError(String mensaje) {
                                                 .addComponent(lblMostrarCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(0, 0, Short.MAX_VALUE))
                                             .addComponent(lblMostrarUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInterfaz1Layout.createSequentialGroup()
-                                .addComponent(lblTelefono)
-                                .addGap(18, 18, 18)
-                                .addComponent(lblMostrarTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(pnlInterfaz1Layout.createSequentialGroup()
+                                .addGroup(pnlInterfaz1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pnlInterfaz1Layout.createSequentialGroup()
+                                        .addComponent(lblTelefono)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lblMostrarTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(pnlInterfaz1Layout.createSequentialGroup()
+                                        .addComponent(lblRepresentanteHogar)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(lblMostrarRepresentante, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())))
             .addGroup(pnlInterfaz1Layout.createSequentialGroup()
@@ -563,13 +564,6 @@ public P10_RecuentistaVerHogares1 getPantallaAnterior() {
 }
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
   if (pantallaAnterior != null) {
-
-        // MOSTRAR LA MISMA PANTALLA 10 QUE ESTABA ABIERTA.
-        pantallaAnterior.setVisible(true);
-        pantallaAnterior.toFront();
-        pantallaAnterior.requestFocus();
-
-        // CERRAR SOLAMENTE LA PANTALLA 11.
         this.dispose();
 
     } else {

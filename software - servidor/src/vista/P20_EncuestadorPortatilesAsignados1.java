@@ -13,6 +13,8 @@ import vista.P21_EncuestadorEditarVinculacion1;
 import javax.swing.JFrame;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 import controlador.P20_EncuestadorPortatilesAsignadosControlador;
 public class P20_EncuestadorPortatilesAsignados1 extends javax.swing.JFrame {
     private P20_EncuestadorPortatilesAsignadosControlador controlador;
@@ -29,59 +31,9 @@ public P20_EncuestadorPortatilesAsignados1() {
 public javax.swing.JPanel obtenerPanelPortatilesAsignados() {
     return pnlMenuInterfaz1;
 }
-private void asignarEventos() {
 
-    // Eliminar los eventos anteriores de los botones
-    for (java.awt.event.ActionListener evento : btnEditar.getActionListeners()) {
-        btnEditar.removeActionListener(evento);
-    }
 
-    for (java.awt.event.ActionListener evento : btnEliminar.getActionListeners()) {
-        btnEliminar.removeActionListener(evento);
-    }
 
-    // Asignar los nuevos eventos
-    btnEditar.addActionListener(e -> accionEditar());
-    btnEliminar.addActionListener(e -> accionEliminar());
-}
-
-private void accionEditar() {
-
-    int respuesta = javax.swing.JOptionPane.showConfirmDialog(
-            this,
-            "¿Desea editar la asignación del portátil seleccionado?",
-            "Confirmar edición",
-            javax.swing.JOptionPane.YES_NO_OPTION,
-            javax.swing.JOptionPane.QUESTION_MESSAGE
-    );
-
-    if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
-        controlador.editarPortatil();
-    }
-}
-private void accionEliminar() {
-
-    int respuesta = javax.swing.JOptionPane.showConfirmDialog(
-            this,
-            "¿Está seguro de que desea eliminar la asignación del portátil?",
-            "Confirmar eliminación",
-            javax.swing.JOptionPane.YES_NO_OPTION,
-            javax.swing.JOptionPane.WARNING_MESSAGE
-    );
-
-    if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
-
-        System.out.println("Eliminación confirmada.");
-
-        javax.swing.JOptionPane.showMessageDialog(
-                this,
-                "Se ha confirmado la eliminación.",
-                "Eliminar portátil",
-                javax.swing.JOptionPane.INFORMATION_MESSAGE
-        );
-
-    }
-}
 
 public void setControlador(
         P20_EncuestadorPortatilesAsignadosControlador controlador) {
@@ -271,18 +223,27 @@ private void ajustarAnchoColumnas(
 
 
 
-public javax.swing.JButton getBtnEditar() {
-    return btnEditar;
-}
 
-public javax.swing.JButton getBtnEliminar() {
-    return btnEliminar;
-}
 
 public javax.swing.JTable getTblTabla() {
     return tblTabla;
 }
 
+
+public void mostrarPortatilesAsignados(List<Object[]> datos) {
+
+    DefaultTableModel modelo =
+            (DefaultTableModel) tblTabla.getModel();
+
+    // Limpiar registros anteriores
+    modelo.setRowCount(0);
+
+    // Agregar los registros recibidos del controlador
+    for (Object[] fila : datos) {
+
+        modelo.addRow(fila);
+    }
+}
 
 
 
@@ -318,8 +279,6 @@ public javax.swing.JTable getTblTabla() {
         lblPortatilesAsignadosInterfaz = new javax.swing.JLabel();
         sp1 = new javax.swing.JScrollPane();
         tblTabla = new javax.swing.JTable();
-        btnEditar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
 
         jPanel4.setBorder(new javax.swing.border.MatteBorder(null));
 
@@ -511,46 +470,28 @@ public javax.swing.JTable getTblTabla() {
         ));
         sp1.setViewportView(tblTabla);
 
-        btnEditar.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btnEditar.setText("Editar");
-        btnEditar.addActionListener(this::btnEditarActionPerformed);
-
-        btnEliminar.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btnEliminar.setText("Eliminar");
-        btnEliminar.addActionListener(this::btnEliminarActionPerformed);
-
         javax.swing.GroupLayout pnlMenuInterfaz1Layout = new javax.swing.GroupLayout(pnlMenuInterfaz1);
         pnlMenuInterfaz1.setLayout(pnlMenuInterfaz1Layout);
         pnlMenuInterfaz1Layout.setHorizontalGroup(
             pnlMenuInterfaz1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMenuInterfaz1Layout.createSequentialGroup()
-                .addGroup(pnlMenuInterfaz1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(pnlMenuInterfaz1Layout.createSequentialGroup()
-                        .addGap(93, 93, 93)
-                        .addComponent(sp1, javax.swing.GroupLayout.PREFERRED_SIZE, 545, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlMenuInterfaz1Layout.createSequentialGroup()
-                        .addGap(104, 104, 104)
-                        .addComponent(btnEliminar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnEditar)))
-                .addContainerGap(60, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMenuInterfaz1Layout.createSequentialGroup()
-                .addGap(0, 213, Short.MAX_VALUE)
-                .addComponent(lblPortatilesAsignadosInterfaz)
-                .addGap(181, 181, 181))
+                .addGap(0, 76, Short.MAX_VALUE)
+                .addGroup(pnlMenuInterfaz1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMenuInterfaz1Layout.createSequentialGroup()
+                        .addComponent(lblPortatilesAsignadosInterfaz)
+                        .addGap(181, 181, 181))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMenuInterfaz1Layout.createSequentialGroup()
+                        .addComponent(sp1, javax.swing.GroupLayout.PREFERRED_SIZE, 565, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(57, 57, 57))))
         );
         pnlMenuInterfaz1Layout.setVerticalGroup(
             pnlMenuInterfaz1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMenuInterfaz1Layout.createSequentialGroup()
                 .addGap(62, 62, 62)
                 .addComponent(lblPortatilesAsignadosInterfaz)
-                .addGap(88, 88, 88)
-                .addComponent(sp1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
-                .addGroup(pnlMenuInterfaz1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEditar)
-                    .addComponent(btnEliminar))
-                .addGap(55, 55, 55))
+                .addGap(87, 87, 87)
+                .addComponent(sp1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(116, Short.MAX_VALUE))
         );
 
         getContentPane().add(pnlMenuInterfaz1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 110, 700, 520));
@@ -573,14 +514,6 @@ public javax.swing.JTable getTblTabla() {
     private void btnPortatilesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPortatilesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnPortatilesActionPerformed
-
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-accionEditar();
-    }//GEN-LAST:event_btnEditarActionPerformed
-
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-
-    }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -609,8 +542,6 @@ accionEditar();
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrarSesion;
-    private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnPortatiles;
     private javax.swing.JButton btnRegistrarPortatiles;
     private javax.swing.JButton btnRegistrarUsuarios;

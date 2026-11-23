@@ -134,13 +134,10 @@ public void eliminarHogar() {
         // CERRAR P11
         vista.dispose();
 
-    } catch (Exception e) {
+} catch (Exception e) {
 
-        vista.mostrarError(
-                "No fue posible eliminar el hogar: "
-                + e.getMessage()
-        );
-    }
+    vista.mostrarError(e.getMessage());
+}
 }
 
 // REGRESAR A LA PANTALLA 10
